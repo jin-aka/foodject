@@ -17,12 +17,11 @@ class CartSelectTests {
 	
 	@Test
 	void contextLoads() {
-		List<HostCollectionVO> list = null;
+		HostCollectionVO co = new HostCollectionVO("음료", 8, 1);
 		try {
-			list = biz.getcol(1);
-			for (HostCollectionVO obj : list) {
-				System.out.println(obj);
-			}
+				biz.register(co);
+				System.out.println("register OK");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

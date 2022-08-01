@@ -1,5 +1,7 @@
 package com.foodject.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -152,6 +154,53 @@ public class HostMenuController {
 		mv.addObject("center", "/host/menu/register");
 		return mv;
 	}
+	@RequestMapping("/colregister")
+	public ModelAndView colregister(ModelAndView mv, int id, int sid) {
+		HostShopVO sh = null;
+		List<HostCollectionVO> clist = null;
+		try {
+			clist = cbiz.get_byShop(sid);
+			mv.addObject("clist",clist);
+			
+			sh = biz.get(id);
+			mv.addObject("sh",sh);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mv.setViewName("/host/index");
+		mv.addObject("center", "/host/menu/colregister");
+		return mv;
+	}
+	@RequestMapping("colregister/colregisterimpl")
+	public String registerimpl(Model m, HostCollectionVO cov) {
+	
+		try {
+			
+			
+			cbiz.register(cov);
+			System.out.println("register OK");
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return "redirect:/host/menu/col?id="+cov.getSid()+"&sid="+cov.getSid();
+	}
+//	@RequestMapping("/menuregisterimpl")
+//	public String addimpl(Model m, HostMenuVO mnv ) {
+//		String imgname = mnv.getMf().getOriginalFilename();
+//		p.setImgname(imgname);
+//		try {
+//			biz.register(p);
+//			Util.saveFile(p.getMf(),admindir,userdir);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return "redirect:select";
+//	}
+
 //	@RequestMapping("/menuregisterimpl")
 //	public String addimpl(Model m, HostMenuVO mn ) {
 //		String imgname = p.getMf().getOriginalFilename();
