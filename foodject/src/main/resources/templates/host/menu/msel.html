@@ -44,7 +44,8 @@
 			if(c == true){
 				 var id =   $('input[name="gtcl"]').val();
 				  var collid =   $('input[name="gtcll"]').val();
-				location.href='/host/menu/msel/delete?sArray='+sArray+"&id="+id+"&collid="+collid;
+				  var sid =   $('input[name="gtsid"]').val();
+				location.href='/host/menu/msel/delete?sArray='+sArray+"&id="+id+"&collid="+collid+"&sid="+sid;
 			}
 		})
 		
@@ -55,7 +56,8 @@
 	  $('#menuimplbt').click(function(){
 		  var id =   $('input[name="gtcl"]').val();
 		  var collid =   $('input[name="gtcll"]').val();
-			location.href = "/host/menu/menuregister?id="+id+"&collid="+collid;
+		  var sid =   $('input[name="gtsid"]').val();
+			location.href = "/host/menu/menuregister?id="+id+"&collid="+collid+"&sid="+sid;
 		});
 });
 </script>
@@ -76,10 +78,15 @@
 				<input th:id="'gtcll'+${mn.collid}"  type="number" 
                     name="gtcll"  value="gtcll" th:value="${mn.collid}" hidden="hidden">
 				</div>
+				<div > 
+				<input th:id="'gtsid'+${col.sid}"  type="number" 
+                    name="gtsid"  value="gtsid" th:value="${col.sid}" hidden="hidden">
+				</div>
 				<table class="table table-striped">
 					<thead>
                     <tr>
                         <th><input type="checkbox" id="selectall" /></th>
+                        <th>이미지</th>
                         <th>메뉴명</th>
                         <th>가격</th>
                         
@@ -90,6 +97,7 @@
                     <tr th:each="mn: ${mnlist}">
                  		
                       	<td><input type="checkbox" name="selected" th:value="${mn.id}"></td>
+                      	<td><img th:src="@{'/foodject/shop/'+${mn.id}}"></td>
                         <td><a  th:text="${mn.name}" th:href="@{detail(id=${mn.id})}"></a></td>
                         <!-- <img id="pimg" th:src="@{'/img/product_img/'+${cr.img0}}"></a></td> -->
                         
