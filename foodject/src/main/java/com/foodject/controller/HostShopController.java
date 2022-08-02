@@ -104,7 +104,7 @@ public class HostShopController {
 				ut.saveFile(obj.getMf(), savename, "shop");
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			} 
 		}	
 		mv.setViewName("redirect:/host/shop");
 		mv.addObject("center", "/host/shop/center");

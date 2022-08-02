@@ -95,16 +95,25 @@ public class UserShopController {
 	}
 	
 	@RequestMapping("/addOptcart")
-	public String addOptcart(Model m, int sid, int[] option) {
-		System.out.println("Enter java");
-		for (int i : option) {
-			System.out.println(i);
+	public String addOptcart(Model m, int sid, int cartId ,int[] option) {
+		if(cartId == 0) {
+			System.out.println("cartId is null");
+			return "redirect:/shop/main?sid="+sid;
 		}
 		
-//		List<Integer> list = option;
-//		for (Integer optionId : list) {
-//			System.out.println(optionId);
-//		}
+		System.out.println("cartId is "+cartId);
+		
+		if(option == null) {
+			
+			System.out.println("Option is null");
+		
+		}else {
+			System.out.println("Enter java");
+			for (int i : option) {
+				System.out.println(cartId+" to add "+i);
+			}
+			
+		}
 		
 		return "redirect:/shop/main?sid="+sid;
 	}

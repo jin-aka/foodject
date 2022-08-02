@@ -42,7 +42,9 @@
 		
 			
 			if(c == true){
-				location.href='/host/menu/msel/delete?sArray='+sArray;
+				 var id =   $('input[name="gtcl"]').val();
+				  var collid =   $('input[name="gtcll"]').val();
+				location.href='/host/menu/msel/delete?sArray='+sArray+"&id="+id+"&collid="+collid;
 			}
 		})
 		
@@ -52,7 +54,8 @@
 	  
 	  $('#menuimplbt').click(function(){
 		  var id =   $('input[name="gtcl"]').val();
-			location.href = "/host/menu/menuregister?id="+id;
+		  var collid =   $('input[name="gtcll"]').val();
+			location.href = "/host/menu/menuregister?id="+id+"&collid="+collid;
 		});
 });
 </script>
@@ -68,6 +71,10 @@
 				<div > 
 				<input th:id="'gtcl'+${col.id}"  type="number" 
                     name="gtcl"  value="gtcl" th:value="${col.id}" hidden="hidden">
+				</div>
+				<div th:each="mn: ${mnlist}"> 
+				<input th:id="'gtcll'+${mn.collid}"  type="number" 
+                    name="gtcll"  value="gtcll" th:value="${mn.collid}" hidden="hidden">
 				</div>
 				<table class="table table-striped">
 					<thead>

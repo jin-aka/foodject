@@ -4,7 +4,9 @@
   
   $(document).ready(function(){  
 	  $('#implbt').click(function(){
-			location.href = "/host/shop/shopregister";
+		  var id =   $('input[name="gts"]').val();
+		  var sid =   $('input[name="gtc"]').val();
+			location.href = "/host/menu/colregister?id="+id+"&sid="+sid;
 		});
 });
 </script>
@@ -14,7 +16,14 @@
 	<div class="card">
 		<div class="card-body">
 			<h4 class="card-title" th:text="${sh.name}">컬렉션 관리</h4>
-			
+			<div > 
+				<input th:id="'gts'+${sh.id}"  type="number" 
+                    name="gts"  value="gts" th:value="${sh.id}" hidden="hidden" >
+				</div>
+				<div th:each="c: ${clist}"> 
+				<input th:id="'gtc'+${c.sid}"  type="number" 
+                    name="gtc"  value="gtc" th:value="${c.sid}" hidden="hidden">
+				</div>
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
