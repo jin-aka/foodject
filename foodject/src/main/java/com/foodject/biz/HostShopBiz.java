@@ -3,6 +3,7 @@ package com.foodject.biz;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.foodject.frame.Biz;
@@ -15,7 +16,8 @@ public class HostShopBiz implements Biz<Integer, HostShopVO> {
 
 	@Autowired
 	HostShopMapper dao;
-	
+
+
 	@Override
 	public void register(HostShopVO v) throws Exception {
 		dao.insert(v);	
@@ -29,7 +31,7 @@ public class HostShopBiz implements Biz<Integer, HostShopVO> {
 
 	@Override
 	public void remove(Integer k) throws Exception {
-		
+		dao.delete(k);
 	}
 
 	@Override

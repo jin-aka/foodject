@@ -6,12 +6,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.foodject.biz.HostCollectionBiz;
 import com.foodject.biz.HostMenuBiz;
 import com.foodject.biz.HostShopBiz;
@@ -20,9 +14,12 @@ import com.foodject.vo.HostCollectionVO;
 import com.foodject.vo.HostManagerVO;
 import com.foodject.vo.HostMenuVO;
 import com.foodject.vo.HostShopVO;
-import com.foodject.vo.UserCollectionVO;
-import com.foodject.vo.UserMenuVO;
-import com.foodject.vo.UserShopVO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/host/menu")

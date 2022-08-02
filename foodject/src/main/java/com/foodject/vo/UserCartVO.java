@@ -18,8 +18,27 @@ public class UserCartVO {
 	private int mnid;
 	private int num;
 	
+	// For insert
+	public UserCartVO(String uid, int mnid, int num) {
+		this.uid = uid;
+		this.mnid = mnid;
+		this.num = num;
+	}
 	
-	
+	// For updateCnt
+	public UserCartVO(int id, int num) {
+		this.id = id;
+		this.num = num;
+	}
 
+	// For selectForInsert
+	public UserCartVO(String uid, int mnid) {
+		this.uid = uid;
+		this.mnid = mnid;
+	}
+
+	
+	
+	
 	
 }

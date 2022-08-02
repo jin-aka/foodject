@@ -47,7 +47,7 @@
 			});
 		};
 
-		function modifyAjax(){
+		function modifyAjax() {
 			var test = $("#name").val();
 			const ImageInput = $("#logobtn")[0];
 			console.log("mf : ", ImageInput.files);
@@ -64,20 +64,17 @@
 			formData.append("allmin", $("#allmin").val());
 			formData.append("marker", dbdata.marker);
 			formData.append("logo", dbdata.logo);
-			if(latt == '' || logt == ''){
-				
+			if (latt == '' || logt == '') {
+
 				formData.append("latt", dbdata.latt);
 				formData.append("logt", dbdata.logt);
-			}else{
+			} else {
 				formData.append("latt", latt);
 				formData.append("logt", logt);
 			}
-			
-			
-
 			var listVar = $('input[name=status]:checked').val();
 
-			formData.append("status",listVar);
+			formData.append("status", listVar);
 
 			$.ajax({
 				url: '/host/shop/shopModify',
@@ -86,16 +83,16 @@
 				processData: false,
 				contentType: false,
 				success: function (data) {
-					if( data == 1 ){
+					if (data == 1) {
 						alert("변경 사항이 저장되었습니다.");
-						location.reload();	
+						
 					}
-					
+
 				}
 			});
 
 		}
-		function display(){
+		function display() {
 			$("#modalId").text("고유번호 : " + dbdata.id);
 			$("#name").val(dbdata.name);
 			$("#bnum").val(dbdata.bnum);
@@ -117,15 +114,44 @@
 			$("#confirmbtn").hide();
 			$("#concelbtn").hide();
 			$("#logobtn").hide();
-
+			//가게 등록 버튼
 			$('#implbt').click(function () {
 				location.href = "/host/shop/shopregister";
 			});
+			// 모달 실행 버튼
 			$("#ajaxbtn").click(function () {
+
 				$("#modalbtn").click();
 			});
 			$("#addrbtn").click(function () {
 				execDaumPostcode();
+			});
+			//가게 삭제 버튼
+			$("#deletebt").click(function () {
+				if ($("input[name=selected]:checked").val() == "undefined" | $("input[name=selected]:checked").val() == "" | $("input[name=selected]:checked").val() == null) {
+					alert("가게가 선택되지 않았습니다.");
+					return;
+				}
+				var c = confirm('삭제 하시겠습니까?');
+
+				var sArray = [];
+				$("input[name=selected]:checked").each(function (i) {
+					sArray.push($(this).val());
+				});
+				if (c == true) {
+					$.ajax({
+						url: '/host/shop/shopdelete',
+						type: "POST",
+						data: { "sArray": sArray },
+						traditional: true,	// ajax 배열 넘기기 옵션!
+						dataType: "json",
+						success: function (data) {
+							alert("가게 삭제 성공");
+							
+						}
+					});
+					
+				}
 			});
 
 			function execDaumPostcode() {
@@ -192,40 +218,40 @@
 				$("#allmin").prop("readonly", false);
 				$("#status1").attr("onClick", "");
 				$("#status2").attr("onClick", "");
-				
+
 				$("#addrbtn").prop("disabled", false);
-				
+
 				$("#modifybtn").hide();
 				$("#closebtn").hide();
 				$("#confirmbtn").show();
 				$("#concelbtn").show();
 
 
-				
+
 			});
 			// 정보 수정 DB 전송
 			$("#confirmbtn").click(function () {
-				if( $("#name").val() ==""){
+				if ($("#name").val() == "") {
 					alert("상호명을 입력해주세요.")
 					$("#name").focus();
 					return;
 				}
-				if( $("#bnum").val() ==""){
+				if ($("#bnum").val() == "") {
 					alert("사업자 번호를 입력해주세요.")
 					$("#bnum").focus();
 					return;
 				}
-				if( $("#addr").val() == "" ||  $("#addrd").val()  == ""){
+				if ($("#addr").val() == "" || $("#addrd").val() == "") {
 					alert("주소를 입력해주세요.")
 					$("#addrd").focus();
 					return;
 				}
-				if( $("#phon").val() ==""){
+				if ($("#phon").val() == "") {
 					alert("전화번호를 입력해주세요.")
 					$("#phon").focus();
 					return;
 				}
-				if( $("#allmin").val() ==""){
+				if ($("#allmin").val() == "") {
 					alert("최소겨제금액을 입력해주세요.")
 					$("#allmin").focus();
 					return;
@@ -274,7 +300,7 @@
 				if (dbdata.status == 2) {
 					$("#status2").prop('checked', true);
 				}
-				
+
 				$("#logo").show();
 				$("#logobtn").hide();
 
@@ -292,7 +318,7 @@
 				success: function (data) {
 					dbdata = data;
 					display();
-					
+
 					$("#modalbtn").click();
 				}
 			});
@@ -379,15 +405,16 @@
 											</td>
 											<td>
 												<input type="text" class="form-control" id="logo" name="logo" readonly>
-												<div class="form-group" >
+												<div class="form-group">
 													<div class="input-group col-xs-12">
-													  <input type="file" class="form-control file-upload-info" id="logobtn" name="mf" placeholder="Upload Image"
-														accept=".jpg, .jpeg, .png">
-													  <span class="input-group-append">
-														<!-- <button class="file-upload-browse btn btn-primary" id="logobt" type="button">Upload</button> -->
-													  </span>
+														<input type="file" class="form-control file-upload-info"
+															id="logobtn" name="mf" placeholder="Upload Image"
+															accept=".jpg, .jpeg, .png">
+														<span class="input-group-append">
+															<!-- <button class="file-upload-browse btn btn-primary" id="logobt" type="button">Upload</button> -->
+														</span>
 													</div>
-												  </div>
+												</div>
 											</td>
 										</tr>
 										<tr>
@@ -428,8 +455,8 @@
 															<div class="form-check">
 																<label class="form-check-label">
 																	<input type="radio" class="form-check-input"
-																		name="status" id="status1"value="1"
-																		checked onclick="return(false);">
+																		name="status" id="status1" value="1" checked
+																		onclick="return(false);">
 																	정상 영업
 																</label>
 															</div>
@@ -441,7 +468,7 @@
 																<label class="form-check-label">
 																	<input type="radio" class="form-check-input"
 																		name="status" id="status2" value="2"
-																		 onclick="return(false);">
+																		onclick="return(false);">
 																	휴업
 																</label>
 															</div>
@@ -478,10 +505,12 @@
 		<div class="card-body">
 			<h4 class="card-title">가게 목록</h4>
 			<button id="implbt" type="button" class="btn btn-info">가게 등록</button>
+			<button id="deletebt" type="button" class="btn btn-danger">가게 삭제</button>
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							<th style="width: 2px;"></th>
 							<th style="width: 2px;">가게 ID</th>
 							<th style="width: 2px;">로고</th>
 
@@ -494,6 +523,7 @@
 
 					<tbody th:if="${slist != null}">
 						<tr th:each="s:${slist}">
+							<td class="py-1"> <input type="checkbox" th:value="${s.id}" name="selected"> </td>
 							<td class="py-1" th:text="${s.id}"> </td>
 							<td>
 								<img class="logoimg" th:if="${s.logo != null }" th:src="${'/foodject/shop/'+s.logo}"

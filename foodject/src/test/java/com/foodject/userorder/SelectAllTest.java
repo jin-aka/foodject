@@ -1,4 +1,4 @@
-package com.foodject.userOrder;
+package com.foodject.userorder;
 
 import java.util.List;
 

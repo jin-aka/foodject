@@ -1,27 +1,29 @@
-package com.foodject.userOrder;
+package com.foodject.userorder;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.foodject.biz.UserOrdersBiz;
-import com.foodject.vo.UserOrdersVO;
+import com.foodject.vo.UserOrdersMyVO;
 
 @SpringBootTest
-class UpdateTest {
+class SelectTestMy {
 
 	@Autowired
 	UserOrdersBiz biz;
 
 	@Test
 	void contextLoads() {
-		UserOrdersVO vo = new UserOrdersVO(2, "id02", 1, "부산시", "부산동", "010-2222-4444", "nick", "dddd");
+		List<UserOrdersMyVO> vo = null;
 		try {
-			biz.modify(vo);
+			vo = biz.getmy("id01");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(vo);
 	}
 
 }

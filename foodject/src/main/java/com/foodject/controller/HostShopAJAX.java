@@ -9,7 +9,6 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpSession;
 
-
 import com.foodject.biz.HostShopBiz;
 import com.foodject.frame.Util;
 import com.foodject.restapi.NaverORC;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.foodject.biz.HostManagerBiz;
-import com.foodject.restapi.NaverORC;
 
 @RestController
 @RequestMapping("/host/shop")
@@ -35,8 +31,30 @@ public class HostShopAJAX {
 	@Autowired
 	Util ut;
 	
+
+	
+	@RequestMapping("shopdelete")
+	public void shopdelete( int[] sArray  ) {
+		// HostManagerVO manager = (HostManagerVO) session.getAttribute("loginshop");
+		System.out.println("shopdelete start : " + sArray[0]);
+
+		for (int i = 0; i < sArray.length; i++) {
+			System.out.println("sArray : " + sArray[i]);
+		}
+			try {
+				
+				for (int i = 0; i < sArray.length; i++) {
+					sbiz.remove(sArray[i]);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+
+
 	@RequestMapping("shopModify")
-	public Object shopModify( MultipartHttpServletRequest  mfsr,  HostShopVO obj  ) {
+	public void shopModify( MultipartHttpServletRequest  mfsr,  HostShopVO obj  ) {
 		// HostManagerVO manager = (HostManagerVO) session.getAttribute("loginshop");
 		System.out.println("shopModify start : ");
 		MultipartFile mf = null;
@@ -67,7 +85,6 @@ public class HostShopAJAX {
 			e.printStackTrace();
 		}
 		System.out.println("end obj; " + obj);
-		return "1";
 	}
 	@RequestMapping("shopinfo")
 	public Object shopinfo(int  id) {

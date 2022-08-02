@@ -206,14 +206,15 @@ public class UserCustController {
 			list = ordersbiz.getmymenu(oid);
 			System.out.println("getmy Test"+olist);
 			System.out.println("getmymenu Test"+list);
-			m.addAttribute("o",olist);
-			m.addAttribute("m",list);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		m.addAttribute("o",olist);
+		m.addAttribute("m",list);
+		
 		m.addAttribute("center", "/user/cust/myordersde");
-
-		return "redirect:/user/cust/myordersde";
+		return "user/index";
 	}
 	
 	@RequestMapping("/cs")

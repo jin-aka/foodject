@@ -1,4 +1,4 @@
-package com.foodject.userOrder;
+package com.foodject.userorder;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,20 +8,21 @@ import com.foodject.biz.UserOrdersBiz;
 import com.foodject.vo.UserOrdersVO;
 
 @SpringBootTest
-class SelectTest {
+class InsertTest {
 
 	@Autowired
 	UserOrdersBiz biz;
 
 	@Test
 	void contextLoads() {
-		UserOrdersVO vo = null;
+		UserOrdersVO vo = new UserOrdersVO(0, "id02", 1, "서울시", "동동동", "010-2222-4444", "nick", null, "dddd");
+//		vo = biz.register(vo);
 		try {
-			vo = biz.get(1);
+			biz.register(vo);
+			System.out.println(vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(vo);
 	}
 
 }

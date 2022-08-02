@@ -1,21 +1,22 @@
 <script>
 
 function oidajax (oid){
-	alert("ajax btn");
 
 	$.ajax({
 		url: '/cust/myordersde',
 		type: 'get',
 		data: {"oid": oid},
+		async: false,
 		success: function(data){
-			
+			alert("success");
 		},
-		error: function(){
-			alert("oid error!");		
+		error: function(e){
+			alert("oid error!"+e.toString);	
+			alert("oid error!"+e.nativecode);		
 		}
 	});	
-	$('#link'+oid).click();
 	
+	$('#link'+oid).click();
 };
 
 $(document).ready(function(){

@@ -102,9 +102,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </style>
 
 <script>
-/* 주문서에 메뉴,옵션 추가 */
+/* 옵션 장바구니 추가 */
 function addOptcart(mnid){	
-	alert("Start addOptcart")
+	alert("Start addOptcart// mnid="+mnid)
 	$('#'+mnid+'option_form').attr({
 		'method':'post',
 		'action':'/shop/addOptcart'
@@ -112,23 +112,27 @@ function addOptcart(mnid){
 	$('#'+mnid+'option_form').submit();
 	alert("End addOptcart");
 }
-function addCart(uid,mnid,cnt){
+
+/* 메뉴 장바구니 추가 */
+function addCart(uid,mnid,num){
 	$.ajax({
 		url:'/shop/main/addCart',
-		data:{'uid':uid, 'mnid':mnid, 'cnt':cnt},
+		data:{'uid':uid, 'mnid':mnid, 'num':num},
+		async: false,	//동기식으로 처리
 		success:function(data){
-			alert('장바구니에 정상적으로 등록되었습니다')	
+			alert('cartIn:'+data+' 메뉴가 장바구니에 정상적으로 등록되었습니다');
+			$('#'+mnid+'cartId').val(data);
 		}
-	});	
+	});
 };
 
- 
+/* 주문서에 메뉴,옵션 추가 */
 function addOrderSheet(mnid){
 	var uid = $('#uid').val();
-	var cnt = $('#'+mnid+'cnt').val();
-	addCart(uid,mnid,cnt);
-	addOptcart(mnid);
+	var num = $('#'+mnid+'num').val();
 	
+	addCart(uid,mnid,num);
+	addOptcart(mnid);
 	closeModal(mnid);
 }
 
@@ -141,7 +145,7 @@ function openModal(mnid){
 	// When the user clicks the button, open the modal 
 	modal.style.display = "block";
 }
-/* x를 누르면 modal이 닫히도록 함. */ 
+/* x를 누르면 modal이 닫히도록 함. */
 function closeModal(mnid){
 	// var btn = document.getElementById(mname+'_closebtn');
 	var modal = document.getElementById('m'+mnid);
@@ -238,10 +242,11 @@ window.onclick = function(event) {
 					      <h3>[여기에 상품 이미지 넣어야 함]</h3>
 					      <input type="hidden" th:value="${mn.id}" id="mnid">
 					      <input type="hidden" th:value="${session.loginid.id}" id="uid">
-					      <h5>주문 수량 : <input type="number" th:id="${mn.id}+'cnt'" class="number_cnt col-2" value="1" min="1"></h5><br>
+					      <h5>주문 수량 : <input type="number" th:id="${mn.id}+'num'" class="number_num col-2" value="1" min="1"></h5><br>
 					      
 					      <form th:id="${mn.id}+'option_form'">
 					      	<input type="hidden" name="sid" th:value="${sid}">
+					      	<input type="hidden" th:id="${mn.id}+'cartId'" name="cartId" value="100" >
 					      	<h5 th:each="o:${olist}"><input type="checkbox" name="option" th:if="${o.mnid == mn.id}" th:text="' '+${o.name}" th:value="${o.id}"></h5><br>
 					      </form>
 					    </div>
@@ -251,7 +256,7 @@ window.onclick = function(event) {
 					      </div>
 					    </div>
 					  </div>
-                  	</div>		
+                  	</div>
                 </div>
               </div>
             </div>

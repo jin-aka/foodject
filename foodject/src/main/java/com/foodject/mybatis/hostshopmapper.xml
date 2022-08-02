@@ -9,23 +9,23 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE s.id=#{id} and status !=0;
 	</select>
 	<select id="selectmid" parameterType="String" resultType="HostShopVO">
-		select * from shop where mid=#{mid};
+		select * from shop where mid=#{mid} and status !=0;
 	</select>
-	
 	<!-- <insert id="insert" parameterType="HostShopVO" userGeneratedKeys="true" keyProperty="id"> -->
 	<insert id="insertMarker" parameterType="HostShopVO" useGeneratedKeys="true" keyProperty="marker" keyColumn="id">
-		INSERT INTO marker VALUES(id=null, #{latt}, #{logt} );
+		INSERT INTO marker VALUES( id=null, #{latt}, #{logt} );
 	</insert>
 
 	<insert id="insertShop" parameterType="HostShopVO" useGeneratedKeys="true" keyProperty="id" keyColumn="id" >
 		INSERT INTO shop VALUES( id = null, #{mid}, #{name}, #{bnum}, #{addr}, #{addrd}, #{phon}, null, #{info}, SYSDATE(), #{allmin}, #{status}, #{marker});
 	</insert>
 	<update id="update" parameterType="HostShopVO">
-
 		update shop s inner join marker m on s.marker = m.id 
 		set s.name=#{name}, s.bnum=#{bnum}, s.addr=#{addr}, s.addrd=#{addrd}, s.phon=#{phon}, s.logo=#{logo}, s.info=#{info}, s.allmin=#{allmin}, s.status = #{status}, m.latt = #{latt} , m.logt=#{logt}
 		where s.id=#{id};
-
+	</update>
+	<update id="delete" parameterType="int">
+		update shop set status=0 where id=#{id};
 	</update>
 
 </mapper>

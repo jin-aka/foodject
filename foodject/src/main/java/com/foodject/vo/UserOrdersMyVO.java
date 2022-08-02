@@ -15,16 +15,33 @@ import lombok.ToString;
 @ToString
 public class UserOrdersMyVO {
 	
+	//orders
+	private int oid;
 	private String uid;
-	private Date odate;
+	private String addr;
+	private String addrd;
+	private String phon;
+	private String nick;
+	private Date odate;	
+	private int status;
+	private String ask;
+	
+	//orders detail
+	private int deid;
+	private int mid;
+	private String mname;	
+	private int mnum;	
+	private int mprice;	
+	
+	//orders option detail
+	private int opid;
+	private String opname;
+	private int opprice;
+	
+	//shop
 	private String sname;
 	private String slogo;
-	private int mprice;
-	private int status;
-	private String mname;
-	private String oname;
-	private int oprice;
-	private int oid;
+
 
 
 
@@ -43,15 +60,7 @@ public class UserOrdersMyVO {
 		this.oid = oid;
 	}
 
-	//selectmenu
-	public UserOrdersMyVO(String uid, int mprice, String mname, String oname, int oprice, int oid) {
-		this.uid = uid;
-		this.mprice = mprice;
-		this.mname = mname;
-		this.oname = oname;
-		this.oprice = oprice;
-		this.oid = oid;
-	}
+	//selectmenu - allargs
 
 
 	

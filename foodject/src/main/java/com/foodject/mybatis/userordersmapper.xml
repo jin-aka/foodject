@@ -15,11 +15,17 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		JOIN shop s ON o.sid = s.id
 		WHERE o.uid=#{uid}
 	</select>
-	<select id="selectmymenu" parameterType="String" resultType="userordersmyVO">
-		select distinct o.id as oid, de.mname, de.price as mprice, d.oname, d.oprice from orders o
+	<select id="selectmymenu" parameterType="int" resultType="userordersmyVO">
+		select distinct 
+        o.id as oid, o.uid, o.addr, o.addrd, o.phon, o.nick, o.date as odate, o.status, o.ask,
+		de.id as deid, de.mnid as mid, de.mname, de.num as mnum, de.price as mprice,
+		d.opid, d.oname AS opname, d.oprice AS opprice,
+		s.name as sname, s.logo as slogo
+		from orders o
 		join detail de on o.id = de.odid
 		join dopt d on de.id=d.did
-		where o.id=#{oid}
+		JOIN shop s ON o.sid = s.id
+		where o.id=#{oid};
 	</select>
 	<insert id="insert" parameterType="userordersVO">
 		INSERT INTO orders VALUES(#{id}, #{uid}, #{sid}, #{addr}, #{addrd},#{phon}, #{nick}, SYSDATE(), 1, #{ask})
