@@ -516,7 +516,7 @@
 
 							<th id="sss">상호명</th>
 							<th>주문 미수락</th>
-							<th>일매출</th>
+							<th>총 매출</th>
 							<th>영업상태</th>
 						</tr>
 					</thead>
@@ -526,18 +526,15 @@
 							<td class="py-1"> <input type="checkbox" th:value="${s.id}" name="selected"> </td>
 							<td class="py-1" th:text="${s.id}"> </td>
 							<td>
-								<img class="logoimg" th:if="${s.logo != null }" th:src="${'/foodject/shop/'+s.logo}"
-									alt="image" />
-								<img class="logoimg" th:unless="${s.logo != null }" src="/foodject/shop/logo1.jpg"
-									alt="image" />
+									<img class="logoimg" th:if="${s.logo != null }" th:src="${'https://kr.object.ncloudstorage.com/foodject/shop/'+s.logo}" alt="image" />
+									<img class="logoimg" th:unless="${s.logo != null }" src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="image" />
 							</td>
 
 
 							<td><a th:text="${s.name}" th:onclick="ajaxModal([[${s.id}]])">name</a></td>
-							<td>
-
-							</td>
-							<td>$ 177.99</td>
+							<td th:if="${s.ordersstatus == 0}" th:text="${s.ordersstatus}"></td>
+							<td th:unless="${s.ordersstatus == 0}" th:text="${s.ordersstatus}" ><a href="" class="badge badge-danger">매출 확인</a></td>
+							<td th:text="${s.allprice+'원'}">$ 177.99</td>
 
 							<td th:if="${s.status == 1}"><label class="badge badge-success">영업 중</label></td>
 							<td th:unless="${s.status == 1}"><label class="badge badge-danger">영업 중지</label></td>

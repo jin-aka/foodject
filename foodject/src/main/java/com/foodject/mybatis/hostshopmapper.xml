@@ -9,7 +9,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE s.id=#{id} and status !=0;
 	</select>
 	<select id="selectmid" parameterType="String" resultType="HostShopVO">
-		select * from shop where mid=#{mid} and status !=0;
+		select s.id, s.logo, s.name, s.mid,  s.status , count(case when o.status = 2 then 1 end) as ordersstatus ,  sum( case when o.status = 1 then d.num * d.price end )+sum( case when o.status = 1 then dt.oprice end ) as allprice
+		from shop s 
+		left join orders o on s.id = o.sid 
+		left join detail d on o.id = d.odid
+		left join dopt dt on d.id = dt.did
+		group by s.id, o.sid, s.status
+		having s.status != 0 and  s.mid = #{mid};
 	</select>
 	<!-- <insert id="insert" parameterType="HostShopVO" userGeneratedKeys="true" keyProperty="id"> -->
 	<insert id="insertMarker" parameterType="HostShopVO" useGeneratedKeys="true" keyProperty="marker" keyColumn="id">

@@ -2,14 +2,12 @@ package com.foodject.biz;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import com.foodject.frame.Biz;
-
 import com.foodject.mapper.HostShopMapper;
 import com.foodject.vo.HostShopVO;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class HostShopBiz implements Biz<Integer, HostShopVO> {
