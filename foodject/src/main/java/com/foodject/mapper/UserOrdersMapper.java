@@ -20,5 +20,6 @@ public interface UserOrdersMapper {
 	public void updatests(UserOrdersVO obj) throws Exception;
 	public List<UserOrdersMyVO> selectmy(String uid) throws Exception;
 	public List<UserOrdersMyVO> selectmymenu(int oid) throws Exception;
+	public UserOrdersMyVO selectmyinfo(Integer id) throws Exception;
 
 }

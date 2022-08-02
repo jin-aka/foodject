@@ -11,6 +11,7 @@ import com.foodject.frame.Util;
 import com.foodject.restapi.BcrytPassward;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOrdersMyVO;
+import com.foodject.vo.UserOrdersVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -178,16 +179,23 @@ public class UserCustController {
 		}
 		return "redirect:/";
 	}
+	
+	
+	@RequestMapping("/cs")
+	public String cs(Model m) {
+		m.addAttribute("center","/user/cust/cs");
+		return "user/index";
+	}
+	
+	
 
 	@RequestMapping("/myorders")
 	public String myorders(HttpSession session, Model m) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
 		List<UserOrdersMyVO> olist = null;
-		List<UserOrdersMyVO> menu = null;
 		try {
 			olist = ordersbiz.getmy(cust.getId());
 			m.addAttribute("olist",olist);
-			m.addAttribute("menu",menu);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -195,30 +203,20 @@ public class UserCustController {
 		return "user/index";
 	}
 	
-	
 	@RequestMapping("/myordersde")
-	public String myordersde(HttpSession session, int oid, Model m) {
-		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
-		List<UserOrdersMyVO> olist = null;
-		List<UserOrdersMyVO> list = null;
+	public String myordersde(int oid, Model m) {
+		UserOrdersMyVO info = null;
+		List<UserOrdersMyVO> details = null;
 		try {
-			olist = ordersbiz.getmy(cust.getId());
-			list = ordersbiz.getmymenu(oid);
-			System.out.println("getmy Test"+olist);
-			System.out.println("getmymenu Test"+list);
-			m.addAttribute("o",olist);
-			m.addAttribute("m",list);
+			info = ordersbiz.getmyinfo(oid);
+			m.addAttribute("i",info);
+			details = ordersbiz.getmymenu(oid);
+			m.addAttribute("d",details);			
+			System.out.println(details);
 		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		m.addAttribute("center", "/user/cust/myordersde");
-
-		return "redirect:/user/cust/myordersde";
-	}
-	
-	@RequestMapping("/cs")
-	public String cs(Model m) {
-		m.addAttribute("center","/user/cust/cs");
+		}
+		m.addAttribute("center","/user/cust/myordersde");
+		
 		return "user/index";
 	}
 
