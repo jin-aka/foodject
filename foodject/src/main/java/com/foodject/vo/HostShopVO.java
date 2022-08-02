@@ -36,8 +36,25 @@ public class HostShopVO {
 	private MultipartFile bnumcheck;
 	private double latt;
 	private double logt;
+	private int ordersstatus;
+	private int allprice;
+	
 
 	
+
+
+	public HostShopVO(String id, String mid, String name, String logo, int status, int orderstatus, int allprice) {
+		this.id = id;
+		this.mid = mid;
+		this.name = name;
+		this.logo = logo;
+		this.status = status;
+		this.ordersstatus = orderstatus;
+		this.allprice = allprice;
+	}
+
+
+
 
 
 	public HostShopVO(String id, String mid, String name, String bnum, String addr, String addrd, String phon,

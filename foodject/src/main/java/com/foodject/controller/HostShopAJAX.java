@@ -59,9 +59,6 @@ public class HostShopAJAX {
 		System.out.println("shopModify start : ");
 		MultipartFile mf = null;
 		String filename = "";
-
-
-
 		Iterator<String> it = mfsr.getFileNames();
 		while( it.hasNext() ){
 		filename = it.next();

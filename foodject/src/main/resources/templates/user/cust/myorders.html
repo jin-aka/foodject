@@ -1,23 +1,19 @@
 <script>
 
-function oidajax (oid){
+//function myordersde (oid){
 
-	$.ajax({
-		url: '/cust/myordersde',
-		type: 'get',
-		data: {"oid": oid},
-		async: false,
-		success: function(data){
-			alert("success");
-		},
-		error: function(e){
-			alert("oid error!"+e.toString);	
-			alert("oid error!"+e.nativecode);		
-		}
-	});	
-	
-	$('#link'+oid).click();
-};
+//	$('#send'+oid).attr({
+//		'method':'post',
+//		'action':'/cust/oidimpl'
+//	});
+//	$('#send'+oid).submit();	
+
+//	alert(oid);
+//	location.href="/cust/myordersde?oid="+oid;
+// };
+
+
+
 
 $(document).ready(function(){
 
@@ -81,8 +77,9 @@ $(document).ready(function(){
 		                        <div class="col-md-5">
 		                        </div>
 		                        <div class="d-grid gap-3 col-sm-auto">
-		                          <a type="button" style="display: none;" th:onclick="|location.href='@{/cust/myordersde(oid=${o.oid})}'|" class="btn btn-line text-dark" th:id="'link'+${o.oid}">진짜주문상세</a>							
-								  <a type="button" th:id="'a'+${o.oid}"	 th:onclick="oidajax([[${o.oid}]]);" th:value="${o.oid}" class="btn btn-line text-dark" >주문상세</a>
+		                        
+		                         <a th:href="@{myordersde(oid=${o.oid})}"  class="btn btn-line text-dark" >주문상세</a>
+					
 								  
 								</div>
 		                      </form>

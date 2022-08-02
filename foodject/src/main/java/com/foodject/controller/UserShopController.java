@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.foodject.biz.UserCollectionBiz;
 import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptBiz;
+import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserShopBiz;
 import com.foodject.vo.MarkerVO;
 import com.foodject.vo.UserCollectionVO;
 import com.foodject.vo.UserMenuVO;
 import com.foodject.vo.UserOptVO;
+import com.foodject.vo.UserOptcartVO;
 import com.foodject.vo.UserShopVO;
 
 @Controller
@@ -33,6 +35,8 @@ public class UserShopController {
 	@Autowired
 	UserOptBiz obiz;
 	
+	@Autowired
+	UserOptcartBiz ocbiz;
 	
 	public void mainProduct(Model m) {
 //		List<ProductVO> plist = null;
@@ -101,19 +105,15 @@ public class UserShopController {
 			return "redirect:/shop/main?sid="+sid;
 		}
 		
-		System.out.println("cartId is "+cartId);
-		
-		if(option == null) {
-			
-			System.out.println("Option is null");
-		
-		}else {
-			System.out.println("Enter java");
+		System.out.println("Enter java");
+		try {
 			for (int i : option) {
-				System.out.println(cartId+" to add "+i);
+				ocbiz.register(new UserOptcartVO(cartId,i));
 			}
-			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		
 		return "redirect:/shop/main?sid="+sid;
 	}

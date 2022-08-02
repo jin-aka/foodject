@@ -114,10 +114,10 @@ function addOptcart(mnid){
 }
 
 /* 메뉴 장바구니 추가 */
-function addCart(uid,mnid,num){
+function addCart(uid,mnid,num,chk){
 	$.ajax({
 		url:'/shop/main/addCart',
-		data:{'uid':uid, 'mnid':mnid, 'num':num},
+		data:{'uid':uid, 'mnid':mnid, 'num':num, 'chk':chk},
 		async: false,	//동기식으로 처리
 		success:function(data){
 			alert('cartIn:'+data+' 메뉴가 장바구니에 정상적으로 등록되었습니다');
@@ -128,11 +128,15 @@ function addCart(uid,mnid,num){
 
 /* 주문서에 메뉴,옵션 추가 */
 function addOrderSheet(mnid){
+	var chk = $("input:checkbox[name=option]:checked").length
 	var uid = $('#uid').val();
 	var num = $('#'+mnid+'num').val();
+	 
 	
-	addCart(uid,mnid,num);
-	addOptcart(mnid);
+	addCart(uid,mnid,num,chk);
+	if(chk != 0){
+		addOptcart(mnid);
+	}
 	closeModal(mnid);
 }
 
@@ -140,10 +144,16 @@ function addOrderSheet(mnid){
 
 /* modal을 열거나, 옵션이 존재하지 않을 경우 바로 주문서에 추가함. */
 function openModal(mnid){
-	// Get the modal
-	var modal = document.getElementById('m'+mnid);
-	// When the user clicks the button, open the modal 
-	modal.style.display = "block";
+	// if문으로 로그인세션 검사
+	
+	if($('#uid').val() == 0){
+		alert("session is null");
+	}else{
+		// Get the modal
+		var modal = document.getElementById('m'+mnid);
+		// When the user clicks the button, open the modal 
+		modal.style.display = "block";
+	}
 }
 /* x를 누르면 modal이 닫히도록 함. */
 function closeModal(mnid){
@@ -229,7 +239,7 @@ window.onclick = function(event) {
                   <div class="d-grid gap-2"><button th:onclick="openModal([[${mn.id}]]);" class="btn btn-primary">주문</button></div>
                   
                   	<!-- The Modal -->
-					<div th:id="'m'+${mn.id}" class="modal">
+					<div th:if="${session.loginid != null}" th:id="'m'+${mn.id}" class="modal">
 					
 					  <!-- Modal content -->
 					  <div class="modal-content">
@@ -256,6 +266,9 @@ window.onclick = function(event) {
 					      </div>
 					    </div>
 					  </div>
+                  	</div>
+                  	<div th:unless="${session.loginid != null}">
+                  		<input type="hidden" value="0" id="uid">
                   	</div>
                 </div>
               </div>

@@ -40,7 +40,7 @@ public class UserCartBiz implements Biz<Integer, UserCartVO> {
 		return dao.selectall();
 	}
 	
-	public UserCartVO getForInsert(UserCartVO v) throws Exception{
+	public List<UserCartVO> getForInsert(UserCartVO v) throws Exception{
 		return dao.selectForInsert(v);
 	}
 

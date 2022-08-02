@@ -39,20 +39,43 @@ $(document).ready(function(){
                 	<div class="card card-span mb-3 shadow-sm">                	
 	                	<!-- 주문상세 Header -->
 					      <div class="modal-header">
-					        <h4 class="modal-title"><i class="fas fa-list"></i>&nbsp  &nbsp 주문상세</h4>
+					      	<div class="ps-3">
+					          <h4 class="modal-title"><i class="fas fa-list"></i>&nbsp  &nbsp 주문상세</h4>					      	
+					      	</div>
 					      </div>
 					
 					      <!-- 주문상세 body -->
-					      <div class="modal-body">
-					      	<h5>주문상황</h5>
-					        <h2 >가게이름</h2>
-					        <h6> 주문시간</h6>
-					        <h6> 주문번호</h6>
+					      <div class="modal-body">	
+					      	<div class="p-3">			      	
+						      	<h5 th:if = "${i.status = 1}" class="">
+						      	  <span class="text-primary">배달완료</span>
+						      	  <span class="text-warning me-2"><i class="fas fa-check-circle"></i></span>
+						      	</h5>
+						        <h2 th:text="${i.sname}"></h2>
+								<h6 th:text="${'주문일시: '+#dates.format(i.odate,'yyyy년 MM월 dd일 HH시 mm분')}"></h6>
+								<h6 class="pb-2" th:text="${'주문번호: '+i.oid+'번'}"></h6>
+						        
+					      	</div>
+
 					        <div class="pb-3 text-center">
 					        	<button type="button" class="btn btn-line text-dark"><i class="fas fa-home"></i>&nbsp 가게보기</button>
 					        </div>
 					        <div class="card">
 					          <div class="p-3">
+					          
+			          	         <div >
+					             <table  width="100%" cellspacing="0">
+		
+					                 <tbody>
+					                     <tr th:each="d: ${d}">
+					                         <td th:text="${d.mname}">mNAME</td>
+					                         <td th:text="${d.mprice+'원'}">mPRICE</td>
+						                 </tr>
+					                    
+					                 </tbody>
+					             </table>
+					         </div>
+					          	
 					          </div>												
 					        </div>
 					      </div>
