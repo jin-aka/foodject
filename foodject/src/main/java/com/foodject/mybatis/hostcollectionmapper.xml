@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 
 	<insert id="insert" parameterType="hostcollectionVO">
-		INSERT INTO collection VALUES (null, #{name}, #{line})
+		INSERT INTO collection VALUES (NULL, #{name}, #{line}, #{sid})
 	</insert>
 	<delete id="delete" parameterType="Integer">
 		DELETE FROM collection WHERE id=#{id}
@@ -31,10 +31,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE sid=#{sid}
 	</select>
 	<select id="select_byShop" parameterType="Integer" resultType="hostcollectionVO">
-		SELECT DISTINCT c.id, c.name, c.line FROM collection c
-	    INNER JOIN menu mn ON mn.collid=c.id
-	    WHERE mn.sid = #{sid}
-	    ORDER BY c.line;
+		SELECT DISTINCT * FROM collection
+	    WHERE sid = #{sid}
+	    ORDER BY line;
 	</select>
 	
 </mapper>

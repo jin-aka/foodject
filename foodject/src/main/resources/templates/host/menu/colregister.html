@@ -10,18 +10,17 @@
     
 
    
-    $('#mncancel').click(function () {
-    	 var id =   $('input[name="gtcl2"]').val();
-		  var collid =   $('input[name="gtcll2"]').val();
-      location.href = "/host/menu/msel?id="+id+"&collid="+collid;
+    $('#colcancel').click(function () {
+    	 var id =   $('input[name="gts2"]').val();
+		  var sid =   $('input[name="gtc2"]').val();
+      location.href = "/host/menu/col?id="+id+"&sid="+sid;
     });
-    $('#mnsubmit').click(function () {
-      $('#registerform').attr({
-        'enctype': 'multipart/form-data',
+    $('#colsubmit').click(function () {
+      $('#colregisterform').attr({
         'method': 'post',
-        'action': '/host/menu/menuregisterimpl'
+        'action': '/host/menu/colregister/colregisterimpl'
       });
-      $('#registerform').submit();
+      $('#colregisterform').submit();
 
     });
   });
@@ -29,47 +28,40 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <h4 class="card-title" th:text="${col.name} + ' 메뉴 추가'">메뉴 등록</h4>
-      <form class="registerform" id="registerform">
-        <div class="form-group">
+      <h4 class="card-title" th:text="${sh.name}  + ' 컬렉션 추가'">컬렉션 등록</h4>
+       <div class="form-group">
         
-   		     <div > 
-				<input th:id="'gtcl2'+${col.id}"  type="number" 
-                    name="gtcl2"  value="gtcl2" th:value="${col.id}" hidden="hidden">
+   		   <div > 
+				<input th:id="'gts2'+${sh.id}"  type="number" 
+                    name="gts2"  value="gts2" th:value="${sh.id}" hidden="hidden">
 				</div>
-        	<div th:each="mn: ${mnlist}"> 
-				<input th:id="'gtcll2'+${mn.collid}"  type="number" 
-                    name="gtcll2"  value="gtcll2" th:value="${mn.collid}" hidden="hidden">
+				<div th:each="c: ${clist}"> 
+				<input th:id="'gtc2'+${c.sid}"  type="number" 
+                    name="gtc2"  value="gtc2" th:value="${c.sid}" hidden="hidden" >
 				</div>
-          <label>메뉴 이미지</label>
-          <div class="input-group col-xs-12">
-            <input type="file" class="form-control file-upload-info" id="mnimg" placeholder="Upload Image"
-              accept=".jpg, .jpeg, .png">
-            <span class="input-group-append">
-              <!-- <button class="file-upload-browse btn btn-primary" id="bnumbtn" type="button">이미지 선택</button> -->
-            </span>
-          </div>
+        </div>
+      <form class="registerform" id="colregisterform">
+       <div class="form-group"  hidden="hidden">
+          <label for="sid">sid</label>
+          <input type="number" class="form-control" id="sid" name="sid" th:value="${sh.id}"  placeholder="shopID" >
         </div>
         
         
       
         <div class="form-group">
-          <label for="name">메뉴명</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="메뉴명">
+          <label for="name">컬렉션명</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="컬렉션명">
         </div>
        
-        <div class="form-group">
-          <label for="price">가격</label>
-          <input type="number" class="form-control" id="price" name="price" placeholder="메뉴 가격">
-        </div>
+        
          <div class="form-group">
           <label for="line">순서</label>
           <input type="number" class="form-control" id="line" name="line" placeholder="메뉴 순서">
         </div>
        
        
-        <button class="btn btn-primary" id="mnsubmit" type="button">등록</button>
-        <button class="btn btn-light" id="mncancel" type="button">취소</button>
+        <button class="btn btn-primary" id="colsubmit" type="button">등록</button>
+        <button class="btn btn-light" id="colcancel" type="button">취소</button>
       </form>
     </div>
   </div>

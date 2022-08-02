@@ -30,6 +30,14 @@ public class HostCollectionVO {
 		this.id = id;
 		this.name = name;
 	}
+
+
+	public HostCollectionVO(String name, int line, int sid) {
+		super();
+		this.name = name;
+		this.line = line;
+		this.sid = sid;
+	}
 	
 	
 }
