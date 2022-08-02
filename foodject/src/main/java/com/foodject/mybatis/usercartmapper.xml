@@ -36,4 +36,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE uid=#{uid} AND mnid=#{mnid}
 	</select>
 	
+	<select id="select_byUid" parameterType="String" resultType="usercartVO">
+		SELECT * FROM cart
+		WHERE uid=#{uid}
+	</select>
+	
+	
 </mapper>

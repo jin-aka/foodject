@@ -39,6 +39,7 @@
   
 <script>
 $(document).ready(function(){
+
 	$('#cart').click(function(){
  		location.href='/cart';
 	});
@@ -52,6 +53,7 @@ $(document).ready(function(){
   		location.href='/cust/logout';
   	});
 });
+
 </script>
   <body>
 
@@ -72,7 +74,7 @@ $(document).ready(function(){
                 <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
               </div>            
             </form>
-             <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">            
+             <form id="log" class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">            
               <h5 th:if="${session.loginid != null}">
             	 <button class="btn btn-primary text-white" id="cart" type="button">
             	 	<i class="fas fa-hamburger me-2"></i>Food Box
@@ -92,6 +94,7 @@ $(document).ready(function(){
               </h5>
             	              
               <h5 th:unless="${session.loginid == null}">
+                 
             	 <button class="btn btn-danger" id="logoutbt" type="button">
             	 	<i class="fas fa-user me-2"></i>Logout
             	 </button>              	

@@ -43,5 +43,10 @@ public class UserCartBiz implements Biz<Integer, UserCartVO> {
 	public List<UserCartVO> getForInsert(UserCartVO v) throws Exception{
 		return dao.selectForInsert(v);
 	}
+	
+	public List<UserCartVO> get_byUid(String uid) throws Exception {
+		return dao.select_byUid(uid);
+	}
+
 
 }

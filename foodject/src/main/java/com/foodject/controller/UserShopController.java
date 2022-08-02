@@ -2,18 +2,23 @@ package com.foodject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserCollectionBiz;
 import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserShopBiz;
 import com.foodject.vo.MarkerVO;
+import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCollectionVO;
+import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserMenuVO;
 import com.foodject.vo.UserOptVO;
 import com.foodject.vo.UserOptcartVO;
@@ -37,6 +42,9 @@ public class UserShopController {
 	
 	@Autowired
 	UserOptcartBiz ocbiz;
+	
+	@Autowired
+	UserCartBiz crbiz;
 	
 	public void mainProduct(Model m) {
 //		List<ProductVO> plist = null;
@@ -68,11 +76,15 @@ public class UserShopController {
 	}
 	
 	@RequestMapping("/main")
-	public String main(Model m, int sid) {
+	public String main(Model m, int sid, HttpSession session) {
 		List<UserMenuVO> mlist = null;
 		List<UserCollectionVO> clist = null;
 		List<UserOptVO> olist = null;
 		UserShopVO obj = null;
+		List<UserCartVO> crlist= null;
+		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		int row = 0;
+		
 		
 		try {
 			m.addAttribute("sid",sid);
@@ -88,7 +100,15 @@ public class UserShopController {
 			
 			olist = obiz.get_byShop(sid);
 			m.addAttribute("olist",olist);
-			
+			if(cust != null) {
+				String uid = cust.getId();
+				crlist = crbiz.get_byUid(uid);
+				row = crlist.size();
+				System.out.println(row);
+				m.addAttribute("row",row);
+			}else {
+				System.out.println("Login session is null");
+			}
 			m.addAttribute("center","/user/shop/main");
 		} catch (Exception e) {
 			e.printStackTrace();
