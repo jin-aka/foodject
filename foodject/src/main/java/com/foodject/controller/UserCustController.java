@@ -194,7 +194,7 @@ public class UserCustController {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
 		List<UserOrdersMyVO> olist = null;
 		try {
-			olist = ordersbiz.getmy(cust.getId());
+			olist = ordersbiz.getod(cust.getId());
 			m.addAttribute("olist",olist);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -204,21 +204,34 @@ public class UserCustController {
 	}
 	
 	@RequestMapping("/myordersde")
-	public String myordersde(int oid, Model m) {
-		UserOrdersMyVO info = null;
+	public String myordersde(int oid, int deid, Model m) {
+		UserOrdersMyVO odinfo = null;
 		List<UserOrdersMyVO> details = null;
+		List<UserOrdersMyVO> getdeid = null;
+		System.out.println(deid);
+		List<UserOrdersMyVO> getodopt = null;
 		try {
-			info = ordersbiz.getmyinfo(oid);
-			m.addAttribute("i",info);
-			details = ordersbiz.getmymenu(oid);
-			m.addAttribute("d",details);			
-			System.out.println(details);
+			
+			//odinfo 주문기본정보
+			odinfo = ordersbiz.getodinfo(oid);
+			m.addAttribute("i",odinfo);
+			//odde 주문디테일
+			details = ordersbiz.getodde(oid);
+			m.addAttribute("d",details);	
+			//oddeid 주문디테일id 
+			getdeid = ordersbiz.getoddeid(oid);
+			m.addAttribute("deid",getdeid);
+			//odopt 주문디테일옵션
+			getodopt = ordersbiz.getodopt(deid);
+			m.addAttribute("opt",getodopt);
+			
 		} catch (Exception e) {
 		}
 		m.addAttribute("center","/user/cust/myordersde");
 		
 		return "user/index";
 	}
+
 
 
 
