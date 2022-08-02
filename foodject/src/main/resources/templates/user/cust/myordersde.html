@@ -1,6 +1,25 @@
 <script>
 
+
+
+
+
 $(document).ready(function(){
+	
+}
+	$('#"deid"+${id.deid}').keyup(function () {
+		var deid = $(this).val();
+		$.ajax({
+			url: '/cust/myordersde',
+			type: 'get',
+			data: {deid: deid},
+			success: function(data){	
+			},
+			error: function(){	
+				alert("error!");
+			}
+		});	
+
 	//Menu Buttons
 	$('#update').click(function(){
  		location.href='/cust/update';
@@ -11,7 +30,7 @@ $(document).ready(function(){
 	$('#cs').click(function(){
  		location.href='/cust/cs';
 	});	
-	
+
 });
 </script>
 
@@ -36,7 +55,8 @@ $(document).ready(function(){
               <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
                 <h1 class="card-title mt-xl-5 mb-4 text-center">주문내역상세</h1>  
                 	<div class="p-5">
-                	<div class="card card-span mb-3 shadow-sm">                	
+                	<div class="card card-span mb-3 shadow-sm"> 
+                	               	
 	                	<!-- 주문상세 Header -->
 					      <div class="modal-header">
 					      	<div class="ps-3">
@@ -44,38 +64,46 @@ $(document).ready(function(){
 					      	</div>
 					      </div>
 					
-					      <!-- 주문상세 body -->
+					      <!-- 주문상세 정보 -->
 					      <div class="modal-body">	
-					      	<div class="p-3">			      	
-						      	<h5 th:if = "${i.status = 1}" class="">
-						      	  <span class="text-primary">배달완료</span>
-						      	  <span class="text-warning me-2"><i class="fas fa-check-circle"></i></span>
-						      	</h5>
-						        <h2 th:text="${i.sname}"></h2>
+					      	<div class="p-3">	
+	      	
+	      						<!-- 주문정보 odinfo(order info) -->
+						      	<h5 class="text-primary" th:if = "${i.status}  == 1" th:text="배달완료"></h5>
+						      	<h5 class="text-gray" th:if = "${i.status}  == 0" th:text="주문취소"></h5>
+						      	
+						      	<h2 th:text="${i.sname}"></h2>
 								<h6 th:text="${'주문일시: '+#dates.format(i.odate,'yyyy년 MM월 dd일 HH시 mm분')}"></h6>
 								<h6 class="pb-2" th:text="${'주문번호: '+i.oid+'번'}"></h6>
 						        
+						        <!-- 주문디테일 아이디 출력 oddeid(order details id) -->
+						        <div th:each="id:${deid}">
+						          <input type="text" th:id="'deid'+${id.deid}" th:value="${id.deid}"></h1>
+						        </div>
 					      	</div>
-
-					        <div class="pb-3 text-center">
+							<div class="pb-3 text-center">
 					        	<button type="button" class="btn btn-line text-dark"><i class="fas fa-home"></i>&nbsp 가게보기</button>
 					        </div>
+						
+						
+						  <!-- 주문상세 내용  -->
 					        <div class="card">
-					          <div class="p-3">
-					          
-			          	         <div >
+					          <div class="p-3">	
+					          				          
+					      		<!-- 주문디테일 + 옵션 추가 odopt(order details option) -->
+			          	        <div>
 					             <table  width="100%" cellspacing="0">
-		
-					                 <tbody>
-					                     <tr th:each="d: ${d}">
-					                         <td th:text="${d.mname}">mNAME</td>
-					                         <td th:text="${d.mprice+'원'}">mPRICE</td>
-						                 </tr>
-					                    
-					                 </tbody>
+				                   <tbody>
+			                         <tr th:each="d: ${d}">
+		                               <td th:text="${d.mname+'('+d.mnum+'개)'}">mNAME</td>
+		                               <td class="fs-sm--2" style="color:gray;"th:text="${d.opname+'('+d.opprice+'원)'}">optNAME</td>
+		                               <td align="right" th:text="${d.mprice+'원'}">mPRICE</td>
+				                     </tr>
+				                   </tbody>
 					             </table>
-					         </div>
+					         	</div>
 					          	
+					          	  
 					          </div>												
 					        </div>
 					      </div>

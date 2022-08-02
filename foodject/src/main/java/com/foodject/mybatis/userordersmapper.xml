@@ -10,17 +10,17 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectall" resultType="userordersVO">
 		SELECT * FROM orders
 	</select>
-	<select id="selectmy" parameterType="String" resultType="userordersmyVO">
-		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.logo AS slogo FROM orders o
+	<select id="selectod" parameterType="String" resultType="userordersmyVO">
+		SELECT DISTINCT o.id as oid, o.uid, o.status, o.date AS odate, s.name AS sname, s.logo AS slogo FROM orders o
 		JOIN shop s ON o.sid = s.id
-		WHERE o.uid=#{uid}
+		WHERE o.uid=#{uid} ORDER BY o.date DESC
 	</select>
-	<select id="selectmyinfo" parameterType="int" resultType="userordersmyVO">
+	<select id="selectodinfo" parameterType="int" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.logo AS slogo, o.status FROM orders o
 		JOIN shop s ON o.sid = s.id
 		WHERE o.id=#{oid};	
 	</select>
-	<select id="selectmymenu" parameterType="int" resultType="userordersmyVO">
+	<select id="selectodde" parameterType="int" resultType="userordersmyVO">
 		select distinct 
         o.id as oid, o.addr, o.addrd, o.phon, o.nick, o.date as odate, o.status, o.ask,
 		de.id as deid, de.mnid as mid, de.mname, de.num as mnum, de.price as mprice,
@@ -32,6 +32,26 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		JOIN shop s ON o.sid = s.id
 		where o.id=#{oid};
 	</select>
+
+	<select id="selectoddeid" parameterType="int" resultType="userordersmyVO">
+		select distinct 
+		de.id as deid, de.mname, de.num as mnum, de.price as mprice
+		from orders o
+		join detail de on o.id = de.odid
+        join dopt d on de.id=d.did
+		where o.id=#{oid};	
+	</select>
+	
+	<select id="selectodopt" parameterType="int" resultType="userordersmyVO">
+		select distinct 
+		de.id as deid, de.mnid as mid, de.mname, de.price as mprice, de.num as mnum,
+       d.opid, d.oname AS opname, d.oprice AS opprice
+		from orders o
+		join detail de on o.id = de.odid
+		join dopt d on de.id=d.did
+		where de.id=#{deid};
+	</select>
+	
 	<insert id="insert" parameterType="userordersVO">
 		INSERT INTO orders VALUES(#{id}, #{uid}, #{sid}, #{addr}, #{addrd},#{phon}, #{nick}, SYSDATE(), 1, #{ask})
 	</insert>
