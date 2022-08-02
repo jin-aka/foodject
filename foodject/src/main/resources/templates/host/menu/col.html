@@ -35,7 +35,7 @@
 					<tbody th:if="${clist != null}" >
 						<tr  th:each="c:${clist}">
 							
-							<td ><a th:text="${c.name}" th:href="@{msel(collid=${c.id},id=${c.id})}">name</a></td>
+							<td ><a th:text="${c.name}" th:href="@{msel(collid=${c.id},id=${c.id},sid=${sh.id})}">name</a></td>
 							<td>
 								
 							</td>

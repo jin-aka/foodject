@@ -1,25 +1,27 @@
 package com.foodject.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-
-import com.foodject.biz.HostCollectionBiz;
-import com.foodject.biz.HostMenuBiz;
-import com.foodject.biz.HostShopBiz;
-import com.foodject.frame.Util;
-import com.foodject.vo.HostCollectionVO;
-import com.foodject.vo.HostManagerVO;
-import com.foodject.vo.HostMenuVO;
-import com.foodject.vo.HostShopVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.foodject.biz.CateBiz;
+import com.foodject.biz.HostCollectionBiz;
+import com.foodject.biz.HostImgBiz;
+import com.foodject.biz.HostMenuBiz;
+import com.foodject.biz.HostShopBiz;
+import com.foodject.frame.Util;
+import com.foodject.vo.CateVO;
+import com.foodject.vo.HostCollectionVO;
+import com.foodject.vo.HostImgVO;
+import com.foodject.vo.HostManagerVO;
+import com.foodject.vo.HostMenuVO;
+import com.foodject.vo.HostShopVO;
 
 @Controller
 @RequestMapping("/host/menu")
@@ -31,6 +33,15 @@ public class HostMenuController {
 	HostCollectionBiz cbiz;
 	@Autowired
 	HostMenuBiz mbiz;
+	
+	@Autowired
+	HostImgBiz ibiz;
+	
+	@Autowired
+	CateBiz ctbiz;
+	
+	@Autowired
+	Util util;
 	
 	public void mainProduct(Model m) {
 //		List<ProductVO> plist = null;
@@ -111,7 +122,7 @@ public class HostMenuController {
 		return "host/index";
 	}
 	@RequestMapping("/msel/delete")
-	public String delete(Model m, int[] sArray, int id, int collid) {
+	public String delete(Model m, int[] sArray, int id, int collid, int sid) {
 
 		
 		try {
@@ -123,7 +134,7 @@ public class HostMenuController {
 			e.printStackTrace();
 }
 		
-		return "redirect:/host/menu/msel?id="+id+"&collid="+collid;
+		return "redirect:/host/menu/msel?id="+id+"&collid="+collid+"&sid="+sid;
 	}
 	
 	
@@ -136,12 +147,17 @@ public class HostMenuController {
 	public ModelAndView register(ModelAndView mv, int id, int collid) {
 		HostCollectionVO col = null;
 		List<HostMenuVO> mnlist = null;
+		List<CateVO> ctlist = null;
 		try {
 			mnlist = mbiz.getmenu(collid);
 			mv.addObject("mnlist",mnlist);
 			
 			col = cbiz.get(id);
 			mv.addObject("col",col);
+			
+			ctlist = ctbiz.get();
+			mv.addObject("ctlist", ctlist);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -184,19 +200,27 @@ public class HostMenuController {
 		}
 		return "redirect:/host/menu/col?id="+cov.getSid()+"&sid="+cov.getSid();
 	}
-//	@RequestMapping("/menuregisterimpl")
-//	public String addimpl(Model m, HostMenuVO mnv ) {
-//		String imgname = mnv.getMf().getOriginalFilename();
-//		p.setImgname(imgname);
-//		try {
-//			biz.register(p);
-//			Util.saveFile(p.getMf(),admindir,userdir);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return "redirect:select";
-//	}
+	@RequestMapping("register/menuregisterimpl")
+	public String menuregisterimpl(Model m, HostMenuVO mnv) {
+		HostImgVO iv = new HostImgVO();
+		String imgname = mnv.getMf().getOriginalFilename();
+		String[] splitname = imgname.split("[.]");
+		iv.setImg(imgname);
+		try {
+			mbiz.register(mnv);
+			String savename = mnv.getId() + "." + splitname[splitname.length -1];
+			iv.setImg(savename);
+			iv.setOutid(String.valueOf(mnv.getId()));
+			iv.setTable("menu");
+			ibiz.register(iv);
+			System.out.println(iv);
+			util.saveFile(mnv.getMf(), savename, "menu" );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/host/menu/msel?id="+mnv.getCollid()+"&collid="+mnv.getCollid()+"&sid="+mnv.getSid();
+	}
 
 //	@RequestMapping("/menuregisterimpl")
 //	public String addimpl(Model m, HostMenuVO mn ) {

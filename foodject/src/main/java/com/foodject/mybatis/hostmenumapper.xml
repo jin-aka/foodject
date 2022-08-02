@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 <mapper namespace="com.foodject.mapper.HostMenuMapper">
 	
 
-	<insert id="insert" parameterType="hostmenuVO">
+	<insert id="insert" parameterType="hostmenuVO" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		INSERT INTO menu VALUES (null, #{sid} , #{cid} , #{collid} , #{name} , #{price} , #{line} ,SYSDATE())
 	</insert>
 	<delete id="delete" parameterType="Integer">
