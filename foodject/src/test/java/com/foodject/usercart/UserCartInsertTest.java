@@ -15,17 +15,12 @@ class UserCartInsertTest {
 
 	@Test
 	void contextLoads() {
-		UserCartVO obj = new UserCartVO("id01",5);
+		UserCartVO obj = new UserCartVO("id02",1,2);
 		int num = 0;
 		try { 
-			obj = biz.getForInsert(obj);
-			num = obj.getNum();
-			
-			UserCartVO nobj = new UserCartVO(1,num+1);
-			biz.modify(nobj);
-			
-			
-			System.out.println(biz.get(1));
+			biz.register(obj);
+			num = obj.getId();
+			System.out.println(num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -44,4 +44,5 @@ public class UserOptcartBiz implements Biz<Integer, UserOptcartVO> {
 		return dao.selectall();
 	}
 
+
 }

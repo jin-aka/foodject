@@ -7,6 +7,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 	<insert id="insert" parameterType="usercartVO">
 		INSERT INTO cart VALUES (null, #{uid} , #{mnid} , #{num})
+		<selectKey keyColumn="" keyProperty="id" order="AFTER" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
 	
 	<!-- 장바구니는 기본적으로 수정이 안됨. 삭제하고 다시 추가하는 것이 맞다. -->
