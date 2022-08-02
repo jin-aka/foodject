@@ -82,7 +82,6 @@ public class UserCustController {
 	@RequestMapping("/loginimpl")
 	public String loginimpl(Model m, String id, String pwd, HttpSession session, String prevUrl) {
 		UserCustVO cust = null;
-		String redirectTo = "";
 		try {
 			cust = custbiz.get(id);
 			if(cust == null) {
@@ -102,14 +101,14 @@ public class UserCustController {
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			return "redirect:login?msg=f&prevUrl"+prevUrl;
+			return "redirect:/cust/login?msg=f&prevUrl="+prevUrl;
 		}
 		if(prevUrl != null) {
-			redirectTo=prevUrl;
+			return "redirect:"+prevUrl;
 		}else {
-			redirectTo="/";
+			return "redirect:/";
 		}
-		return "redirect:"+redirectTo;
+		
 	}
 	
 	@RequestMapping("/logout")
