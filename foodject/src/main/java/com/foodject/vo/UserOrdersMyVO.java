@@ -43,8 +43,6 @@ public class UserOrdersMyVO {
 	private String slogo;
 
 
-
-
 	//delete
 	public UserOrdersMyVO(String uid, int status) {
 		this.uid = uid;
