@@ -17,6 +17,7 @@ public class UserCartVO {
 	private String uid;
 	private int mnid;
 	private int num;
+	private int sid;
 	
 	// For insert
 	public UserCartVO(String uid, int mnid, int num) {
@@ -35,6 +36,11 @@ public class UserCartVO {
 	public UserCartVO(String uid, int mnid) {
 		this.uid = uid;
 		this.mnid = mnid;
+	}
+
+	public UserCartVO(int id,String uid, int sid) {
+		this.uid = uid;
+		this.sid = sid;
 	}
 
 	

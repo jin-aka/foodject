@@ -25,7 +25,7 @@ public class Util {
 		//String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","custimg").toString();
 		String filePath = "";
 		
-		if (System.getProperty("os.name").toLowerCase().startsWith("win")){
+		if (System.getProperty("os.name").toLowerCase().startsWith("win") && System.getProperty("os.name").toLowerCase().startsWith("mac")){
 			// 파일이 저장 안되시면 user.dir 뒤에 foodject를 지우거나 추가하세요!! 본인 경로에 맞게 설정해야됩니다 꼭 foodject가 아닐수도있어요
             filePath = Paths.get(System.getProperty("user.dir"), "foodject", "src", "main","resources","static","foodject", table ).toString() 
 				+ File.separator + savename;

@@ -1,5 +1,6 @@
 package com.foodject.marker;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class MarkerSelelctAllTests {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println(Paths.get(System.getProperty("user.dir"), "foodject", "src", "main","resources","static","foodject" ).toString() );
 	}
 
 }

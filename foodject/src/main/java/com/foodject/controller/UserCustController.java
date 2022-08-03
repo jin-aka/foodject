@@ -103,7 +103,7 @@ public class UserCustController {
 		} catch (Exception e) {
 			return "redirect:/cust/login?msg=f&prevUrl="+prevUrl;
 		}
-		if(prevUrl != null) {
+		if(prevUrl != null && !(prevUrl.equals("null")) && !(prevUrl.equals(""))) {
 			return "redirect:"+prevUrl;
 		}else {
 			return "redirect:/";
@@ -210,12 +210,12 @@ public class UserCustController {
 	}
 	
 	@RequestMapping("/myordersde")
-	public String myordersde(int oid, int deid, Model m) {
+	public String myordersde(int oid, Model m) {
 		UserOrdersMyVO odinfo = null;
 		List<UserOrdersMyVO> details = null;
 		List<UserOrdersMyVO> getdeid = null;
-		System.out.println(deid);
-		List<UserOrdersMyVO> getodopt = null;
+//		System.out.println(deid);
+//		List<UserOrdersMyVO> getodopt = null;
 		try {
 			
 			//odinfo 주문기본정보
@@ -228,8 +228,8 @@ public class UserCustController {
 			getdeid = ordersbiz.getoddeid(oid);
 			m.addAttribute("deid",getdeid);
 			//odopt 주문디테일옵션
-			getodopt = ordersbiz.getodopt(deid);
-			m.addAttribute("opt",getodopt);
+//			getodopt = ordersbiz.getodopt(deid);
+//			m.addAttribute("opt",getodopt);
 			
 		} catch (Exception e) {
 		}

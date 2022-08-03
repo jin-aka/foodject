@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.foodject.vo.UserCustVO;
 
@@ -29,13 +28,16 @@ public class UserCartController {
 	@RequestMapping("")
 	public String main(Model m, String uid, HttpSession session, String prevUrl) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		boolean error = true;
 		if(cust == null) {
 			return "redirect:/cust/login?prevUrl="+prevUrl;
-		}else {
-		
-		m.addAttribute("center", "user/cart/center" );
-		return "user/index";
+		}else if(cust.getId().equals(uid) == false) {
+			error = false;
+		}else{
+			m.addAttribute("center", "user/cart/center" );
 		}
+		m.addAttribute("uid_error",error);
+		return "user/index";
 	}
 	
 	
