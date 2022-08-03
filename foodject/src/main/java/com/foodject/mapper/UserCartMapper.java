@@ -18,7 +18,7 @@ public interface UserCartMapper {
 	public List<UserCartVO> selectall() throws Exception;
 	
 	public List<UserCartVO> selectForInsert(UserCartVO obj) throws Exception;
-	
+	public List<UserCartVO> select_byUid(String uid) throws Exception;
 
 }
 

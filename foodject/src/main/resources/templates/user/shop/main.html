@@ -102,6 +102,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </style>
 
 <script>
+/* 장바구니로 이동 */
+function goCart(){
+	var uid = $('#uid').val();
+	location.href="/cart?uid="+uid;
+}
+
+
+
 /* 옵션 장바구니 추가 */
 function addOptcart(mnid){	
 	alert("Start addOptcart// mnid="+mnid)
@@ -140,14 +148,23 @@ function addOrderSheet(mnid){
 	closeModal(mnid);
 }
 
-
+/* Login page로 날리기 */
+function goLogin(){
+	alert("로그인이 필요합니다.");
+	$('#url').attr({
+		'method':'post',
+		'action':'/cust/login'
+	});
+	$('#url').submit();
+}
 
 /* modal을 열거나, 옵션이 존재하지 않을 경우 바로 주문서에 추가함. */
+
 function openModal(mnid){
 	// if문으로 로그인세션 검사
-	
 	if($('#uid').val() == 0){
-		alert("session is null");
+		// 로그인 세션 없으면 url 가지고 login 페이지로 날림.
+		goLogin();
 	}else{
 		// Get the modal
 		var modal = document.getElementById('m'+mnid);
@@ -163,6 +180,7 @@ function closeModal(mnid){
 	$('input[name="option"]').each(function(){
 		this.checked=false;
 	});
+	$('#'+mnid+'num').val('1');
 }
 
 /* 모든 모달을 HTMLCollection으로 받아옴. */ 
@@ -181,6 +199,10 @@ window.onclick = function(event) {
 
 }
 
+$(document).ready(function(){
+	var prevUrl = document.location.href;
+	$('input[name="prevUrl"]').val(prevUrl);
+});
 </script>
 <!-- <Modal> begin ==============================-->
 
@@ -200,7 +222,8 @@ window.onclick = function(event) {
               <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
                 <h1 class="card-title mt-xl-5 mb-4" th:text="${shop.name}"> 음식점명 </h1>
                 <p class="fs-1" th:text="${shop.info}">가게 정보</p>
-                <div class="d-grid bottom-0"><a class="btn btn-lg btn-primary mt-xl-6" href="#!">주문하기<i class="fas fa-chevron-right ms-2"></i></a></div>
+                <div class="d-grid bottom-0" th:if="${session.loginid != null}"><a class="btn btn-lg btn-primary mt-xl-6" onclick="goCart();">주문하기<span th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i></a></div>
+                <div class="d-grid bottom-0" th:unless="${session.loginid != null}"><a class="btn btn-lg btn-primary mt-xl-6" onclick="goLogin();">주문하기<i class="fas fa-chevron-right ms-2"></i></a></div>
               </div>
             </div>
           </div>
@@ -270,6 +293,9 @@ window.onclick = function(event) {
                   	<div th:unless="${session.loginid != null}">
                   		<input type="hidden" value="0" id="uid">
                   	</div>
+                  	<form id="url">
+                  		<input type="hidden" name="prevUrl" id="prevUrl">
+                  	</form>
                 </div>
               </div>
             </div>

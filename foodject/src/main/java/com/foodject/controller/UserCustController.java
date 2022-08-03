@@ -5,19 +5,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.foodject.biz.UserCustBiz;
 import com.foodject.biz.UserOrdersBiz;
 import com.foodject.frame.Util;
 import com.foodject.restapi.BcrytPassward;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOrdersMyVO;
-import com.foodject.vo.UserOrdersVO;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -68,18 +67,20 @@ public class UserCustController {
 	
 	
 	@RequestMapping("/login")
-	public String login(Model m, String msg) {
+	public String login(Model m, String msg, String prevUrl) {
 		if(msg != null && msg.equals("f")) {
 			m.addAttribute("msg", "!! 아이디 또는 비밀번호를 확인해주세요");
 		}
 		m.addAttribute("center","user/cust/login");
-
+		if(prevUrl != null) {
+			m.addAttribute("prevUrl",prevUrl);
+		}
 		
 		return "user/index";
 	}
 	
 	@RequestMapping("/loginimpl")
-	public String loginimpl(Model m, String id, String pwd, HttpSession session) {
+	public String loginimpl(Model m, String id, String pwd, HttpSession session, String prevUrl) {
 		UserCustVO cust = null;
 		try {
 			cust = custbiz.get(id);
@@ -100,9 +101,14 @@ public class UserCustController {
 				throw new Exception();
 			}
 		} catch (Exception e) {
-			return "redirect:login?msg=f";
+			return "redirect:/cust/login?msg=f&prevUrl="+prevUrl;
 		}
-		return "redirect:/";
+		if(prevUrl != null) {
+			return "redirect:"+prevUrl;
+		}else {
+			return "redirect:/";
+		}
+		
 	}
 	
 	@RequestMapping("/logout")
