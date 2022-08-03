@@ -29,11 +29,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM menu
 	</select>
 	<select id="selectmenu" parameterType="Integer" resultType="hostmenuVO">
-		SELECT * FROM menu
-		WHERE collid=#{collid}
+	SELECT * FROM menu mn
+		LEFT OUTER JOIN img i ON mn.id=i.outid
+		WHERE mn.collid=#{collid} AND (i.table='menu' OR i.table IS NULL);
 	</select>
-	
-	
+
 	
 	<!-- 가게에 따라 -->
 	<select id="select_byShop" parameterType="Integer" resultType="hostmenuVO">

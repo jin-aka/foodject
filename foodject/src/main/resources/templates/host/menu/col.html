@@ -8,7 +8,13 @@
 		  var sid =   $('input[name="gtc"]').val();
 			location.href = "/host/menu/colregister?id="+id+"&sid="+sid;
 		});
-});
+
+  
+  $('#backbtn1').click(function () {
+   location.href = "/host/menu/setting";
+  });
+  
+  });
 </script>
 
 </head>
@@ -49,7 +55,10 @@
 				</table>
 			</div>
 			<hr><center>
-			<button id="colimplbt" type="button" class="btn btn-info">컬렉션 등록</button></center>
+			<button id="colimplbt" type="button" class="btn btn-info">컬렉션 등록</button>
+			<button id="backbtn1" type="button" class="btn btn-info">뒤로 가기</button>
+			
+			</center>
 		</div>
 	</div>
 </div>

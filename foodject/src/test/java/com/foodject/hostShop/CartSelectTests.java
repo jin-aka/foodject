@@ -1,13 +1,12 @@
 package com.foodject.hostShop;
 
-import java.util.List;
-
-import com.foodject.biz.HostCollectionBiz;
-import com.foodject.vo.HostCollectionVO;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.foodject.biz.HostCollectionBiz;
 
 @SpringBootTest
 class CartSelectTests {
@@ -17,16 +16,8 @@ class CartSelectTests {
 	
 	@Test
 	void contextLoads() {
-		HostCollectionVO co = new HostCollectionVO("음료", 8, 1);
-		try {
-				biz.register(co);
-				System.out.println("register OK");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		System.out.println(Paths.get(System.getProperty("user.dir"), "foodject", "src", "main","resources","static","foodject" ).toString() );
 	}
-
 }
 
 
