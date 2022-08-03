@@ -9508,6 +9508,10 @@ fieldset:disabled .btn {
   color: #2780ED !important;
 }
 
+.text-gray {
+  color: gray !important;
+}
+
 .text-success {
   color: #79B93C !important;
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.foodject.mapper.CateMapper">
+	
+	<select id="select" parameterType="Integer" resultType="CateVO">
+		SELECT * FROM mncate WHERE id=#{id}
+	</select>
+	<select id="selectall" resultType="CateVO">
+		SELECT * FROM mncate
+	</select>
+	<insert id="insert" parameterType="CateVO">
+		INSERT INTO mncate VALUES(null, #{name})
+	</insert>
+	<update id="update" parameterType="CateVO">
+		UPDATE mncate name=#{name} WHERE id=#{id}
+	</update>
+
+
+	
+</mapper>

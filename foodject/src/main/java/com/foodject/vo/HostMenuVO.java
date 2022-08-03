@@ -2,6 +2,8 @@ package com.foodject.vo;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,7 @@ public class HostMenuVO {
 	
 	private String category;
 	private String cname;
-	
+	private MultipartFile mf;
 	
 	
 	
@@ -58,6 +60,15 @@ public class HostMenuVO {
 		super();
 		this.sid = sid;
 		this.cname = cname;
+	}
+
+	public HostMenuVO(int collid, String name, int price, int line, MultipartFile mf) {
+		super();
+		this.collid = collid;
+		this.name = name;
+		this.price = price;
+		this.line = line;
+		this.mf = mf;
 	}
 	
 	

@@ -45,15 +45,23 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersVO> {
 		dao.updatests(v);
 	}
 	
-	public List<UserOrdersMyVO> getmy(String k) throws Exception{
-		return dao.selectmy(k);
+	public List<UserOrdersMyVO> getod(String k) throws Exception{
+		return dao.selectod(k);
 	}
 
-	public List<UserOrdersMyVO> getmymenu(int k) throws Exception{
-		return dao.selectmymenu(k);
+	public List<UserOrdersMyVO> getodde(Integer k) throws Exception{
+		return dao.selectodde(k);
 	}
 	
-	public UserOrdersMyVO getmyinfo(Integer k) throws Exception{
-		return dao.selectmyinfo(k);
+	public UserOrdersMyVO getodinfo(Integer k) throws Exception{
+		return dao.selectodinfo(k);
+	}
+	
+	public List<UserOrdersMyVO> getoddeid(Integer k) throws Exception{
+		return dao.selectoddeid(k);
+	}
+	
+	public List<UserOrdersMyVO> getodopt(Integer k) throws Exception{
+		return dao.selectodopt(k);
 	}
 }
