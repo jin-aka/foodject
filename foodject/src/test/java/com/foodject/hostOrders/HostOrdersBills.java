@@ -1,29 +1,31 @@
-package com.foodject.userorder;
+package com.foodject.hostOrders;
 
 import java.util.List;
+
+import com.foodject.biz.HostOrdersBiz;
+import com.foodject.vo.HostOrdersVO;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.foodject.biz.UserOrdersBiz;
-import com.foodject.vo.UserOrdersMyVO;
-
 @SpringBootTest
-class SelectTestMy {
+class HostOrdersBills {
 
 	@Autowired
-	UserOrdersBiz biz;
+	HostOrdersBiz biz;
 
 	@Test
 	void contextLoads() {
-		List<UserOrdersMyVO> vo = null;
+		System.out.println("dd");
+		List<HostOrdersVO> list = null;
 		try {
-			vo = biz.getmy("id01");
+			list = biz.selectbills(1);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println(vo);
+		System.out.println("list : "+list);
 	}
 
 }

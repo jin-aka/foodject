@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.foodject.mapper.HostOrdersMapper" >
+	<!-- <select id="selectbills" parameterType="String" resultType="HostOrdersVO">
+		select s.id, s.logo, s.name, s.mid,  s.status , count(case when o.status = 2 then 1 end) as ordersstatus ,  sum( case when o.status = 1 then d.num * d.price end )+sum( case when o.status = 1 then dt.oprice end ) as allprice
+		from shop s 
+		left join orders o on s.id = o.sid 
+		left join detail d on o.id = d.odid
+		left join dopt dt on d.id = dt.did
+		group by s.id, o.sid, s.status
+		having s.status != 0 and  s.mid = #{mid};
+	</select> -->
+	<select id="selectbills" parameterType="int" resultType="HostOrdersVO">
+		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.ask, sum( d.num * d.price ) + sum(dt.oprice) as allprice
+		from orders o 
+		left join detail d on o.id = d.odid
+		left join dopt dt on d.id = dt.did
+		group by o.id
+		having o.sid = #{sid};
+	</select>
+
+</mapper>

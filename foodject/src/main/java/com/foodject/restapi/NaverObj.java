@@ -14,8 +14,10 @@ import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
 import com.amazonaws.services.s3.model.ObjectListing;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -46,7 +48,7 @@ public class NaverObj {
 				.withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endPoint, regionName))
 				.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
 				.build();
-
+		
 
 		System.out.println("filePath : " + filePath);
 		// upload local file
@@ -58,7 +60,8 @@ public class NaverObj {
 		// String filePath = userpath+name;
 
 		try {
-			s3.putObject(bucketName, objectName, new File(filePath));
+			// s3.putObject(bucketName, objectName, new File(filePath));
+			s3.putObject(new PutObjectRequest(bucketName, objectName, new File(filePath)).withCannedAcl(CannedAccessControlList.PublicRead));
 			System.out.format("Object %s has been created.\n", objectName);
 		} catch (AmazonS3Exception e) {
 			e.printStackTrace();

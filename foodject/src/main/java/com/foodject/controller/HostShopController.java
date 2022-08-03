@@ -28,6 +28,33 @@ public class HostShopController {
 	@Autowired
 	Util ut;
 	
+	@RequestMapping("bills")
+	public ModelAndView bills(ModelAndView mv, HttpSession session, int id) {
+		System.out.println("bills in : " + id);
+		HostManagerVO manager = null;
+		List<HostShopVO> list = null;
+		if (session.getAttribute("loginshop") == null) {
+			mv.setViewName("redirect:/host");
+			return mv;
+		}
+		manager = (HostManagerVO) session.getAttribute("loginshop");
+		String mid = manager.getId();
+		try {
+			list = biz.getmid(mid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (list.size() != 0) {
+			mv.addObject("slist", list);
+		}
+		System.out.println("slist : " + list);
+		mv.addObject("kakaosrc",kakaoJSKey);
+		mv.setViewName("/host/index");
+		mv.addObject("contents", "/host/shop/bills");
+		mv.addObject("center", "/host/shop/analysis");
+		return mv;
+	}
 	@RequestMapping("billcharts")
 	public ModelAndView billcharts(ModelAndView mv, HttpSession session) {
 
