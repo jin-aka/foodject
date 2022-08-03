@@ -17,6 +17,7 @@ public interface HostShopMapper {
 	public HostShopVO select(int id) throws Exception;
 	public List<HostShopVO> selectall() throws Exception;
 	public List<HostShopVO> selectmid(String obj) throws Exception;
+	
 	public int insertMarker(HostShopVO obj) throws Exception;
 	public int insertShop(HostShopVO obj)throws Exception;
 	
