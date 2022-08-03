@@ -16,6 +16,21 @@
       location.href = "/host/menu/col?id="+id+"&sid="+sid;
     });
     $('#colsubmit').click(function () {
+    	var name = $('#name').val();
+	    var line = $('#line').val();
+    	
+	    if(name == ''){
+	         $('#name').focus();
+	         alert("컬렉션 명을 입력하세요.");
+	         return;      
+	      }
+	      
+	      if(line == ''){
+	         $('#line').focus();
+	         alert("순서 번호를 정해주세요.");
+	         return;
+	      }
+	    
       $('#colregisterform').attr({
         'method': 'post',
         'action': '/host/menu/colregister/colregisterimpl'
