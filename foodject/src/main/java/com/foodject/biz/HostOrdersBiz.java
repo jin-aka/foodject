@@ -44,6 +44,9 @@ public class HostOrdersBiz implements Biz<Integer, HostOrdersVO> {
 	public List<HostOrdersVO> selectbills(Integer k) throws Exception{
 		return dao.selectbills(k);
 	}
+	public List<HostOrdersVO> selectbill(Integer k) throws Exception{
+		return dao.selectbill(k);
+	};
 
 
 }

@@ -44,8 +44,8 @@ $(document).ready(function(){
               <h1 class="card-title mt-xl-5 mb-4 text-center text-primary pt-5">Foodject Member</h1>               
                 <h2 class="card-title mt-xl-5 mb-4 text-center" th:text="${c.nick}+'님'"></h2>        
                 <div class="col text-center pb-6">
-                  <img id="imgviewer" class="img-fluid rounded-3 h-100" th:src="@{'/custimg/'+${c.img}}" alt="..." />
-                
+                  <img id="imgviewer" class="img-fluid rounded-3 h-100" th:src="@{'https://kr.object.ncloudstorage.com/foodject/cust/'+${c.img}}" alt="..." />
+
                 </div>
                 
               </div>
