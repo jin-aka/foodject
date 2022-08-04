@@ -3,18 +3,58 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<style type="text/css">
+		.modal-content {
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			max-height: calc(100vh - 110px);
+			max-width: calc(150vh - 70px);
+			overflow-y: auto;
 
+		}
+	</style>
 	<script>
+		function display(data){
+
+			var arr = new Array();	
+			arr = data;
+			$('#modal_id').text("주문 번호 : "+arr[0].id);
+
+		}
+		function bill( id ){
+			$.ajax({
+				url: '/host/shop/bill',
+				type: "POST",
+				data: { "id": id },
+				success: function (data) {
+
+					display(data);
+
+					$('#open_modal_btn').click();
+				}
+			});	
+		}
+		$(document).ready(function(){
+
+
+		});
+		
 	</script>
 </head>
-
+<div class="container mt-3">
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="open_modal_btn" hidden>
+		Open modal
+	</button>
+</div>
 <div class="modal" id="myModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
 
 			<!-- Modal Header -->
 			<div class="modal-header">
-				<h4 class="modal-title" id="modalId">Modal Heading</h4>
+				<h4 class="modal-title" id="modal_id">Modal Heading</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal">x</button>
 			</div>
 			<!-- Modal body -->
@@ -22,140 +62,54 @@
 				<div class="col-lg-12 grid-margin stretch-card">
 					<div class="card">
 						<div class="card-body">
-							<div class="table-responsive pt-3">
-								<table class="table table-bordered" id="modalTable">
-									<tbody>
-										<tr>
-											<td>
-												상호명
-											</td>
-											<td>
-												<input type="text" class="form-control" id="name" name="name" readonly>
-
-											</td>
-											<td>
-												사업자 번호
-											</td>
-											<td>
-												<input type="text" class="form-control" id="bnum" name="bnum" readonly>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												주소
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<div class="input-group col-xs-12">
-													<input type="text" class="form-control" id="addr" name="addr"
-														readonly="readonly" placeholder="주소">
-													<span class="input-group-append">
-														<button class="file-upload-browse btn btn-primary" id="addrbtn"
-															type="button" disabled>주소 검색</button>
-														<input type="number" hidden id="latt" name="latt">
-														<input type="number" hidden id="logt" name="logt">
-													</span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<input type="text" class="form-control" id="addrd" name="addrd"
-													readonly>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												전화번호
-											</td>
-											<td>
-												<input type="text" class="form-control" id="phon" name="phon" readonly>
-
-											</td>
-											<td>
-												로고
-											</td>
-											<td>
-												<input type="text" class="form-control" id="logo" name="logo" readonly>
-												<div class="form-group">
-													<div class="input-group col-xs-12">
-														<input type="file" class="form-control file-upload-info"
-															id="logobtn" name="mf" placeholder="Upload Image"
-															accept=".jpg, .jpeg, .png">
-														<span class="input-group-append">
-															<!-- <button class="file-upload-browse btn btn-primary" id="logobt" type="button">Upload</button> -->
-														</span>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												가게 정보
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<input type="text" class="form-control" id="info" name="info" readonly>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												최소 결제 금액
-											</td>
-											<td>
-												<input type="text" class="form-control" id="allmin" name="allmin"
-													readonly>
-
-											</td>
-											<td>
-												등록일
-											</td>
-											<td id="date">
-												date
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												가게 운영 상태
-											</td>
-											<!-- (1) 라디오 버튼 -->
-											<div class="col-md-6">
-												<div class="form-group row">
-													<td>
-														<div class="col-sm-4">
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input type="radio" class="form-check-input"
-																		name="status" id="status1" value="1" checked
-																		onclick="return(false);">
-																	정상 영업
-																</label>
-															</div>
-														</div>
-													</td>
-													<td>
-														<div class="col-sm-5">
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input type="radio" class="form-check-input"
-																		name="status" id="status2" value="2"
-																		onclick="return(false);">
-																	휴업
-																</label>
-															</div>
-														</div>
-													</td>
-												</div>
-											</div>
-											<!-- (1) 라디오 버튼 끝 -->
-											</td>
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
+							<h4 class="card-title">구매자 정보</h4>
+                  <p class="card-description">
+                    Add class <code>.table</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Profile</th>
+                          <th>VatNo.</th>
+                          <th>수량</th>
+                          <th>가격</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Jacob</td>
+                          <td>53275531</td>
+                          <td>12 May 2017</td>
+                          <td><label class="badge badge-danger">Pending</label></td>
+                        </tr>
+                        <tr>
+                          <td>Messsy</td>
+                          <td>53275532</td>
+                          <td>15 May 2017</td>
+                          <td><label class="badge badge-warning">In progress</label></td>
+                        </tr>
+                        <tr>
+                          <td>John</td>
+                          <td>53275533</td>
+                          <td>14 May 2017</td>
+                          <td><label class="badge badge-info">Fixed</label></td>
+                        </tr>
+                        <tr>
+                          <td>Peter</td>
+                          <td>53275534</td>
+                          <td>16 May 2017</td>
+                          <td><label class="badge badge-success">Completed</label></td>
+                        </tr>
+                        <tr>
+                          <td>Dave</td>
+                          <td>53275535</td>
+                          <td>20 May 2017</td>
+                          <td><label class="badge badge-warning">In progress</label></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 						</div>
 					</div>
 				</div>
@@ -163,20 +117,48 @@
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-info btn-rounded btn-fw" id="modifybtn">수정</button>
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="closebtn">닫기</button>
+				<!-- <button type="button" class="btn btn-info btn-rounded btn-fw" id="modifybtn">수정</button> -->
 				<button type="button" class="btn btn-success" id="confirmbtn">확인</button>
-				<button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="closebtn">닫기</button>
+				<!-- <button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button> -->
 			</div>
-
 		</div>
 	</div>
 </div>
-<div class="col-lg-6 grid-margin stretch-card">
+<div class="col-lg-12 grid-margin stretch-card">
 	<div class="card">
 		<div class="card-body">
-			<h4 class="card-title">Bar chart</h4>
-				
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th style="width: 2px;"></th>
+							<th style="width: 2px;">주문 번호</th>
+							<th style="width: 2px;">주문 고객</th>
+
+							<th id="sss">주소</th>
+							<th>주문 날짜</th>
+							<th>총 매출</th>
+							<th>주문 상태</th>
+						</tr>
+					</thead>
+					<tbody th:if="${olist != null}" th:each="o:${olist}">
+						<tr>
+							<td class="py-1" rowspan="2"> 
+								<input type="checkbox" th:value="${o.id}" name="selected">
+							</td>
+						</tr>
+						<tr  th:onclick="bill([[${o.id}]])">		
+							<td class="py-1" th:text="${o.id}">id</td>
+							<td class="py-1" th:text="${o.uid}">uid</td>
+							<td class="py-1" th:text="${o.addr +' '+ o.addrd}">addr</td>
+							<td th:text="${#dates.format(o.date, 'yyyy년 MM월 dd일 HH시mm분')}"></td>
+							<td class="py-1" th:text="${o.allprice}">allprice</td>
+							<td class="py-1" th:text="${o.status}">status</td>					
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

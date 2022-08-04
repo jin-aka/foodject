@@ -6,12 +6,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.foodject.biz.HostOrdersBiz;
 import com.foodject.biz.HostShopBiz;
 import com.foodject.frame.Util;
 import com.foodject.restapi.NaverORC;
+import com.foodject.vo.HostOrdersVO;
 import com.foodject.vo.HostShopVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +33,25 @@ public class HostShopAJAX {
 	NaverORC orc;
 	@Autowired
 	Util ut;
+	@Autowired
+	HostOrdersBiz obiz;
 	
 
 	
+	@RequestMapping("bill")
+	public Object bill( int id  ) {
+		
+		System.out.println("bilss : " + id);
+		List<HostOrdersVO> list = null;
+		try {
+			list = obiz.selectbill(id);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		System.out.println("HostOrderVO list : " + list);
+		return list;
+	}
 	@RequestMapping("shopdelete")
 	public void shopdelete( int[] sArray  ) {
 		// HostManagerVO manager = (HostManagerVO) session.getAttribute("loginshop");

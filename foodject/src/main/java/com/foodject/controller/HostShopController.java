@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.foodject.biz.HostOrdersBiz;
 import com.foodject.biz.HostShopBiz;
 import com.foodject.frame.Util;
 import com.foodject.vo.HostManagerVO;
+import com.foodject.vo.HostOrdersVO;
 import com.foodject.vo.HostShopVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,29 +28,28 @@ public class HostShopController {
 	@Autowired
 	HostShopBiz biz;	
 	@Autowired
+	HostOrdersBiz obiz;
+	@Autowired
 	Util ut;
 	
 	@RequestMapping("bills")
 	public ModelAndView bills(ModelAndView mv, HttpSession session, int id) {
 		System.out.println("bills in : " + id);
-		HostManagerVO manager = null;
-		List<HostShopVO> list = null;
+		List<HostOrdersVO> list = null;
 		if (session.getAttribute("loginshop") == null) {
 			mv.setViewName("redirect:/host");
 			return mv;
 		}
-		manager = (HostManagerVO) session.getAttribute("loginshop");
-		String mid = manager.getId();
 		try {
-			list = biz.getmid(mid);
+			list = obiz.selectbills(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		if (list.size() != 0) {
-			mv.addObject("slist", list);
+			mv.addObject("olist", list);
 		}
-		System.out.println("slist : " + list);
+		System.out.println("olist : " + list);
 		mv.addObject("kakaosrc",kakaoJSKey);
 		mv.setViewName("/host/index");
 		mv.addObject("contents", "/host/shop/bills");

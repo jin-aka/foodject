@@ -331,7 +331,6 @@
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="modalbtn" hidden>
 		Open modal
 	</button>
-
 </div>
 
 <!-- The Modal -->
@@ -495,7 +494,6 @@
 				<button type="button" class="btn btn-success" id="confirmbtn">확인</button>
 				<button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button>
 			</div>
-
 		</div>
 	</div>
 </div>
@@ -520,7 +518,6 @@
 							<th>영업상태</th>
 						</tr>
 					</thead>
-
 					<tbody th:if="${slist != null}">
 						<tr th:each="s:${slist}">
 							<td class="py-1"> <input type="checkbox" th:value="${s.id}" name="selected"> </td>
@@ -529,13 +526,10 @@
 									<img class="logoimg" th:if="${s.logo != null }" th:src="${'https://kr.object.ncloudstorage.com/foodject/shop/'+s.logo}" alt="image" />
 									<img class="logoimg" th:unless="${s.logo != null }" src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="image" />
 							</td>
-
-
 							<td><a th:text="${s.name}" th:onclick="ajaxModal([[${s.id}]])">name</a></td>
 							<td th:if="${s.ordersstatus == 0}" th:text="${s.ordersstatus}"></td>
 							<td th:unless="${s.ordersstatus == 0}" th:text="${s.ordersstatus}" ><a href="" class="badge badge-danger">매출 확인</a></td>
 							<td th:text="${s.allprice+'원'}">$ 177.99</td>
-
 							<td th:if="${s.status == 1}"><label class="badge badge-success">영업 중</label></td>
 							<td th:unless="${s.status == 1}"><label class="badge badge-danger">영업 중지</label></td>
 						</tr>

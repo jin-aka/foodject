@@ -17,6 +17,7 @@ public interface HostOrdersMapper {
 	public HostOrdersVO select(int id) throws Exception;
 	public List<HostOrdersVO> selectall() throws Exception;
 	public List<HostOrdersVO> selectbills(int id) throws Exception;
-
+	public List<HostOrdersVO> selectbill(int id) throws Exception;
+	
 	
 }
