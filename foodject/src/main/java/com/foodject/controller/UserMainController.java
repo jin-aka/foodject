@@ -27,13 +27,17 @@ public class UserMainController {
 	public String sample(Model m) {
 		return "user/sample";
 	}
-
+	
 	@RequestMapping("/")
 	public String main(Model m) {
 		m.addAttribute("kakaosrc",kakaoJSKey);
 		return "user/index";
 	}
 	
+	@RequestMapping("/errorpage")
+	public String error(Model m) {
+		return "user/error";
+	}
 	
 
 }
