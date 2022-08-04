@@ -1,3 +1,5 @@
+
+
 <script>
 
 
@@ -55,7 +57,7 @@ $(document).ready(function(){
 					      <!-- 주문상세 정보 -->
 					      <div class="modal-body">	
 					      	<div class="p-3">	
-	      	
+
 	      						<!-- 주문정보 odinfo(order info) -->
 						      	<h5 class="text-primary" th:if = "${i.status}  == 1" th:text="배달완료"></h5>
 						      	<h5 class="text-gray" th:if = "${i.status}  == 0" th:text="주문취소"></h5>
@@ -63,12 +65,7 @@ $(document).ready(function(){
 						      	<h2 th:text="${i.sname}"></h2>
 								<h6 th:text="${'주문일시: '+#dates.format(i.odate,'yyyy년 MM월 dd일 HH시 mm분')}"></h6>
 								<h6 class="pb-2" th:text="${'주문번호: '+i.oid+'번'}"></h6>
-						        
-						        <!-- 주문디테일 아이디 출력 oddeid(order details id)
-						        <div th:each="id:${deid}">
-						          <input type="text" th:id="'deid'+${id.deid}" th:value="${id.deid}"></h1>
-						        </div>
-						         -->
+
 					      	</div>
 							<div class="pb-3 text-center">
 					        	<button type="button" class="btn btn-line text-dark"><i class="fas fa-home"></i>&nbsp 가게보기</button>
@@ -80,26 +77,91 @@ $(document).ready(function(){
 					          <div class="p-3">	
 					          				          
 					      		<!-- 주문디테일 + 옵션 추가 odopt(order details option) -->
-			          	        <div>
-					             <table  width="100%" cellspacing="0">
+			          	        <div class="modal-footer">
+					             <table  th:each="m: ${m}"  width="100%" cellspacing="0">
 				                   <tbody>
-			                         <tr th:each="m: ${m}">
-		                               <td th:text="${m.mname}">mNAME</td>		                               
-		                               <td align="right" th:text="${'기본'+m.mprice+'원'}">mPRICE</td>
+			                         <tr>
+		                               <td><h6 th:text="${m.mname}"></h6></td>	                              
+		                               <td align="right"><h6 th:text="${m.mprice+'W'}"></h6></td>
 				                     </tr>
-
+				                     <tr >
+		                               <td>
+		                               	<ul>
+		                               	  <li>
+		                               	    <p1>기본:&nbsp</p1>
+		                               	    <p1 th:text="${m.mprice+'원'}"></p1>
+		                               	  </li> 
+		                               	  <li>
+		                               	    <p1>추가옵션(가격):&nbsp</p1>
+		                               	    <p1 th:each="opt: ${opt}" th:if="${opt.deid}==${m.deid}" 
+		                               	    th:text="${opt.opname}+'('+${opt.opprice}+'원)&nbsp&nbsp&nbsp&nbsp'"></p1>
+		                               	  </li>
+		                               	</ul>
+		                               </td>                           
+				                     </tr>
+				                     <tr >
+		                               <td><h1></h1></td>                           
+				                     </tr>
 				                   </tbody>
 					             </table>
+					             
 					         	</div>
-					          	
-					          	  
+					         	
+					         	<!-- 주문가격  -->
+								<div class="modal-footer">
+								  <table width="100%" cellspacing="0">
+									  <tbody>
+									    <tr>
+									      <td><h6>총 주문금액</h6>   </td>
+									      <td align="right"><h6>....원</h6>   </td>
+									    </tr>
+									    <tr>
+									      <td><h6>배달팁</h6>   </td>
+									      <td align="right"><h6>3000원</h6>   </td>
+									    </tr>								  
+									  </tbody>
+								  </table>
+					      		</div>
+					      		<div class="modal-footer">
+								  <table width="100%" cellspacing="0">
+									  <tbody>
+									    <tr>
+									      <td><h5>최종결제가격</h5>   </td>
+									      <td align="right"><h5>....원</h5>   </td>
+									    </tr>
+									  </tbody>
+								  </table>
+					      		
+					      		
+					      		</div>
 					          </div>												
 					        </div>
+					        <div class="p-1">
+					        </div>
+					        
+					        
+					        <!-- 배달정보 -->
+					        <div class="card">
+					          <div class="p-4" th:each="d:${d}" >
+					           <h6>배달주소</h6>
+					           <p1 th:text="${d.addr}+' '+${d.addrd}"></p1><hr>					           
+					           <h6>연락처</h6>
+					           <p1 th:text="${d.phon}"></p1><hr>
+					           <h6>요청사항</h6>
+					           <p1 th:text="${d.ask}"></p1>
+							  </div>
+					        </div>
+	
+					        
 					      </div>
 					
-					      <!-- 주문상세 footer -->
+				     	 <!-- 주문내역삭제 footer -->
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-line text-dark" data-bs-dismiss="modal">닫기</button>
+					      </div>
+					      <div class="modal-body">
+					      	<div class="text-center pb-3">
+		  			          <a type="button" class="btn btn-line2 btn-sm text-gray">주문내역삭제</a>					      	
+					      	</div>					      	
 					      </div>
 					</div>
 					</div>

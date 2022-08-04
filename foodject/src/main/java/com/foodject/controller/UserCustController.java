@@ -214,15 +214,13 @@ public class UserCustController {
 	public String myordersde(int oid, Model m) {
 		UserOrdersMyVO odinfo = null;
 		List<UserOrdersMyVO> details = null;
-
 		List<Integer> getdeid = null;
-		int deid = 0;
-//		ArrayList<UserOrdersMyVO> deids = null;
+		
 		ArrayList<UserOrdersMyVO> getodmenu = new ArrayList<UserOrdersMyVO>();	
-		ArrayList<UserOrdersMyVO> getodopt = new ArrayList<UserOrdersMyVO>();	
-
 		UserOrdersMyVO menu = null;
-		UserOrdersMyVO opt = null;
+		
+		ArrayList<UserOrdersMyVO> getodopt = new ArrayList<UserOrdersMyVO>() ;
+		List<UserOrdersMyVO> opt = null;
 		
 		try {			
 			//odinfo 주문기본정보
@@ -231,17 +229,24 @@ public class UserCustController {
 			//odde 주문디테일
 			details = ordersbiz.getodde(oid);
 			m.addAttribute("d",details);
-			
+			System.out.println(details);
+						
 			//oddeid 주문디테일id 
-			getdeid = ordersbiz.getoddeid(oid);		
+			getdeid = ordersbiz.getoddeid(oid);					
+						
 			for (Integer i : getdeid) {
 				// 주문메뉴리스트				
 				menu = ordersbiz.getoddemenu(i);
 				getodmenu.add(menu);
 
-				m.addAttribute("m",getodmenu);
-
+				opt = ordersbiz.getoddeopt(i);
+				getodopt.addAll(opt);
+				System.out.println(getodopt);
+							
 				}
+			m.addAttribute("m",getodmenu);
+			m.addAttribute("opt", getodopt);	
+
 
 			
 		} catch (Exception e) {

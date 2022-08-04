@@ -139,6 +139,10 @@ p {
   margin-top: 0;
   margin-bottom: 1rem;
 }
+p1 {
+  margin-top: 0;
+  font-size: 0.7rem;
+}
 
 abbr[title],
 abbr[data-bs-original-title] {
@@ -3762,6 +3766,11 @@ fieldset:disabled .btn {
 .btn-line {
   color: #4D4C4C;
   border-color: #4D4C4C;
+}
+
+.btn-line2 {
+  color: gray;
+  border-color: gray;
 }
 
 .btn-light {

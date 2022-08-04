@@ -18,43 +18,36 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectodinfo" parameterType="int" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.logo AS slogo, o.status FROM orders o
 		JOIN shop s ON o.sid = s.id
-		WHERE o.id=#{oid};	
+		WHERE o.id=#{oid}	
 	</select>
 	<select id="selectodde" parameterType="int" resultType="userordersmyVO">
 		select distinct 
-        o.id as oid, o.addr, o.addrd, o.phon, o.nick, o.date as odate, o.status, o.ask,
-		de.id as deid, de.mnid as mid, de.mname, de.num as mnum, de.price as mprice,
-		d.opid, d.oname AS opname, d.oprice AS opprice,
-		s.name as sname, s.logo as slogo
-		from orders o
-		join detail de on o.id = de.odid
-		join dopt d on de.id=d.did
-		JOIN shop s ON o.sid = s.id
-		where o.id=#{oid};
+        id as oid, addr, addrd, phon, nick, date as odate, status, ask
+		from orders
+		where id=#{oid}
 	</select>
 
 	<select id="selectoddeid" parameterType="int" resultType="int">
 		select distinct 
 		de.id as deid		from orders o
 		join detail de on o.id = de.odid
-		where o.id=#{oid};	
+		where o.id=#{oid}	
 	</select>
 	
 	<select id="selectoddemenu" parameterType="int" resultType="userordersmyVO">
         select
 		id as deid, mnid as mid, mname, price as mprice, num as mnum
 		from detail
-		where id=#{deid};
+		where id=#{deid}
 	</select>
 	
 	<select id="selectoddeopt" parameterType="int" resultType="userordersmyVO">
-		select
-		de.id as deid,
+       select
+        de.id as deid,
         d.opid, d.oname AS opname, d.oprice AS opprice
-		from orders o
-        join detail de on o.id = de.odid
-		join dopt d on de.id=d.did
-		where de.id=#{deid};
+        from dopt d
+        JOIN detail de on d.did = de.id
+        WHERE d.did=#{deid}        
 	</select>
 		
 	<insert id="insert" parameterType="userordersVO">

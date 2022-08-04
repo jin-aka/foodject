@@ -25,7 +25,7 @@ public interface UserOrdersMapper {
 	public UserOrdersMyVO selectodinfo(Integer id) throws Exception;
 	public List<Integer> selectoddeid(int oid) throws Exception;
 	public UserOrdersMyVO selectoddemenu(int deid) throws Exception;
-	public UserOrdersMyVO selectoddeopt(int deid) throws Exception;
+	public List<UserOrdersMyVO> selectoddeopt(int deid) throws Exception;
 	
 
 }
