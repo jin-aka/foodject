@@ -113,6 +113,7 @@ public class HostMenuController {
 			mnlist = mbiz.getmenu(collid);
 			m.addAttribute("mnlist",mnlist);
 			
+			
 			col = cbiz.get(id);
 			m.addAttribute("col",col);
 			
@@ -225,7 +226,51 @@ public class HostMenuController {
 		}
 		return "redirect:/host/menu/msel?id="+mnv.getCollid()+"&collid="+mnv.getCollid()+"&sid="+mnv.getSid();
 	}
+	@RequestMapping("/msel/deletecol")
+	public String deletecol(int id, int collid, int sid) {
+		try {
+			cbiz.remove(id);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+//			return "/host/menu/msel?id="+id+"&sid="+sid+"&collid="+collid;
+		}
+		return "redirect:/host/menu/col?id="+sid+"&sid="+sid;
+	}
 
+	@RequestMapping("/detail")
+	public ModelAndView detail(ModelAndView mv, int id, int collid, int sid) {
+		HostCollectionVO col = null;
+		List<HostMenuVO> mnlist = null;
+		List<CateVO> ctlist = null;
+		HostMenuVO mnd = null;
+		List<HostCollectionVO> clist = null;
+		try {
+			mnlist = mbiz.getmenu(collid);
+			mv.addObject("mnlist",mnlist);
+			
+			col = cbiz.get(id);
+			mv.addObject("col",col);
+			
+			ctlist = ctbiz.get();
+			mv.addObject("ctlist", ctlist);
+			
+			mnd = mbiz.get(id);
+			mv.addObject("mnd",mnd);
+			
+			clist = cbiz.get_byShop(sid);
+			mv.addObject("clist",clist);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mv.setViewName("/host/index");
+		mv.addObject("center", "/host/menu/detail");
+		return mv;
+	}
 //	@RequestMapping("/menuregisterimpl")
 //	public String addimpl(Model m, HostMenuVO mn ) {
 //		String imgname = p.getMf().getOriginalFilename();

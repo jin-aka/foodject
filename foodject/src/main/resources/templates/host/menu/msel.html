@@ -43,8 +43,8 @@
 			
 			if(c == true){
 				 var id =   $('input[name="gtcl"]').val();
-				  var collid =   $('input[name="gtcll"]').val();
-				  var sid =   $('input[name="gtsid"]').val();
+				 var collid =   $('input[name="gtcll"]').val();
+				 var sid =   $('input[name="gtsid"]').val();
 				location.href='/host/menu/msel/delete?sArray='+sArray+"&id="+id+"&collid="+collid+"&sid="+sid;
 			}
 		})
@@ -64,6 +64,15 @@
 			var sid =   $('input[name="gtsid"]').val();
 			location.href = "/host/menu/col?id="+id+"&sid="+sid;
 		});
+		$('#coldlt').click(function(){
+			var c2 = confirm('컬렉션을 삭제 하시겠습니까?');
+			var id =   $('input[name="gtcl"]').val();
+			var collid =   $('input[name="gtcl"]').val();
+			var sid =   $('input[name="gtsid"]').val();
+			if(c2 == true){
+				location.href="/host/menu/msel/deletecol?id="+id+"&collid="+collid+"&sid="+sid;
+			}
+		})
 		
 });
 </script>
@@ -74,7 +83,7 @@
 		<div class="card-body">
 			<div>
 			<h4 class="card-title" th:text="${col.name}" >메뉴판 관리</h4>
-			<button  id="coldlt" type="button" class="btn btn-info">컬렉션 삭제</button>
+			<button th:if="${mnlist.isEmpty()}" id="coldlt" type="button" class="btn btn-info">컬렉션 삭제</button>
 			
 			</div>
 			<div class="table-responsive">
@@ -109,7 +118,7 @@
 						th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
 						<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
 						src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" /></td>
-                        <td><a  th:text="${mn.name}" th:href="@{detail(id=${mn.id})}"></a></td>
+                        <td><a  th:text="${mn.name}" th:href="@{detail(id=${mn.id},collid=${mn.collid},sid=${mn.sid})}"></a></td>
                         <!-- <img id="pimg" th:src="@{'/img/product_img/'+${cr.img0}}"></a></td> -->
                         
                         <td th:text="${mn.price}"></td>
