@@ -1,5 +1,6 @@
 package com.foodject.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.foodject.vo.UserOrdersMyVO;
@@ -18,10 +19,13 @@ public interface UserOrdersMapper {
 	public UserOrdersVO select(Integer id) throws Exception;
 	public List<UserOrdersVO> selectall() throws Exception;
 	public void updatests(UserOrdersVO obj) throws Exception;
+	
 	public List<UserOrdersMyVO> selectod(String uid) throws Exception;
 	public List<UserOrdersMyVO> selectodde(int oid) throws Exception;
 	public UserOrdersMyVO selectodinfo(Integer id) throws Exception;
-	public List<UserOrdersMyVO> selectoddeid(int oid) throws Exception;
-	public List<UserOrdersMyVO> selectodopt(int deid) throws Exception;
+	public List<Integer> selectoddeid(int oid) throws Exception;
+	public UserOrdersMyVO selectoddemenu(int deid) throws Exception;
+	public UserOrdersMyVO selectoddeopt(int deid) throws Exception;
+	
 
 }

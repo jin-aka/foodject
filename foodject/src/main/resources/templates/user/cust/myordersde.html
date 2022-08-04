@@ -5,20 +5,8 @@
 
 
 $(document).ready(function(){
-	
-}
-	$('#"deid"+${id.deid}').keyup(function () {
-		var deid = $(this).val();
-		$.ajax({
-			url: '/cust/myordersde',
-			type: 'get',
-			data: {deid: deid},
-			success: function(data){	
-			},
-			error: function(){	
-				alert("error!");
-			}
-		});	
+
+
 
 	//Menu Buttons
 	$('#update').click(function(){
@@ -76,10 +64,11 @@ $(document).ready(function(){
 								<h6 th:text="${'주문일시: '+#dates.format(i.odate,'yyyy년 MM월 dd일 HH시 mm분')}"></h6>
 								<h6 class="pb-2" th:text="${'주문번호: '+i.oid+'번'}"></h6>
 						        
-						        <!-- 주문디테일 아이디 출력 oddeid(order details id) -->
+						        <!-- 주문디테일 아이디 출력 oddeid(order details id)
 						        <div th:each="id:${deid}">
 						          <input type="text" th:id="'deid'+${id.deid}" th:value="${id.deid}"></h1>
 						        </div>
+						         -->
 					      	</div>
 							<div class="pb-3 text-center">
 					        	<button type="button" class="btn btn-line text-dark"><i class="fas fa-home"></i>&nbsp 가게보기</button>
@@ -94,11 +83,11 @@ $(document).ready(function(){
 			          	        <div>
 					             <table  width="100%" cellspacing="0">
 				                   <tbody>
-			                         <tr th:each="d: ${d}">
-		                               <td th:text="${d.mname+'('+d.mnum+'개)'}">mNAME</td>
-		                               <td class="fs-sm--2" style="color:gray;"th:text="${d.opname+'('+d.opprice+'원)'}">optNAME</td>
-		                               <td align="right" th:text="${d.mprice+'원'}">mPRICE</td>
+			                         <tr th:each="m: ${m}">
+		                               <td th:text="${m.mname}">mNAME</td>		                               
+		                               <td align="right" th:text="${'기본'+m.mprice+'원'}">mPRICE</td>
 				                     </tr>
+
 				                   </tbody>
 					             </table>
 					         	</div>
