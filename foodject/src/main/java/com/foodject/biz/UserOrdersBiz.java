@@ -66,7 +66,7 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersVO> {
 		return dao.selectoddemenu(k);
 	}
 	
-	public UserOrdersMyVO getoddeopt(Integer k) throws Exception{
+	public List<UserOrdersMyVO> getoddeopt(Integer k) throws Exception{
 		return dao.selectoddeopt(k);
 	}
 }
