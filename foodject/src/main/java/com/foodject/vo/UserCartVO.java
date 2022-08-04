@@ -19,6 +19,8 @@ public class UserCartVO {
 	private int num;
 	private int sid;
 	
+	private int name;
+	
 	// For insert
 	public UserCartVO(String uid, int mnid, int num) {
 		this.uid = uid;
