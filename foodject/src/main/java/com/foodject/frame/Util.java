@@ -27,6 +27,7 @@ public class Util {
 		//이미지 경로설정
 		//String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","custimg").toString();
 		String filePath = "";
+
 	
 		filePath = userDir + File.separator + table + File.separator + savename;
 		

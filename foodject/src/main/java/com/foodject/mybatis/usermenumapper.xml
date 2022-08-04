@@ -31,7 +31,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<!-- 가게에 따라 -->
 	<select id="select_byShop" parameterType="Integer" resultType="usermenuVO">
-		SELECT * FROM menu 
-		WHERE sid=#{sid}
+		SELECT * FROM menu mn
+		LEFT OUTER JOIN img i ON mn.id=i.outid
+		WHERE mn.sid=#{sid} AND (i.table='menu' OR i.table IS NULL);
 	</select>
 </mapper>

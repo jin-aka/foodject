@@ -104,7 +104,7 @@ public class UserCustController {
 		} catch (Exception e) {
 			return "redirect:/cust/login?msg=f&prevUrl="+prevUrl;
 		}
-		if(prevUrl != null) {
+		if(prevUrl != null && !(prevUrl.equals("null")) && !(prevUrl.equals(""))) {
 			return "redirect:"+prevUrl;
 		}else {
 			return "redirect:/";
@@ -214,6 +214,7 @@ public class UserCustController {
 	public String myordersde(int oid, Model m) {
 		UserOrdersMyVO odinfo = null;
 		List<UserOrdersMyVO> details = null;
+
 		List<Integer> getdeid = null;
 		int deid = 0;
 //		ArrayList<UserOrdersMyVO> deids = null;
@@ -241,6 +242,7 @@ public class UserCustController {
 				m.addAttribute("m",getodmenu);
 
 				}
+
 			
 		} catch (Exception e) {
 		}

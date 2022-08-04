@@ -40,8 +40,17 @@
 <script>
 $(document).ready(function(){
 
+	var prevUrl = document.location.href;
+	$('#prevUrl_index').val(prevUrl);
+	
 	$('#cart').click(function(){
- 		location.href='/cart';
+		var uid = $('#uid_index').val();
+		location.href="/cart?uid="+uid;
+		$('#index_form').attr({
+			'method':'post',
+			'action':'/cart'
+		});
+		$('#index_from').submit();
 	});
   	$('#mypagebt').click(function(){
       	location.href='/cust';
@@ -60,6 +69,7 @@ $(document).ready(function(){
     <!-- ===============================================-->
     <!--    Main Content-->
     <!-- ===============================================-->
+    
     <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" data-navbar-on-scroll="data-navbar-on-scroll">
         <div class="container"><a class="navbar-brand d-inline-flex" href="/"><img  class="d-inline-block" src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" alt="logo" /><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">Foodject</span></a>
@@ -74,7 +84,7 @@ $(document).ready(function(){
                 <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search Food" aria-label="Search" />
               </div>            
             </form>
-             <form id="log" class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">            
+             <form id="index_form" class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">            
               <h5 th:if="${session.loginid != null}">
             	 <button class="btn btn-primary text-white" id="cart" type="button">
             	 	<i class="fas fa-hamburger me-2"></i>Food Box
@@ -94,11 +104,14 @@ $(document).ready(function(){
               </h5>
             	              
               <h5 th:unless="${session.loginid == null}">
-                 
+                 <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">
             	 <button class="btn btn-danger" id="logoutbt" type="button">
             	 	<i class="fas fa-user me-2"></i>Logout
             	 </button>              	
               </h5>
+              
+              <input type="hidden" id="prevUrl_index" name="prevUrl">
+
             </form>
           </div>
         </div>

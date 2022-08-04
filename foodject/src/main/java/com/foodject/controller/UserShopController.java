@@ -102,7 +102,7 @@ public class UserShopController {
 			m.addAttribute("olist",olist);
 			if(cust != null) {
 				String uid = cust.getId();
-				crlist = crbiz.get_byUid(uid);
+				crlist = crbiz.get_byUid(new UserCartVO(0,uid,sid));
 				row = crlist.size();
 				System.out.println(row);
 				m.addAttribute("row",row);

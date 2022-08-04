@@ -25,6 +25,7 @@ public class UserMenuVO {
 	private Date date;
 	
 	private String category;
+	private String img;
 	
 	
 	
