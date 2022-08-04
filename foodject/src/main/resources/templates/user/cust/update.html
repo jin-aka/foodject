@@ -219,7 +219,7 @@ $(document).ready(function(){
                         
                         <label for="img">프로필 사진:</label>
                         <div class="pb-3 text-center">
-                          <img class="shadow-transition" id="imgviewer" th:src="@{'/foodject/cust/'+${c.img}}"> 
+                          <img class="shadow-transition" id="imgviewer" th:src="@{'https://kr.object.ncloudstorage.com/foodject/cust/'+${c.img}}"> 
                         </div>
                         <div class="input-group">
                           <input class="form-control input-box form-foodwagon-control"

@@ -13,12 +13,20 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		having s.status != 0 and  s.mid = #{mid};
 	</select> -->
 	<select id="selectbills" parameterType="int" resultType="HostOrdersVO">
-		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.ask, sum( d.num * d.price ) + sum(dt.oprice) as allprice
+		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.ask,o.status, sum( d.num * d.price ) + sum(dt.oprice) as allprice
 		from orders o 
 		left join detail d on o.id = d.odid
 		left join dopt dt on d.id = dt.did
 		group by o.id
 		having o.sid = #{sid};
 	</select>
-
+	<select id="selectbill" parameterType="int" resultType="HostOrdersVO">
+		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask
+		, d.id as detail_id, d.odid as detail_odid, d.mnid as detail_mnid, d.mname as detail_mname, d.num as detail_num, d.price as detail_price
+		, dt.did as dopt_did, dt.opid as dopt_opid, dt.oname as dopt_oname, dt.oprice as dopt_oprice
+		from orders o 
+		left join detail d on o.id = d.odid
+		left join dopt dt on d.id = dt.did
+		where d.odid = #{id};
+	</select>
 </mapper>

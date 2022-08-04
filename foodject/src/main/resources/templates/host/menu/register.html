@@ -17,6 +17,43 @@
       location.href = "/host/menu/msel?id="+id+"&collid="+collid+"&sid="+sid;
     });
     $('#mnsubmit').click(function () {
+    	var mnimg = $('#mnimg').val();
+	    var name = $('#name').val();
+	    var price = $('#price').val();
+	    var line = $('#line').val();
+	    var cid = $('#cid').val();
+    	
+	    if(mnimg == ''){
+	         $('#mnimg').focus();
+	         alert("등록할 이미지를 선택하세요.");
+	         return;      
+	      }
+	      
+	      if(name == ''){
+	         $('#name').focus();
+	         alert("메뉴명을 입력하세요.");
+	         return;
+	      }
+	      if(price == ''){
+		         $('#price').focus();
+		         alert("가격을 입력하세요.");
+		         return;      
+		      }
+		      
+		      if(line == ''){
+		         $('#line').focus();
+		         alert("순서 번호를 정해주세요.");
+		         return;
+		      }
+		      if(cid == ''){
+			         $('#cid').focus();
+			         alert("카테고리를 정해주세요.");
+			         return;      
+			      }
+			      
+			    
+    	
+    	
       $('#registerform').attr({
         'enctype': 'multipart/form-data',
         'method': 'post',
@@ -74,7 +111,7 @@
         </div>
          <div class="form-group">
           <label for="cid">카테고리</label>
-          <select name="cid" class="form-control form-control-item" >
+          <select name="cid" class="form-control form-control-item" id="cid">
                 	<option th:each="ct:${ctlist}" 
                 	th:value="${ct.id}" 
                 	th:text="${ct.name}">

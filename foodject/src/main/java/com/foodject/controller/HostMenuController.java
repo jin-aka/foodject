@@ -107,6 +107,7 @@ public class HostMenuController {
 	public String menu(Model m, int collid, int id) {
 		List<HostMenuVO> mnlist = null;
 		HostCollectionVO col = null;
+		HostMenuVO mno = null;
 		try {
 			
 			mnlist = mbiz.getmenu(collid);
@@ -114,6 +115,9 @@ public class HostMenuController {
 			
 			col = cbiz.get(id);
 			m.addAttribute("col",col);
+			
+			mno = mbiz.get(collid);
+			m.addAttribute("mno",mno);
 			
 			m.addAttribute("center","/host/menu/msel");
 		} catch (Exception e) {

@@ -28,6 +28,7 @@ public class HostMenuVO {
 	
 	private String category;
 	private String cname;
+	private String img;
 	private MultipartFile mf;
 	
 	

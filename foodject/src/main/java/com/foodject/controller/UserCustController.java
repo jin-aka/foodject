@@ -1,6 +1,7 @@
 package com.foodject.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -213,23 +214,35 @@ public class UserCustController {
 	public String myordersde(int oid, Model m) {
 		UserOrdersMyVO odinfo = null;
 		List<UserOrdersMyVO> details = null;
-		List<UserOrdersMyVO> getdeid = null;
-//		System.out.println(deid);
-//		List<UserOrdersMyVO> getodopt = null;
-		try {
-			
+
+		List<Integer> getdeid = null;
+		int deid = 0;
+//		ArrayList<UserOrdersMyVO> deids = null;
+		ArrayList<UserOrdersMyVO> getodmenu = new ArrayList<UserOrdersMyVO>();	
+		ArrayList<UserOrdersMyVO> getodopt = new ArrayList<UserOrdersMyVO>();	
+
+		UserOrdersMyVO menu = null;
+		UserOrdersMyVO opt = null;
+		
+		try {			
 			//odinfo 주문기본정보
 			odinfo = ordersbiz.getodinfo(oid);
 			m.addAttribute("i",odinfo);
 			//odde 주문디테일
 			details = ordersbiz.getodde(oid);
-			m.addAttribute("d",details);	
+			m.addAttribute("d",details);
+			
 			//oddeid 주문디테일id 
-			getdeid = ordersbiz.getoddeid(oid);
-			m.addAttribute("deid",getdeid);
-			//odopt 주문디테일옵션
-//			getodopt = ordersbiz.getodopt(deid);
-//			m.addAttribute("opt",getodopt);
+			getdeid = ordersbiz.getoddeid(oid);		
+			for (Integer i : getdeid) {
+				// 주문메뉴리스트				
+				menu = ordersbiz.getoddemenu(i);
+				getodmenu.add(menu);
+
+				m.addAttribute("m",getodmenu);
+
+				}
+
 			
 		} catch (Exception e) {
 		}
