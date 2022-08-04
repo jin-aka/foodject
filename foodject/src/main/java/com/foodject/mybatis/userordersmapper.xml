@@ -33,25 +33,30 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		where o.id=#{oid};
 	</select>
 
-	<select id="selectoddeid" parameterType="int" resultType="userordersmyVO">
+	<select id="selectoddeid" parameterType="int" resultType="int">
 		select distinct 
-		de.id as deid, de.mname, de.num as mnum, de.price as mprice
-		from orders o
+		de.id as deid		from orders o
 		join detail de on o.id = de.odid
-        join dopt d on de.id=d.did
 		where o.id=#{oid};	
 	</select>
 	
-	<select id="selectodopt" parameterType="int" resultType="userordersmyVO">
-		select distinct 
-		de.id as deid, de.mnid as mid, de.mname, de.price as mprice, de.num as mnum,
-       d.opid, d.oname AS opname, d.oprice AS opprice
+	<select id="selectoddemenu" parameterType="int" resultType="userordersmyVO">
+        select
+		id as deid, mnid as mid, mname, price as mprice, num as mnum
+		from detail
+		where id=#{deid};
+	</select>
+	
+	<select id="selectoddeopt" parameterType="int" resultType="userordersmyVO">
+		select
+		de.id as deid,
+        d.opid, d.oname AS opname, d.oprice AS opprice
 		from orders o
-		join detail de on o.id = de.odid
+        join detail de on o.id = de.odid
 		join dopt d on de.id=d.did
 		where de.id=#{deid};
 	</select>
-	
+		
 	<insert id="insert" parameterType="userordersVO">
 		INSERT INTO orders VALUES(#{id}, #{uid}, #{sid}, #{addr}, #{addrd},#{phon}, #{nick}, SYSDATE(), 1, #{ask})
 	</insert>
