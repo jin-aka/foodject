@@ -1,0 +1,97 @@
+<script type="text/javascript"
+  th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
+<script>
+$(document).ready(function () {
+	$('#mndcancel').click(function () {
+		var id =   $('input[name="collid"]').val();
+		var collid =   $('input[name="collid"]').val();
+		var sid =   $('input[name="sid"]').val();
+	  location.href = "/host/menu/msel?id="+id+"&collid="+collid+"&sid="+sid;
+	});
+});
+
+ 
+</script>
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title" th:text="${mnd.name} + ' 상세'">메뉴 등록</h4>
+      <form class="registerform" id="registerform">
+        
+        <div class="form-group" >
+        <img class="img-fluid rounded-3 h-100" th:if="${mnd.img != null }" 
+						th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mnd.img}" alt="error1" />
+						<img class="img-fluid rounded-3 h-100" th:unless="${mnd.img != null }" 
+						src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+      </div>
+        <div class="form-group">
+          <label for="name">메뉴명</label>
+          <input type="text" class="form-control" id="name" name="name" placeholder="메뉴명" th:value="${mnd.name}">
+        </div>
+       
+        <div class="form-group">
+          <label for="price">가격</label>
+          <input type="number" class="form-control" id="price" name="price" placeholder="메뉴 가격"  th:value="${mnd.price}">
+        </div>
+         <div class="form-group">
+          <label for="line">순서</label>
+          <input type="number" class="form-control" id="line" name="line" placeholder="메뉴 순서"  th:value="${mnd.line}">
+        </div>
+         <div class="form-group">
+          <label for="cid">카테고리</label>
+          <select name="cid" class="form-control form-control-item" id="cid">
+                	<option th:each="ct:${ctlist}" 
+                	th:value="${ct.id}" 
+                	th:text="${ct.name}"
+                	th:selected="${mnd.cid} == ${ct.id}">
+                	</option>
+                </select>
+        </div>
+        <div class="form-group">
+        <label for="collid">컬렉션</label>
+                <select name="collid" class="form-control form-control-item" >
+                	<option th:each="co:${clist}" 
+                	th:if="${co.sid == mnd.sid}" 
+                	th:value="${co.id}" 
+                	th:text="${co.name}"
+                	th:selected="${mnd.collid} == ${co.id}">
+                	</option>
+                	       		
+               </select>
+            </div>
+       
+          <div class="form-group">
+           <label>이미지 수정</label>
+            <input type="file" class="form-control file-upload-info" id="mndimg" name="mf" placeholder="Upload Image"
+              accept=".jpg, .jpeg, .png">
+            <span class="input-group-append">
+              <!-- <button class="file-upload-browse btn btn-primary" id="bnumbtn" type="button">이미지 선택</button> -->
+            </span>
+          </div>
+          <div > 
+				<input type="number" 
+                    name="id"  value="id" th:value="${mnd.id}" hidden="hidden">
+				</div>
+			<div > 
+				<input type="number" 
+                    name="collid"  value="collid" th:value="${mnd.collid}" hidden="hidden">
+				</div>	
+				
+        	<div > 
+				<input  type="number" 
+                    name="sid"  value="sid" th:value="${mnd.sid}" hidden="hidden">
+				</div>
+          
+        
+     <!--   <div class="form-group" hidden="hidden">
+          <label for="collid">컬렉션 ID</label>
+          <input type="number" class="form-control" id="collid" name="collid" th:value="${col.id}" placeholder="COLLECTION ID">
+        </div> -->
+        <button class="btn btn-primary" id="mnudt" type="button">수정</button>
+        <button class="btn btn-light" id="mndcancel" type="button">취소</button>
+      </form>
+      
+      
+    </div>
+  </div>
+</div>

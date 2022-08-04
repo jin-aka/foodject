@@ -22,8 +22,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="select" parameterType="Integer" resultType="hostmenuVO">
-		SELECT * FROM menu
-		WHERE id=#{id}
+		SELECT * FROM menu mn
+		LEFT OUTER JOIN img i ON mn.id=i.outid
+		WHERE mn.id=#{id} AND (i.table='menu' OR i.table IS NULL);
 	</select>
 	<select id="selectall" resultType="hostmenuVO">
 		SELECT * FROM menu
