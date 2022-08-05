@@ -15,6 +15,7 @@ import com.foodject.biz.HostCollectionBiz;
 import com.foodject.biz.HostImgBiz;
 import com.foodject.biz.HostMenuBiz;
 import com.foodject.biz.HostShopBiz;
+import com.foodject.biz.UserOptBiz;
 import com.foodject.frame.Util;
 import com.foodject.vo.CateVO;
 import com.foodject.vo.HostCollectionVO;
@@ -22,6 +23,7 @@ import com.foodject.vo.HostImgVO;
 import com.foodject.vo.HostManagerVO;
 import com.foodject.vo.HostMenuVO;
 import com.foodject.vo.HostShopVO;
+import com.foodject.vo.UserOptVO;
 
 @Controller
 @RequestMapping("/host/menu")
@@ -42,6 +44,9 @@ public class HostMenuController {
 	
 	@Autowired
 	Util util;
+	
+	@Autowired
+	UserOptBiz obiz;
 	
 	public void mainProduct(Model m) {
 //		List<ProductVO> plist = null;
@@ -74,6 +79,7 @@ public class HostMenuController {
 		String mid = manager.getId();
 		try {
 			list = biz.getmid(mid);
+			System.out.println(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -246,9 +252,13 @@ public class HostMenuController {
 		List<CateVO> ctlist = null;
 		HostMenuVO mnd = null;
 		List<HostCollectionVO> clist = null;
+		List<UserOptVO> olist= null;
 		try {
 			mnlist = mbiz.getmenu(collid);
 			mv.addObject("mnlist",mnlist);
+			
+			olist = obiz.get_byMenu(id);
+			mv.addObject("olist", olist);
 			
 			col = cbiz.get(id);
 			mv.addObject("col",col);
@@ -271,6 +281,35 @@ public class HostMenuController {
 		mv.addObject("center", "/host/menu/detail");
 		return mv;
 	}
+	@RequestMapping("/detail/update")
+	public String update(Model m, HostMenuVO mnv) {
+		HostImgVO iv = new HostImgVO();
+		String imgname = mnv.getMf().getOriginalFilename();
+		String[] splitname = imgname.split("[.]");
+		if (!(imgname.equals(""))) {
+			iv.setImg(imgname);
+			String savename = mnv.getId() + "." + splitname[splitname.length -1];
+			System.out.println(savename);
+			try {
+				util.saveFile(mnv.getMf(), savename, "menu" );
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		try {
+			mbiz.modify(mnv);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "redirect:/host/menu/detail?id="+mnv.getId()+"&collid="+mnv.getCollid()+"&sid="+mnv.getSid();
+	}
+	
+	
+	
 //	@RequestMapping("/menuregisterimpl")
 //	public String addimpl(Model m, HostMenuVO mn ) {
 //		String imgname = p.getMf().getOriginalFilename();
