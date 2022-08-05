@@ -48,5 +48,8 @@ public class UserCartBiz implements Biz<Integer, UserCartVO> {
 		return dao.select_byUid(v);
 	}
 
+	public Integer getSid_byUid(String uid) throws Exception{
+		return dao.selectSid_byUid(uid);
+	}
 
 }

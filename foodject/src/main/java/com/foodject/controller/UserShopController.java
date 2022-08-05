@@ -119,11 +119,12 @@ public class UserShopController {
 	}
 	
 	@RequestMapping("/addOptcart")
-	public String addOptcart(Model m, int sid, int cartId ,int[] option) {
+	public String addOptcart(Model m, int sid, int cartId ,int[] option, HttpSession session) {
 		if(cartId == 0) {
 			System.out.println("cartId is null");
-			return "redirect:/shop/main?sid="+sid;
+			return "redirect:/";
 		}
+		
 		
 		System.out.println("Enter java");
 		try {

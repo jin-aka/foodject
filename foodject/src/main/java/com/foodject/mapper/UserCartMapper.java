@@ -19,7 +19,7 @@ public interface UserCartMapper {
 	
 	public List<UserCartVO> selectForInsert(UserCartVO obj) throws Exception;
 	public List<UserCartVO> select_byUid(UserCartVO obj) throws Exception;
-
+	public Integer selectSid_byUid(String uid) throws Exception;
 }
 
 

@@ -44,5 +44,10 @@ public class UserOptcartBiz implements Biz<Integer, UserOptcartVO> {
 		return dao.selectall();
 	}
 
-
+	public List<UserOptcartVO> get_byUid(String uid) throws Exception {
+		return dao.select_byUid(uid);
+	}
+	
+	
+	
 }
