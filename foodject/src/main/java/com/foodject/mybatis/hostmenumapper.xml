@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	
 	<update id="update" parameterType="hostmenuVO">
-		UPDATE menu SET collid=#{collid}, name=#{name}, price=#{price} WHERE id=#{id}
+		UPDATE menu SET collid=#{collid}, cid=#{cid}, name=#{name}, line=#{line},  price=#{price} WHERE id=#{id}
 	</update>
 
 	<update id="updateLine" parameterType="hostmenuVO">
