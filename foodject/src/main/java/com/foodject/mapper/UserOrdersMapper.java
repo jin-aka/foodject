@@ -18,7 +18,8 @@ public interface UserOrdersMapper {
 	public void update(UserOrdersVO obj) throws Exception;
 	public UserOrdersVO select(Integer id) throws Exception;
 	public List<UserOrdersVO> selectall() throws Exception;
-	public void updatests(UserOrdersVO obj) throws Exception;
+	
+	public void orderdelete(int oid) throws Exception;
 	
 	public List<UserOrdersMyVO> selectod(String uid) throws Exception;
 	public List<UserOrdersMyVO> selectodde(int oid) throws Exception;
@@ -26,6 +27,6 @@ public interface UserOrdersMapper {
 	public List<Integer> selectoddeid(int oid) throws Exception;
 	public UserOrdersMyVO selectoddemenu(int deid) throws Exception;
 	public List<UserOrdersMyVO> selectoddeopt(int deid) throws Exception;
-	
+	public UserOrdersMyVO selectallprice(int oid) throws Exception;
 
 }
