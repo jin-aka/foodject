@@ -22,5 +22,14 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT * FROM optcart
 	</select>
 	
+	<select id="select_byUid" parameterType="String" resultType="useroptcartVO">
+		SELECT oc.ctid, oc.oid, cr.uid, o.price, o.name FROM optcart oc
+		INNER JOIN cart cr ON oc.ctid = cr.id
+		INNER JOIN opt o ON oc.oid = o.id
+		WHERE uid=#{uid}
+	</select>
+	
+
+	
 
 </mapper>

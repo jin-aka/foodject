@@ -34,10 +34,7 @@ public class UserMainController {
 		return "user/index";
 	}
 	
-	@RequestMapping("/errorpage")
-	public String error(Model m) {
-		return "user/error";
-	}
+
 	
 
 }

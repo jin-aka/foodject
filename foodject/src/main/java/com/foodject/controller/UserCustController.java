@@ -84,6 +84,7 @@ public class UserCustController {
 		UserCustVO cust = null;
 		try {
 			cust = custbiz.get(id);
+			System.out.println(cust);
 			if(cust == null) {
 				throw new Exception();
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.vo.UserCartVO;
+import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOptcartVO;
 
 @RestController
@@ -22,9 +23,23 @@ public class UserShopAJAX {
 	UserOptcartBiz opbiz;
 	
 	@RequestMapping("/addCart")
-	public Object addCart(String uid, int mnid, int num, int chk) {
+	public Object addCart(String uid, int mnid, int num, int chk, int sid) {
 		int cartId = 0;
 		int cnt = 0;
+		
+		
+		int usid = 0;
+		try {
+			usid = crbiz.getSid_byUid(uid);
+			if(sid != usid) {
+				return "siderror";
+			}else {
+				
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		List<UserCartVO> list = null;
 		UserCartVO obj = null;

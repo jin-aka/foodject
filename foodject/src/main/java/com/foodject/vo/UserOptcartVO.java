@@ -15,7 +15,17 @@ import lombok.ToString;
 public class UserOptcartVO {
 	private int ctid;
 	private int oid;
-
+	private String uid;
+	private int price;
+	private String name;
+	
+	// for insert(2)
+	public UserOptcartVO(int ctid, int oid) {
+		this.ctid = ctid;
+		this.oid = oid;
+	}
+	
+	
 	
 
 	
