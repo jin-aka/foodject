@@ -10,20 +10,83 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 			max-height: calc(100vh - 110px);
-			max-width: calc(150vh - 70px);
+			max-width: calc(100vh - 70px);
 			overflow-y: auto;
+		}
+
+		.right_align {
+			text-align: right;
 
 		}
 	</style>
 	<script>
-		function display(data){
+		function display(data) {
 
-			var arr = new Array();	
+			var arr = new Array();
+			var did = 0;
+			var modal_str = "";
+			var allprice = 0;
 			arr = data;
-			$('#modal_id').text("주문 번호 : "+arr[0].id);
+
+			$('#modal_id').text("주문 번호 : " + arr[0].id);
+			$('#modal_uid').text(arr[0].uid);
+			$('#modal_nick').text(arr[0].nick);
+			$('#modal_date').text(moment(arr[0].date).format("YYYY년 MM월 DD일 HH시mm분"));
+			$('#modal_addr').text(arr[0].addr + " " + arr[0].addrd);
+			$('#modal_phon').text(arr[0].phon);
+			if (arr[0].status == 1) {
+				$('#modal_status').text("주문 완료");
+			} else if (arr[0].status == 0) {
+				$('#modal_status').text("주문 취소");
+			} else if (arr[0].status == 2) {
+				$('#modal_status').text("배송 중");
+			}
+			$('#modal_ask').text(arr[0].ask);
+
+			$('#modal_body').empty();
+			for (let index = 0; index < arr.length; index++) {
+				const element = arr[index];
+
+				if (did != element.detail_id) {
+					modal_str = '<tr id=detail_' + element.detail_id + '>'
+						+ '<td class="font-weight-bold" colspan="2">' + element.detail_mname + '</td>'
+						+ '<td>' + element.detail_num + '</td>'
+						+ '<td class="right_align">' + element.detail_price + '원</td>'
+						+ '</tr>';
+					if (element.dopt_oname != null) {
+						modal_str += '<tr >'
+							+ '<td></td>'
+							+ '<td class="right_align">' + element.dopt_oname + '</td>'
+							+ '<td> + </td>'
+							+ '<td class="right_align">' + element.dopt_oprice + '원</td>'
+							+ '</tr>'
+					}
+
+					$('#modal_body').append(modal_str);
+					did = element.detail_id;
+					allprice += (element.detail_num * element.detail_price) + element.dopt_oprice;
+				} else {
+					modal_str = '<tr >'
+						+ '<td></td>'
+						+ '<td class="right_align">' + element.dopt_oname + '</td>'
+						+ '<td> + </td>'
+						+ '<td class="right_align">' + element.dopt_oprice + '원 </td>'
+						+ '</tr>'
+					$('#modal_body').append(modal_str);
+					allprice += element.dopt_oprice;
+				}
+
+			}
+			modal_str = '<tr >'
+						+ '<td></td>'
+						+ '<td ></td>'
+						+ '<td class="font-weight-bold"> 총액  </td>'
+						+ '<td class="right_align">' + allprice + '원 </td>'
+						+ '</tr>'
+					$('#modal_body').append(modal_str);
 
 		}
-		function bill( id ){
+		function bill(id) {
 			$.ajax({
 				url: '/host/shop/bill',
 				type: "POST",
@@ -34,17 +97,18 @@
 
 					$('#open_modal_btn').click();
 				}
-			});	
+			});
 		}
-		$(document).ready(function(){
+		$(document).ready(function () {
 
 
 		});
-		
+
 	</script>
 </head>
 <div class="container mt-3">
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="open_modal_btn" hidden>
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="open_modal_btn"
+		hidden>
 		Open modal
 	</button>
 </div>
@@ -63,53 +127,74 @@
 					<div class="card">
 						<div class="card-body">
 							<h4 class="card-title">구매자 정보</h4>
-                  <p class="card-description">
-                    Add class <code>.table</code>
-                  </p>
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Profile</th>
-                          <th>VatNo.</th>
-                          <th>수량</th>
-                          <th>가격</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
-                          <td>12 May 2017</td>
-                          <td><label class="badge badge-danger">Pending</label></td>
-                        </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>53275532</td>
-                          <td>15 May 2017</td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
-                        <tr>
-                          <td>John</td>
-                          <td>53275533</td>
-                          <td>14 May 2017</td>
-                          <td><label class="badge badge-info">Fixed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>53275534</td>
-                          <td>16 May 2017</td>
-                          <td><label class="badge badge-success">Completed</label></td>
-                        </tr>
-                        <tr>
-                          <td>Dave</td>
-                          <td>53275535</td>
-                          <td>20 May 2017</td>
-                          <td><label class="badge badge-warning">In progress</label></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+							<div class="row">
+								<div class="col-md-6">
+									<address>
+										<p class="font-weight-bold">아이디</p>
+										<p id="modal_uid">
+											695 lsom Ave,
+										</p>
+										<p class="font-weight-bold">닉네임</p>
+										<p id="modal_nick">
+											San Francisco, CA 94107
+										</p>
+										<p class="font-weight-bold">결제일</p>
+										<p id="modal_date">
+											San Francisco, CA 94107
+										</p>
+									</address>
+								</div>
+								<div class="col-md-6">
+									<address class="text-primary">
+										<p class="font-weight-bold">
+											주소
+										</p>
+										<p class="mb-2" id="modal_addr">
+											johndoe@examplemeail.com
+										</p>
+										<p class="font-weight-bold">
+											전화 번호
+										</p>
+										<p id="modal_phon">
+											www.Skydash.com
+										</p>
+										<p class="font-weight-bold">
+											주문 상태
+										</p>
+										<p id="modal_status">
+											www.Skydash.com
+										</p>
+									</address>
+								</div>
+								<div class="col-lg-12">
+									<address>
+										<p class="font-weight-bold">요청사항</p>
+										<p id="modal_ask">
+											695 lsom Ave,
+										</p>
+
+									</address>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th colspan="2">메뉴</th>
+											<th style="width: 2px;">수량</th>
+											<th class="right_align">가격</th>
+										</tr>
+									</thead>
+									<tbody id="modal_body">
+										<tr>
+											<td>Jacob</td>
+											<td>53275531</td>
+											<td>12 May 2017</td>
+											<td><label class="badge badge-danger">Pending</label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -118,7 +203,7 @@
 			<!-- Modal footer -->
 			<div class="modal-footer">
 				<!-- <button type="button" class="btn btn-info btn-rounded btn-fw" id="modifybtn">수정</button> -->
-				<button type="button" class="btn btn-success" id="confirmbtn">확인</button>
+				<!-- <button type="button" class="btn btn-success" id="confirmbtn">확인</button> -->
 				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="closebtn">닫기</button>
 				<!-- <button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button> -->
 			</div>
@@ -144,17 +229,17 @@
 					</thead>
 					<tbody th:if="${olist != null}" th:each="o:${olist}">
 						<tr>
-							<td class="py-1" rowspan="2"> 
+							<td class="py-1" rowspan="2">
 								<input type="checkbox" th:value="${o.id}" name="selected">
 							</td>
 						</tr>
-						<tr  th:onclick="bill([[${o.id}]])">		
+						<tr th:onclick="bill([[${o.id}]])">
 							<td class="py-1" th:text="${o.id}">id</td>
 							<td class="py-1" th:text="${o.uid}">uid</td>
 							<td class="py-1" th:text="${o.addr +' '+ o.addrd}">addr</td>
 							<td th:text="${#dates.format(o.date, 'yyyy년 MM월 dd일 HH시mm분')}"></td>
 							<td class="py-1" th:text="${o.allprice}">allprice</td>
-							<td class="py-1" th:text="${o.status}">status</td>					
+							<td class="py-1" th:text="${o.status}">status</td>
 						</tr>
 					</tbody>
 				</table>
