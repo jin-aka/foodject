@@ -31,6 +31,10 @@
 		.chatbot {
 			height: 50px;
 		}
+		.card-body{
+			height: 200px;
+
+		}
 	</style>
 
 	<script th:inline="javascript">
@@ -54,7 +58,7 @@
 						+ " : " + JSON.parse(msg.body).sendid + "</td>"
 						+ "</tr>"
 						+ "<tr>"
-						+ "<td class='py-1'><img src='' alt='' /> Bot : " +
+						+ "<td class='py-1'><img src='https://kr.object.ncloudstorage.com/foodject/css/bot.png' alt='' /> Bot : " +
 						JSON.parse(msg.body).content2 + "</td>"
 						+ "</tr>"
 					);
@@ -99,11 +103,13 @@
 		}
 
 		$(document).ready(function () {
-			$("#connect").click(function () {
-				connect();
-			});
+			// $("#connect").click(function () {
+			// 	connect();
+			// });
+			connect();
 			$("#disconnect").click(function () {
 				disconnect();
+				location.href="/host"
 			});
 			$("#sendme").click(function () {
 				sendMe();
@@ -120,12 +126,12 @@
 </head>
 
 <body>
-	<h1 th:text="${session.loginshop.id} ? ${session.loginshop.id} : 'host/login'">ID</h1>
+	<!-- <h1 th:text="${session.loginshop.id} ? ${session.loginshop.id} : 'host/login'">ID</h1>
 	<H1 id="status">Status</H1>
 	<H1 id="servermsg1">Server Msg1</H1>
 	<H1 id="servermsg2">Server Msg2</H1>
-	<button id="connect">Connect</button>
-	<button id="disconnect">Disconnect</button>
+	<button id="connect">Connect</button> -->
+	<!-- <button id="disconnect">Disconnect</button> -->
 
 	<!-- <h3>Me</h3>
 	<input type="text" id="metext">
@@ -138,10 +144,7 @@
 	<div class="col-xl-9 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-				<h4 class="card-title">Striped Table</h4>
-				<p class="card-description">
-					Add class <code>.table-striped</code>
-				</p>
+				<h4 class="card-title" th:text="${session.loginshop.id}">Striped Table</h4>
 				<div class="table-responsive" id="size">
 					<table class="table table-striped" >
 						<thead>
@@ -155,30 +158,22 @@
 							</tr>
 						</thead>
 						<tbody id="chatbot">
-
 						</tbody>
 					</table>
 				</div>
 			</div>
-
+			
 			<div class="card-body">
-				<h4 class="card-title">Basic form elements</h4>
-				<p class="card-description">Basic form elements</p>
 				<div class="form-group">
-					<label for="exampleInputCity1">질문을 적어주세요</label> <input type="text" class="form-control" id="metext"
-						placeholder="Location">
+					<label for="exampleInputCity1"></label> <input type="text" class="form-control" id="metext"
+						placeholder="질문을 적어주세요">
 				</div>
 				<button id="sendme" class="btn btn-primary mr-2">질문</button>
-				<button class="btn btn-light">취소</button>
+				<button class="btn btn-light" id="disconnect">종료</button>
 			</div>
 		</div>
 	</div>
 
 	<body>
-
-
-
 	</body>
-
-
 </html>
