@@ -49,15 +49,20 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         JOIN detail de on d.did = de.id
         WHERE d.did=#{deid}        
 	</select>
+	
+	<select id="selectallprice"  parameterType="int" resultType="userordersmyVO">
+		select distinct o.id as oid, (select sum( num * price ) from detail group by odid having odid = o.id)
+		+  ( select IFNULL( sum(oprice), 0 ) from dopt dt left join detail d on d.id = dt.did where d.odid = o.id ) as allprice
+		from orders o 
+		left join detail d on o.id = d.odid
+		left join dopt dt on d.id = dt.did 
+		where o.id = #{oid}
+		order by o.id desc
+	</select>
 		
-	<insert id="insert" parameterType="userordersVO">
-		INSERT INTO orders VALUES(#{id}, #{uid}, #{sid}, #{addr}, #{addrd},#{phon}, #{nick}, SYSDATE(), 1, #{ask})
-	</insert>
-	<update id="update" parameterType="userordersVO">
-		UPDATE orders SET uid=#{uid}, sid=#{sid}, addr=#{addr}, addrd=#{addrd}, phon=#{phon}, nick=#{nick}, ask=#{ask} WHERE id=#{id}
-	</update>
-	<delete id="updatests" parameterType="userordersVO">
-		UPDATE orders SET status=0 WHERE id=#{id}
+		
+	<delete id="orderdelete" parameterType="userordersmyVO">
+		UPDATE orders SET status=0 WHERE id=#{oid}
 	</delete>
 
 	

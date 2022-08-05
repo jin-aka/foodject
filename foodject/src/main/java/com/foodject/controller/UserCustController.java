@@ -51,7 +51,6 @@ public class UserCustController {
 	}
 	
 
-
 	@RequestMapping("")
 	public ModelAndView cust(ModelAndView mv, HttpSession session) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
@@ -187,6 +186,25 @@ public class UserCustController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("/orderdelete")
+	public String orderdelete(int oid, Model m) {
+//		int a = status;
+//		if(a==1) {
+//			a = 0;
+//			System.out.println(a);
+
+//		}
+		
+		try {
+			ordersbiz.modifydelete(oid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/cust/myorders";
+	}
+	
+	
 	
 	@RequestMapping("/cs")
 	public String cs(Model m) {
@@ -221,6 +239,8 @@ public class UserCustController {
 		
 		ArrayList<UserOrdersMyVO> getodopt = new ArrayList<UserOrdersMyVO>() ;
 		List<UserOrdersMyVO> opt = null;
+	
+		UserOrdersMyVO allprice = null;
 		
 		try {			
 			//odinfo 주문기본정보
@@ -229,10 +249,13 @@ public class UserCustController {
 			//odde 주문디테일
 			details = ordersbiz.getodde(oid);
 			m.addAttribute("d",details);
-			System.out.println(details);
-						
+			
+			allprice = ordersbiz.getallprice(oid);
+			m.addAttribute("ap",allprice);
+			
 			//oddeid 주문디테일id 
-			getdeid = ordersbiz.getoddeid(oid);					
+			getdeid = ordersbiz.getoddeid(oid);	
+			
 						
 			for (Integer i : getdeid) {
 				// 주문메뉴리스트				
@@ -241,13 +264,11 @@ public class UserCustController {
 
 				opt = ordersbiz.getoddeopt(i);
 				getodopt.addAll(opt);
-				System.out.println(getodopt);
-							
+						
 				}
+			
 			m.addAttribute("m",getodmenu);
 			m.addAttribute("opt", getodopt);	
-
-
 			
 		} catch (Exception e) {
 		}
