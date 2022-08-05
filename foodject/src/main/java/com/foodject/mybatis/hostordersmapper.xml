@@ -13,12 +13,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		having s.status != 0 and  s.mid = #{mid};
 	</select> -->
 	<select id="selectbills" parameterType="int" resultType="HostOrdersVO">
-		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.ask,o.status, sum( d.num * d.price ) + sum(dt.oprice) as allprice
+		select distinct o.id, o.uid , o.sid, o.addr, o.addrd, o.phon, o.nick, o.date,o.status, o.ask, d.odid , ( select sum( num * price ) from detail group by odid having odid = o.id)
+		+  ( select IFNULL( sum(oprice), 0 ) from dopt dt left join detail d on d.id = dt.did where d.odid = o.id ) as allprice
 		from orders o 
 		left join detail d on o.id = d.odid
-		left join dopt dt on d.id = dt.did
-		group by o.id
-		having o.sid = #{sid};
+		left join dopt dt on d.id = dt.did 
+		where o.sid = #{sid}
+		order by o.id desc;
 	</select>
 	<select id="selectbill" parameterType="int" resultType="HostOrdersVO">
 		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask
@@ -27,6 +28,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		from orders o 
 		left join detail d on o.id = d.odid
 		left join dopt dt on d.id = dt.did
-		where d.odid = #{id};
+		where d.odid = #{id}
+		order by d.id asc;
 	</select>
 </mapper>
