@@ -147,11 +147,17 @@ $(document).ready(function () {
 				      </div>
 				      <div class="modal-body">
 				      <div class="form-group"  th:each= "o: ${olist}">
+				      <input type="checkbox" name="selected" th:value="${o.id}">
 				      <input th:id="'opt'+${o.id}" type="text" name="mopt"   value="mopt" th:value="${o.name}" >
-					</div>		     
+					</div>	
+					<div>
+					<hr>
+					<input  type="text" id="addopt" name="addopt" >
+					<input type="button" value="옵션추가">
+					</div>	     
 				      </div>
 				      <div class="modal-footer">
-				      	
+				      	 <button class="btn btn-primary" id="optudt" type="button">수정</button>
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>
