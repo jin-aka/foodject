@@ -84,7 +84,7 @@ public class UserCustController {
 		UserCustVO cust = null;
 		try {
 			cust = custbiz.get(id);
-			System.out.println(cust);
+			//System.out.println(cust);
 			if(cust == null) {
 				throw new Exception();
 
@@ -195,7 +195,7 @@ public class UserCustController {
 //			System.out.println(a);
 
 //		}
-		
+		System.out.println(oid);
 		try {
 			ordersbiz.modifydelete(oid);
 		} catch (Exception e) {

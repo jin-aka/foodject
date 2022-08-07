@@ -4,16 +4,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.foodject.mapper.UserOrdersMapper">
 	
-	<select id="select" parameterType="int" resultType="userordersVO">
-		SELECT * FROM orders WHERE id=#{id} and status !=0
-	</select>
-	<select id="selectall" resultType="userordersVO">
-		SELECT * FROM orders
-	</select>
 	<select id="selectod" parameterType="String" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.status, o.date AS odate, s.name AS sname, s.logo AS slogo FROM orders o
 		JOIN shop s ON o.sid = s.id
-		WHERE o.uid=#{uid} ORDER BY o.date DESC
+		WHERE o.uid=#{uid}  and o.status !=3 ORDER BY o.date DESC
 	</select>
 	<select id="selectodinfo" parameterType="int" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.logo AS slogo, o.status FROM orders o
@@ -62,7 +56,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		
 		
 	<delete id="orderdelete" parameterType="userordersmyVO">
-		UPDATE orders SET status=0 WHERE id=#{oid}
+		UPDATE orders SET status=3 WHERE id=#{oid}
 	</delete>
 
 	
