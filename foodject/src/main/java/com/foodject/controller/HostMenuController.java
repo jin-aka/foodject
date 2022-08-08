@@ -308,7 +308,36 @@ public class HostMenuController {
 		return "redirect:/host/menu/detail?id="+mnv.getId()+"&collid="+mnv.getCollid()+"&sid="+mnv.getSid();
 	}
 	
+	@RequestMapping("/detail/optdelete")
+	public String optdelete(Model m, int[] oArray, int id, int collid, int sid) {
+
+		
+		try {
+			for (int i = 0; i < oArray.length; i++) {
+				
+				obiz.remove(oArray[i]);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+}
+		
+		return "redirect:/host/menu/detail?id="+id+"&collid="+collid+"&sid="+sid;
+	}
+	@RequestMapping("detail/optregisterimpl")
+	public String optregisterimpl(Model m, UserOptVO ov,  HostMenuVO mnv) {
 	
+		try {
+			
+			
+			obiz.register(ov);
+			System.out.println("register OK");
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		return "redirect:/host/menu/detail?id="+ov.getMnid()+"&collid="+mnv.getCollid()+"&sid="+mnv.getSid();
+	}
 	
 //	@RequestMapping("/menuregisterimpl")
 //	public String addimpl(Model m, HostMenuVO mn ) {
