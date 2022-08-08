@@ -3,44 +3,22 @@
 PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.foodject.mapper.UserCustMapper">
-   
-   <select id="select" parameterType="String" resultType="usercustVO">
-      SELECT * FROM cust WHERE id=#{id} and status != 0
-   </select>
-   <select id="selectall" resultType="usercustVO">
-      SELECT * FROM cust
-   </select>
-   <insert id="insert" parameterType="usercustVO">
-      INSERT INTO cust VALUES(#{id}, #{pwd}, #{nick}, #{name}, #{birth},SYSDATE(), #{phon}, #{addr}, #{addrd},1, #{img})
-   </insert>
-   <update id="update" parameterType="usercustVO">
-      <if   test="img != null"> 
-          UPDATE cust SET pwd=#{pwd}, nick=#{nick}, name=#{name}, birth=#{birth},phon=#{phon}, addr=#{addr}, addrd=#{addrd},img=#{img} WHERE id=#{id}
-      </if>
-      <if   test="img == null"> 
-          UPDATE cust SET pwd=#{pwd}, nick=#{nick}, name=#{name}, birth=#{birth},phon=#{phon}, addr=#{addr}, addrd=#{addrd} WHERE id=#{id}
-      </if>      
-   </update>
-   
-   <delete id="updatests" parameterType="usercustVO">
-      UPDATE cust SET status=0 WHERE id=#{id}
-   </delete>
-   
-   
-   
-   <!-- === New update === -->
-   
-   <update id="updateetc" parameterType="usercustVO">
-   		UPDATE cust SET nick=#{nick}, name=#{name}, birth=#{birth}, phon=#{phon}, addr=#{addr}, addrd=#{addrd} WHERE id=#{id}   
-   </update>
-   
-   <update id="updateimg" parameterType="usercustVO">
-      UPDATE cust SET img=#{img} WHERE id=#{id}  
-	</update>
 	
-   <update id="updatepwd" parameterType="usercustVO">
-      UPDATE cust SET pwd=#{pwd} WHERE id=#{id}  
-	</update>  
+	<select id="select" parameterType="String" resultType="usercustVO">
+		SELECT * FROM cust WHERE id=#{id} and status != 0
+	</select>
+	<select id="selectall" resultType="usercustVO">
+		SELECT * FROM cust
+	</select>
+	<insert id="insert" parameterType="usercustVO">
+		INSERT INTO cust VALUES(#{id}, #{pwd}, #{nick}, #{name}, #{birth},SYSDATE(), #{phon}, #{addr}, #{addrd},1, #{img})
+	</insert>
+	<update id="update" parameterType="usercustVO">
+		UPDATE cust SET pwd=#{pwd}, nick=#{nick}, name=#{name}, birth=#{birth},phon=#{phon}, addr=#{addr}, addrd=#{addrd},img=#{img} WHERE id=#{id}
+	</update>
+	<delete id="updatests" parameterType="usercustVO">
+		UPDATE cust SET status=0 WHERE id=#{id}
+	</delete>
 
-   
+	
 </mapper>
