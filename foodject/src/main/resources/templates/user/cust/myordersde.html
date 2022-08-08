@@ -43,7 +43,8 @@ $(document).ready(function(){
                 </div>
               </div>
             
-              <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1  pt-4">
+              <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
+                <h1 class="card-title mt-xl-5 mb-4 text-center">주문내역상세</h1>  
                 	<div class="p-5">
                 	<div class="card card-span mb-3 shadow-sm"> 
                 	               	
@@ -154,7 +155,17 @@ $(document).ready(function(){
 	
 					        
 					      </div>
-
+					
+				     	 <!-- 주문내역삭제 footer -->
+						  <hr>
+					      <div class="modal-body">
+					      	<div class="text-center pb-3">
+					      	  <input type="number" name=oidinput th:value="${i.oid}" hidden="hidden">
+		  			          <button id="deletebtn" onclick="check()" class="btn btn-line2 btn-sm text-gray">주문내역삭제</button>					      	
+		  			          
+					      	 
+					      	</div>					      	
+					      </div>
 					</div>
 					</div>
                          

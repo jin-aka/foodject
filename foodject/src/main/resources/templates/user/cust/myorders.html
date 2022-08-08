@@ -62,8 +62,7 @@ $(document).ready(function(){
 		                  <nav>
 		                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
 		                      <div class="col-md-2">
-		                        <img class="img-fluid rounded-3 w-100" th:if="${o.slogo != null }" th:src="${'https://kr.object.ncloudstorage.com/foodject/shop/'+o.slogo}" alt="image" />
-								<img class="img-fluid rounded-3 w-100" th:unless="${o.slogo != null }" src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="image" />
+		                        <img class="img-fluid rounded-3 w-100" th:src="@{'/custimg/'+${o.slogo}}">
 		                      </div>
 		                      <div class="col-md-10 p-3">
 		                      	<p th:text="${#dates.format(o.odate,'yyyy-MM-dd')}"></p>

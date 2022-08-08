@@ -18,7 +18,4 @@ public interface UserCustMapper {
 	public List<UserCustVO> selectall() throws Exception;
 	public void updatests(UserCustVO obj) throws Exception;
 	
-	public void updateetc(UserCustVO obj) throws Exception;
-	public void updateimg(UserCustVO obj) throws Exception;
-	public void updatepwd(UserCustVO obj) throws Exception;
 }

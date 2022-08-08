@@ -53,7 +53,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		where o.id = #{oid}
 		order by o.id desc
 	</select>
-
+		
+		
+	<delete id="orderdelete" parameterType="userordersmyVO">
+		UPDATE orders SET status=3 WHERE id=#{oid}
+	</delete>
 
 	
 </mapper>

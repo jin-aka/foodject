@@ -31,8 +31,12 @@ public class UserCustVO {
 	private int status;
 	private String img;
 	private MultipartFile mf;
-
 	
+	public UserCustVO(String id, String pwd, String name) {
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+	}
 	public UserCustVO(String id, String pwd, String name, Date birth, String phon, String addr, String addrd) {
 		this.id = id;
 		this.pwd = pwd;
@@ -80,40 +84,10 @@ public class UserCustVO {
 		this.status = status;
 		this.img = img;
 	}
-	
-	// Delete용 VO
 	public UserCustVO(String id, int status) {
 		this.id = id;
 		this.status = status;
 	}
-	
-	// Update-etc용 VO
-	public UserCustVO(String id, String nick, String name, Date birth, Date date, String phon, String addr, String addrd) {
-		this.id = id;
-		this.nick = nick;
-		this.name = name;
-		this.birth = birth;
-		this.date = date;
-		this.phon = phon;
-		this.addr = addr;
-		this.addrd = addrd;
-	}
-	
-	// Update-img용 VO
-	public UserCustVO(String id, String img, MultipartFile mf) {
-		this.id = id;
-		this.img = img;
-
-	}
-	
-	// Update-pwd용 VO
-	public UserCustVO(String id, String pwd) {
-		this.id = id;
-		this.pwd = pwd;
-	}
-	
-	
-	
 
 	
 }
