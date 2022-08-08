@@ -20,7 +20,6 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		from orders
 		where id=#{oid}
 	</select>
-
 	<select id="selectoddeid" parameterType="int" resultType="int">
 		select distinct 
 		de.id as deid		from orders o
@@ -53,8 +52,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		where o.id = #{oid}
 		order by o.id desc
 	</select>
-		
-		
+			
 	<delete id="orderdelete" parameterType="userordersmyVO">
 		UPDATE orders SET status=3 WHERE id=#{oid}
 	</delete>

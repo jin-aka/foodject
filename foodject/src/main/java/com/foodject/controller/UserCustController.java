@@ -135,20 +135,23 @@ public class UserCustController {
 
 		// 비밀번호 암호화 처리
 		//cust.setPwd(bp.hashPassward(cust.getPwd()));
+		
 
 
 		if(savename.equals(idname+".")) {
 			cust.setImg("icon.jpg");			
 		}else {
 			cust.setImg(savename);
-			try {
-				custbiz.register(cust);
-				// saveFile(실제 파일, 저장할 이름, 사용되는 DB 컬럼명)
-				ut.saveFile(cust.getMf(), savename, "cust");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}				
+			ut.saveFile(cust.getMf(), savename, "cust");
+		}		
+		
+		try {
+			custbiz.register(cust);
+			// saveFile(실제 파일, 저장할 이름, 사용되는 DB 컬럼명)
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "redirect:/";
 
 	}
@@ -159,19 +162,25 @@ public class UserCustController {
 		String[] splitname = imgname.split("[.]");
 		String idname = cust.getId();
 		String savename = idname + "." + splitname[splitname.length -1];		
-		
-		if(savename.equals(idname+".")) {
-			cust.setImg("icon.jpg");			
+
+		System.out.println("sdfaeid" + cust.getId() );
+		System.out.println("14142" + cust.getMf().getOriginalFilename() );
+
+
+		if(cust.getMf().getOriginalFilename().equals("")) {
+			System.out.println(cust.getMf());		
+			System.out.println(cust.getImg());		
 		}else {
 			cust.setImg(savename);
-			try {
-				Util ut = new Util();
-				custbiz.modify(cust);
-				ut.saveFile(cust.getMf(), savename, "cust");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}		
+			ut.saveFile(cust.getMf(), savename, "cust");
+		}
+
+		try {			
+			custbiz.modify(cust);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return "redirect:/cust/update";
 	}

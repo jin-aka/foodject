@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 import com.foodject.biz.HostManagerBiz;
 import com.foodject.biz.HostMenuBiz;
 import com.foodject.vo.HostManagerVO;
-import com.foodject.vo.HostMenuVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;

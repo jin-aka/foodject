@@ -1,214 +1,401 @@
-
-    <div class="content-wrapper">
-      <div class="row">
-        <div class="col-md-12 grid-margin stretch-card">
-          <div class="card">
-            <div class="card-body">
-             <!-- title -->
-             <div class="row">
-              <div class="col-md-12 grid-margin">
-                <div class="row">
-                  <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">주문 확인</h3>
-                    <!-- <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6> -->
-                  </div>
-                  
-                  <div class="col-12 col-xl-4">
-                   <div class="justify-content-end d-flex">
-                    <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                      <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                       <i class="mdi mdi-calendar" ></i>전체
-
-                      </button>
-                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
-                        <a class="dropdown-item" href="#" onclick="">전체</a>
-                        <a class="dropdown-item" href="#">미수락</a>
-                        <a class="dropdown-item" href="#">배송중</a>
-                        <a class="dropdown-item" href="#">배송 완료</a>
-                      </div>
-                      
-                    </div>
-                   </div>
-                  </div>
-                 
-
-
-                </div>
-              </div>
-            </div>
-             <!--  -->
-              <div class="row">
-                <div class="col-12">
-                  <div class="table-responsive">
-                    <table id="example" class="display expandable-table" style="width:100%">
-                      <thead>
-                        <tr>                       
-                          <th>주문 번호</th>
-                          <th>가게 이름</th>
-                          <th>주문 고객</th>
-                          
-                          <th>배송지</th>
-                          <th>전화번호</th>   
-                          <th>수락/거절</th>
-                          <th>주문 시간</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="table-danger">
-                          <td>1</td>
-                          <td>1s</td>
-                          <td>1s</td>
-                          <td>1s</td>
-                          <td>1s</td>
-                          <td>1s</td>
-                          <td>1s</td>
-                        </tr>
-                      </tbody>
-                  </table>
-                  
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>         
-          </div>
-        </div>
-          
-        </div>
-        <!-- content-wrapper ends -->
-
-  
-      <!-- websoket -->
-      <!DOCTYPE html>
+<!-- websoket -->
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Shop Websocket</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="/webjars/sockjs-client/sockjs.min.js"></script>
-<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-<style>
-	#all{
-		width:400px;
-		height:200px;
-		overflow: auto;
-		border:2px solid red;
-	}
-	#me{
-		width:400px;
-		height:200px;
-		overflow: auto;
-		border:2px solid blue;
-	}
-	#to{
-		width:400px;
-		height:200px;
-		overflow: auto;
-		border:2px solid green;
-	}
-</style>
-
-<script th:inline="javascript">
-	 /*<![CDATA[*/ 
-	var stompClient = null;
-	var id = [[${session.loginshop.id}]];
-	/* ]]> */
-	// 서버소켓에 연결
-	function connect() {
-		var socket = new SockJS('/ws');
-		stompClient = Stomp.over(socket);
-
-		stompClient.connect({}, function(frame) { 
-			setConnected(true);
-			console.log('Connected: ' + frame);
-			stompClient.subscribe('/send', function(msg) { 
-				$("#all").append(
-						"<h4>" + JSON.parse(msg.body).sendid +":"+
-						JSON.parse(msg.body).content1
-								+ "</h4>");
-			});
-			stompClient.subscribe('/send/'+id, function(msg) { 
-				$("#me").append(
-						"<h4>" + JSON.parse(msg.body).sendid +":"+
-						JSON.parse(msg.body).content1+"<br><br>"+
-						JSON.parse(msg.body).content2
-								+ "</h4>");
-			});
-			stompClient.subscribe('/send/tomsg/'+id, function(msg) { 
-				$("#to").append(
-						"<h4>" + JSON.parse(msg.body).sendid +":"+
-						JSON.parse(msg.body).content1
-								+ "</h4>");
-			});
-			stompClient.subscribe('/send/serversend', function(msg) { 
-				$("#servermsg1").text(JSON.parse(msg.body).content1);
-				$("#servermsg2").text(JSON.parse(msg.body).content2);
-			});
-		});
-	}
-	
-	// 서버소켓에 연결끊기
-	function disconnect() {
-		if (stompClient !== null) {
-			stompClient.disconnect();
+	<meta charset="UTF-8">
+	<title>Shop Websocket</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<style>
+		#all {
+			width: 400px;
+			height: 200px;
+			overflow: auto;
+			border: 2px solid red;
 		}
-		setConnected(false);
-		console.log("Disconnected");
-	}
 
-	// connect&disconnect버턴 활성화/비활성화
-	function setConnected(connected) {
-		if (connected) {
-			$("#status").text("Connected");
-		} else {
-			$("#status").text("Disconnected");
+		#me {
+			width: 400px;
+			height: 200px;
+			overflow: auto;
+			border: 2px solid blue;
+		}
+
+		#to {
+			width: 400px;
+			height: 200px;
+			overflow: auto;
+			border: 2px solid green;
+		}
+	</style>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var stompClient = null;
+		var id = [[${ session.loginshop.id }]];
+		/* ]]> */
+		// 서버소켓에 연결
+
+
+		var orders_status = new Set();
+		
+		function connect() {
+			var socket = new SockJS('/ws');
+			stompClient = Stomp.over(socket);
+
+			stompClient.connect({}, function (frame) {
+				setConnected(true);
+				console.log('Connected: ' + frame);
+				stompClient.subscribe('/send', function (msg) {
+					$("#all").append(
+						"<h4>" + JSON.parse(msg.body).sendid + ":" +
+						JSON.parse(msg.body).content1
+						+ "</h4>");
+				});
+				stompClient.subscribe('/send/' + id, function (msg) {
+					$("#me").append(
+						"<h4>" + JSON.parse(msg.body).sendid + ":" +
+						JSON.parse(msg.body).content1 + "<br><br>" +
+						JSON.parse(msg.body).content2
+						+ "</h4>");
+				});
+				stompClient.subscribe('/send/tomsg/' + id, function (msg) {
+					$("#to").append(
+						"<h4>" + JSON.parse(msg.body).sendid + ":" +
+						JSON.parse(msg.body).content1
+						+ "</h4>");
+				});
+				stompClient.subscribe('/send/serversend', function (msg) {
+					$("#servermsg1").text(JSON.parse(msg.body).content1);
+					$("#servermsg2").text(JSON.parse(msg.body).content2);
+				});
+			});
+		}
+
+		// 서버소켓에 연결끊기
+		function disconnect() {
+			if (stompClient !== null) {
+				stompClient.disconnect();
+			}
+			setConnected(false);
+			console.log("Disconnected");
+		}
+
+		// connect&disconnect버턴 활성화/비활성화
+		function setConnected(connected) {
+			if (connected) {
+				$("#status").text("Connected");
+			} else {
+				$("#status").text("Disconnected");
+			}
+
+		}
+
+		// 서버에 메세지 요청 메서드
+		function sendAll() {
+			var msg = JSON.stringify({
+				'sendid': id,
+				'content1': $("#alltext").val()
+			});
+			stompClient.send("/receiveall", {}, msg);
+		}
+		function sendMe() {
+			var msg = JSON.stringify({
+				'sendid': id,
+				'content1': $('#metext').val()
+			});
+			stompClient.send("/receiveme", {}, msg);
+		}
+		function sendTo() {
+			var msg = JSON.stringify({
+				'sendid': id,
+				'receiveid': $('#target').val(),
+				'content1': $('#totext').val()
+			});
+			stompClient.send('/receivetomsg', {}, msg);
 		}
 		
-	}
+		function modal(id){
+alert("id : " + id)
+			$('#open_modal_btn').click();
+		}
 
-	// 서버에 메세지 요청 메서드
-	function sendAll() {
-		var msg = JSON.stringify({
-			'sendid' : id,
-			'content1' : $("#alltext").val()
+		function display(data) {
+			var list_str = "";
+			$('#orders_list').empty();
+			for (let index = 0; index < data.length; index++) {
+				const element = data[index];
+				list_str = "";
+				if (element.status == 4) {
+					list_str = '<tr class="table-danger" onclick="modal('+element.id+')">';
+						element.status = "주문 대기";
+
+				} else if (element.status == 3) {
+					list_str = '<tr class="table-warning" onclick="modal('+element.id+')">';
+						element.status = "주문 수락";
+
+				} else if (element.status == 2) {
+					list_str = '<tr class="table-info" onclick="modal('+element.id+')">';
+						element.status = "배송 중";
+				}
+				else if (element.status == 1) {
+					list_str = '<tr class="table-success" onclick="modal('+element.id+')">';
+						element.status = "배송 완료";
+				}
+
+				list_str += '<td>' + element.id + '</td>'
+					+ '<td>' + element.shop_name + '</td>'
+					+ '<td class="font-weight-bold"> ' + element.uid + '  </td>'
+					+ '<td class="right_align">' + element.addr + " : " + element.addrd + ' </td>'
+					+ '<td class="right_align">' + element.phon + ' </td>'
+					+ '<td class="right_align">' + element.status + ' </td>'
+					+ '<td class="right_align">' + element.date + ' </td>'
+					+ '</tr>';
+				$('#orders_list').append(list_str);
+
+			}
+			// <th>주문 번호</th>
+			// <th>가게 이름</th>
+			// <th>주문 고객</th>
+			// <th>배송지</th>
+			// <th>전화번호</th>
+			// <th>수락/거절</th>
+			// <th>주문 시간</th>
+
+
+
+		}
+		function ajaxDatas(id) {
+
+			$.ajax({
+				url: '/host/orders/getDatas',
+				type: "POST",
+				data: { "id": id },
+				success: function (data) {
+
+					display(data);
+				}
+			});
+		}
+		function getData(name, id) {
+			if (name == null) {
+				$('#dropdownMenuDate2').text("전 체");
+				id = 0;
+			} else {
+				$('#dropdownMenuDate2').text(name);
+			}
+			ajaxDatas(id);
+
+
+		}
+		$(document).ready(function () {
+
+			getData();
+			$("#connect").click(function () {
+				connect();
+			});
+			$("#disconnect").click(function () {
+				disconnect();
+			});
+			$("#sendall").click(function () {
+				sendAll();
+			});
+			$("#sendme").click(function () {
+				sendMe();
+			});
+			$("#sendto").click(function () {
+				sendTo();
+			});
 		});
-		stompClient.send("/receiveall", {}, msg);
-	}
-	function sendMe() {
-		var msg = JSON.stringify({
-			'sendid' : id,
-			'content1' : $('#metext').val()
-		});
-		stompClient.send("/receiveme", {}, msg);
-	}
-	function sendTo() {
-		var msg = JSON.stringify({
-			'sendid' : id,
-			'receiveid' : $('#target').val(),
-			'content1' : $('#totext').val()
-		});
-		stompClient.send('/receivetomsg', {}, msg);
-	}
-	$(document).ready(function() {
-		$("#connect").click(function() {
-			connect();
-		});
-		$("#disconnect").click(function() {
-			disconnect();
-		});
-		$("#sendall").click(function() {
-			sendAll();
-		});
-		$("#sendme").click(function() {
-			sendMe();
-		});
-		$("#sendto").click(function() {
-			sendTo();
-		});
-	});
-</script>
+	</script>
 </head>
+<!-- modal -->
+<div class="container mt-3">
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="open_modal_btn"
+		>
+		Open modal
+	</button>
+</div>
+<div class="modal" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title" id="modal_id">Modal Heading</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">x</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="col-lg-12 grid-margin stretch-card">
+					<div class="card">
+						<div class="card-body">
+							<h4 class="card-title">구매자 정보</h4>
+							<div class="row">
+								<div class="col-md-6">
+									<address>
+										<p class="font-weight-bold">아이디</p>
+										<p id="modal_uid">
+											695 lsom Ave,
+										</p>
+										<p class="font-weight-bold">닉네임</p>
+										<p id="modal_nick">
+											San Francisco, CA 94107
+										</p>
+										<p class="font-weight-bold">결제일</p>
+										<p id="modal_date">
+											San Francisco, CA 94107
+										</p>
+									</address>
+								</div>
+								<div class="col-md-6">
+									<address class="text-primary">
+										<p class="font-weight-bold">
+											주소
+										</p>
+										<p class="mb-2" id="modal_addr">
+											johndoe@examplemeail.com
+										</p>
+										<p class="font-weight-bold">
+											전화 번호
+										</p>
+										<p id="modal_phon">
+											www.Skydash.com
+										</p>
+										<p class="font-weight-bold">
+											주문 상태
+										</p>
+										<p id="modal_status">
+											www.Skydash.com
+										</p>
+									</address>
+								</div>
+								<div class="col-lg-12">
+									<address>
+										<p class="font-weight-bold">요청사항</p>
+										<p id="modal_ask">
+											695 lsom Ave,
+										</p>
+
+									</address>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+										<tr>
+											<th colspan="2">메뉴</th>
+											<th style="width: 2px;">수량</th>
+											<th class="right_align">가격</th>
+										</tr>
+									</thead>
+									<tbody id="modal_body">
+										<tr>
+											<td>Jacob</td>
+											<td>53275531</td>
+											<td>12 May 2017</td>
+											<td><label class="badge badge-danger">Pending</label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<!-- <button type="button" class="btn btn-info btn-rounded btn-fw" id="modifybtn">수정</button> -->
+				<!-- <button type="button" class="btn btn-success" id="confirmbtn">확인</button> -->
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="closebtn">닫기</button>
+				<!-- <button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button> -->
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /modal -->
+
+
+
+
+<div class="content-wrapper">
+	<div class="row">
+		<div class="col-md-12 grid-margin stretch-card">
+			<div class="card">
+				<div class="card-body">
+					<!-- title -->
+					<div class="row">
+						<div class="col-md-12 grid-margin">
+							<div class="row">
+								<div class="col-12 col-xl-8 mb-4 mb-xl-0">
+									<h3 class="font-weight-bold">주문 확인</h3>
+									<!-- <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6> -->
+								</div>
+
+								<div class="col-12 col-xl-4">
+									<div class="justify-content-end d-flex" th:if="${slist != null}">
+										<div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+											<button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button"
+												id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true"
+												aria-expanded="true">
+												<i class="mdi mdi-calendar"></i>
+												전 체
+											</button>
+
+											<div class="dropdown-menu dropdown-menu-right"
+												aria-labelledby="dropdownMenuDate2">
+												<a class="dropdown-item" onclick="getData()">전 체</a>
+												<a class="dropdown-item" th:onclick="getData([[${s.name}]],[[${s.id}]])"
+													th:text="${s.name}" th:each="s:${slist}">전 체</a>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+					<!--  -->
+					<div class="row">
+						<div class="col-12">
+							<div class="table-responsive">
+								<table id="example" class="display expandable-table" style="width:100%">
+									<thead>
+										<tr>
+											<th>주문 번호</th>
+											<th>가게 이름</th>
+											<th>주문 고객</th>
+
+											<th>배송지</th>
+											<th>전화번호</th>
+											<th>수락/거절</th>
+											<th>주문 시간</th>
+										</tr>
+									</thead>
+									<tbody id="orders_list">
+
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- content-wrapper ends -->
+
+
+
 <body>
 	<H1 th:text="${session.loginid}">ID</H1>
 	<H1 id="status">Status</H1>
@@ -216,21 +403,20 @@
 	<H1 id="servermsg2">Server Msg2</H1>
 	<button id="connect">Connect</button>
 	<button id="disconnect">Disconnect</button>
-	
+
 	<h3>All</h3>
 	<input type="text" id="alltext"><button id="sendall">Send</button>
 	<div id="all"></div>
-	
+
 	<h3>Me</h3>
 	<input type="text" id="metext"><button id="sendme">Send</button>
 	<div id="me"></div>
-	
+
 	<h3>To</h3>
 	<input type="text" id="target">
 	<input type="text" id="totext"><button id="sendto">Send</button>
 	<div id="to"></div>
 
 </body>
+
 </html>
-
-
