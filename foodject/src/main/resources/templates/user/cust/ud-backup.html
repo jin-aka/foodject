@@ -1,0 +1,254 @@
+<style>
+#imgviewer{
+	width: 150px;		
+}
+</style>
+<script>
+function execDaumPostcode(){
+	daum.postcode.load(function(){
+		new daum.Postcode({
+		    oncomplete: function(data) {		    	
+		    	$("#addr").val(data.roadAddress);
+		    }
+		}).open();
+	});
+};
+
+
+$(document).ready(function(){
+	//비밀번호 유효성 검사
+	$('input[name="pwd"]').keyup(function(){
+		var uid = $('input[name="id"]').val();
+		var pwd = $('input[name="pwd"]').val();
+		var pwd2 = $('#pwdcheck').val();
+			if(pwd != uid){
+				$('#pwdspan').text('');			
+			}else {
+				$('#pwdspan').text('아이디와 비밀번호가 같습니다');				
+			}
+	});		
+	//비밀번호2 유효성 검사
+	$('#pwdcheck').keyup(function(){
+		var pwd = $('#pwd').val();
+		var pwd2 = $('#pwdcheck').val();
+			if(pwd != pwd2){
+				$('#pwdcheckspan').text('비밀번호가 일치하는지 확인해주세요');
+				
+			}else {
+				$('#pwdcheckspan').text('비밀번호를 사용할 수 있습니다');
+				
+			}
+	 });
+
+	//전화번호 유효성 검사
+	function autoHypenTel(str) {
+		  str = str.replace(/[^0-9]/g, '');
+		  var tmp = '';
+
+		  if (str.substring(0, 2) == 02) {
+		    // 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
+		    if (str.length < 3) {
+		      return str;
+		    } else if (str.length < 6) {
+		      tmp += str.substr(0, 2);
+		      tmp += '-';
+		      tmp += str.substr(2);
+		      return tmp;
+		    } else if (str.length < 10) {
+		      tmp += str.substr(0, 2);
+		      tmp += '-';
+		      tmp += str.substr(2, 3);
+		      tmp += '-';
+		      tmp += str.substr(5);
+		      return tmp;
+		    } else {
+		      tmp += str.substr(0, 2);
+		      tmp += '-';
+		      tmp += str.substr(2, 4);
+		      tmp += '-';
+		      tmp += str.substr(6, 4);
+		      return tmp;
+		    }
+		  } else {
+		    // 핸드폰 및 다른 지역 전화번호 일 경우
+		    if (str.length < 4) {
+		      return str;
+		    } else if (str.length < 7) {
+		      tmp += str.substr(0, 3);
+		      tmp += '-';
+		      tmp += str.substr(3);
+		      return tmp;
+		    } else if (str.length < 11) {
+		      tmp += str.substr(0, 3);
+		      tmp += '-';
+		      tmp += str.substr(3, 3);
+		      tmp += '-';
+		      tmp += str.substr(6);
+		      return tmp;
+		    } else {
+		      tmp += str.substr(0, 3);
+		      tmp += '-';
+		      tmp += str.substr(3, 4);
+		      tmp += '-';
+		      tmp += str.substr(7);
+		      return tmp;
+		    }
+		  }
+		  return str;
+		}
+	
+	$('#phon').keyup(function (event) {
+		  event = event || window.event;
+		  var _val = this.value.trim();
+		  this.value = autoHypenTel(_val);
+		});
+
+	
+	//Cust info update button
+	$('#updatebt').click(function(){
+		$('#updateform').attr({
+			'enctype':'multipart/form-data',
+			'method':'post',
+			'action':'/cust/updateimpl'
+		});
+		$('#updateform').submit();
+		
+	});
+	
+	// Cust info delete button
+	$('#deletebt').click(function(){	
+		var c = confirm('정말 탈퇴하시겠습니까?');
+		
+		if(c == true){
+			$('#updateform').attr({
+				'enctype':'multipart/form-data',
+				'method':'post',
+				'action':'/cust/delete'
+		}); 
+			$('#updateform').submit(); 
+		}
+	});
+
+});
+
+</script>
+
+<section class="pb-5 pt-8">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-span mb-3 shadow-lg">
+          <div class="card-body py-0">
+            <div class="row justify-content-center">
+            
+             <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
+                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span class="text-primary">마이페이지</span></a></h1>
+                <div class="d-grid bottom-0">                
+                <a class="btn btn-danger text-white mt-xl-6" id="update" href="/cust/update">회원정보수정하기 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
+                <a class="btn btn-lg btn-primary mt-xl-6" id="myorders" href="/cust/myorders">주문내역 조회</a><p></p>
+                <a class="btn btn-lg btn-primary mt-xl-6" id="cs" href="/cust/cs">고객센터</a><p></p>
+                </div>
+              </div>
+            
+              <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
+                <h1 class="card-title mt-xl-5 mb-4 text-center">회원정보수정하기</h1>
+                <div class="px-6 pb-3">
+                <div class="card w-xxl-100">
+                <div class="card-body"> 
+                
+                
+                <form id="updateform" class="align-items-center pb-5">
+                   <div class="col">
+                      
+                        <label class=" pt-5"for="id">아이디:</label><br>
+                        
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="id" name="id" th:value="${c.id}" type="text" readonly>
+                        </div> 
+                        <span style="font-size: smaller; color:gray;" id="idspan"></span><p></p>
+                        
+                        <label for="pwd">비밀번호:</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="pwd" name="pwd" type="password" th:value="${c.pwd}" placeholder="Password"  required>
+                        </div> <p></p>
+                        <span style="font-size: smaller; color:gray;" id="pwdspan"></span><p></p>
+                        
+                        <label for="pwdcheck">비밀번호 확인</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="pwdcheck" type="password" th:value="${c.pwd}" placeholder="Password checking" required>
+                        </div> <p></p>
+                        <span style="font-size: smaller; color:gray;" id="pwdcheckspan"></span><p></p>
+                        
+                        <label for="name">이름:</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="name" name="name" type="text" th:value="${c.name}" required>
+                        </div> <p></p>
+						<span style="font-size: smaller; color:gray;" id="namespan"></span><p></p>
+						
+                        <label for="birth">생년월일:</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="birth" name="birth" type="date" th:value="${#dates.format(c.birth, 'yyyy-MM-dd')}" required>
+                        </div> <p></p>
+                                                               
+                        <label for="phon">연락처:</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="phon" name="phon" type="tel" th:value="${c.phon}" placeholder="Phone Number"  maxlength="13" required>
+                        </div><p></p>
+                                                
+                        <label for="addr">주소:</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="addr" name="addr" type="text" th:value="${c.addr}" placeholder="도로명 주소" readonly>
+                          <button type="button" class="btn btn-primary" onclick="execDaumPostcode()">주소찾기</button>
+                        </div><p></p>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="addrd" name="addrd" type="text" th:value="${c.addrd}" placeholder="상세주소">
+                        </div><p></p>
+                        <span style="font-size: smaller; color:gray;" id="addrspan"></span><p></p>
+                                                                         
+                        <label for="nick">닉네임:</label><br>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="nick" name="nick" type="text" th:value="${c.nick}" placeholder="Nickname" required>
+                        </div> <p></p>
+                        <span style="font-size: smaller; color:gray;" id="nickspan"></span><p></p>
+                        
+                        <label for="img">프로필 사진:</label>
+                        <div class="pb-3 text-center">
+                          <img class="shadow-transition" id="imgviewer" th:src="@{'https://kr.object.ncloudstorage.com/foodject/cust/'+${c.img}}"> 
+                        </div>
+                        <div class="input-group">
+                          <input class="form-control input-box form-foodwagon-control"
+                          id="img" name="mf" type="file" placeholder="Profile Image" >
+                        </div> <p></p>
+                                                 
+	                      <div class="d-grid gap-3 col-sm-auto p-5">
+	                        <button id="updatebt" class="btn btn-danger" type="button">회원정보수정하기</button>
+	                      </div>
+		                <div class="text-center pt-5 pb-1"><button class="btn btn-light btn-sm" style="color:gray;" id="deletebt">회원탈퇴하기</button></div>
+
+                    </div>
+
+                
+                </form>
+                </div>
+                </div>
+                </div>
+				</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end of .container-->
+
+</section>
