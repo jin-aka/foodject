@@ -1,6 +1,5 @@
 package com.foodject.biz;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,8 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersVO> {
 		return dao.selectall();
 	}
 
-	public void modifysts(UserOrdersVO v) throws Exception{
-		dao.updatests(v);
+	public void modifydelete(int oid) throws Exception{
+		dao.orderdelete(oid);
 	}
 	
 	public List<UserOrdersMyVO> getod(String k) throws Exception{
@@ -69,4 +68,10 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersVO> {
 	public List<UserOrdersMyVO> getoddeopt(Integer k) throws Exception{
 		return dao.selectoddeopt(k);
 	}
+	
+	public UserOrdersMyVO getallprice(Integer k) throws Exception{
+		return dao.selectallprice(k);
+	}
+
+
 }

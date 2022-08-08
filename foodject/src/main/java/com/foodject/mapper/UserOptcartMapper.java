@@ -16,7 +16,8 @@ public interface UserOptcartMapper {
 	public List<UserOptcartVO> select_byCtid(int id) throws Exception;
 	public List<UserOptcartVO> selectall() throws Exception;
 	
-
+	public List<UserOptcartVO> select_byUid(String uid) throws Exception;
+	
 	
 
 }

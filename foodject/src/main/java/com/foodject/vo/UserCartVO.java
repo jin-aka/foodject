@@ -19,7 +19,8 @@ public class UserCartVO {
 	private int num;
 	private int sid;
 	
-	private int name;
+	private String name;
+	private int total;
 	
 	// For insert
 	public UserCartVO(String uid, int mnid, int num) {

@@ -1,22 +1,62 @@
 <script type="text/javascript"
   th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
+
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <script>
 $(document).ready(function () {
 	$('#mndcancel').click(function () {
-		var id =   $('input[name="collid"]').val();
-		var collid =   $('input[name="collid"]').val();
+		var id =   $('input[name="collid1"]').val();
+		var collid =   $('input[name="collid1"]').val();
 		var sid =   $('input[name="sid"]').val();
 	  location.href = "/host/menu/msel?id="+id+"&collid="+collid+"&sid="+sid;
 	});
+	$('#mnudt').click(function () {
+	    var name = $('#name').val();
+	    var price = $('#price').val();
+	    var line = $('#line').val();
+	    
+	    if(name == ''){
+	         $('#name').focus();
+	         alert("메뉴명을 입력하세요.");
+	         return;
+	      }
+	      if(price == ''){
+		         $('#price').focus();
+		         alert("가격을 입력하세요.");
+		         return;      
+		      }
+		      
+		      if(line == ''){
+		         $('#line').focus();
+		         alert("순서 번호를 정해주세요.");
+		         return;
+		      }
+	    
+		 $('#updateform').attr({
+	        'enctype': 'multipart/form-data',
+	        'method': 'post',
+	        'action': '/host/menu/detail/update'
+	      });
+	      $('#updateform').submit();
+	      });
+	
 });
 
  
 </script>
+<style>
+.form-group > img{
+ 	width:200px;
+}
+</style>
+
+
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
       <h4 class="card-title" th:text="${mnd.name} + ' 상세'">메뉴 등록</h4>
-      <form class="registerform" id="registerform">
+      <form class="updateform" id="updateform">
         
         <div class="form-group" >
         <img class="img-fluid rounded-3 h-100" th:if="${mnd.img != null }" 
@@ -49,7 +89,7 @@ $(document).ready(function () {
         </div>
         <div class="form-group">
         <label for="collid">컬렉션</label>
-                <select name="collid" class="form-control form-control-item" >
+                <select name="collid" class="form-control form-control-item" id="collid" >
                 	<option th:each="co:${clist}" 
                 	th:if="${co.sid == mnd.sid}" 
                 	th:value="${co.id}" 
@@ -59,7 +99,16 @@ $(document).ready(function () {
                 	       		
                </select>
             </div>
-       
+       		<div class="form-group">
+          <label for="opt">옵션</label>
+         	<ul>
+         		<li th:if = "${olist.isEmpty()}"> 옵션없음 </li>
+         		<li th:unless = "${olist.isEmpty()}" th:each= "o: ${olist}" th:text = "${o.name}" ></li>
+         	
+         	</ul>
+         	<a class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#optModal"> 옵션 관리 </a>
+         	
+        </div>
           <div class="form-group">
            <label>이미지 수정</label>
             <input type="file" class="form-control file-upload-info" id="mndimg" name="mf" placeholder="Upload Image"
@@ -68,29 +117,47 @@ $(document).ready(function () {
               <!-- <button class="file-upload-browse btn btn-primary" id="bnumbtn" type="button">이미지 선택</button> -->
             </span>
           </div>
-          <div > 
+        <div > 
 				<input type="number" 
                     name="id"  value="id" th:value="${mnd.id}" hidden="hidden">
 				</div>
-			<div > 
-				<input type="number" 
-                    name="collid"  value="collid" th:value="${mnd.collid}" hidden="hidden">
-				</div>	
-				
-        	<div > 
+          <div > 
 				<input  type="number" 
                     name="sid"  value="sid" th:value="${mnd.sid}" hidden="hidden">
 				</div>
-          
         
-     <!--   <div class="form-group" hidden="hidden">
-          <label for="collid">컬렉션 ID</label>
-          <input type="number" class="form-control" id="collid" name="collid" th:value="${col.id}" placeholder="COLLECTION ID">
-        </div> -->
+     
         <button class="btn btn-primary" id="mnudt" type="button">수정</button>
         <button class="btn btn-light" id="mndcancel" type="button">취소</button>
       </form>
-      
+        
+			<div > 
+				<input type="number" 
+                    name="collid1"  value="collid" th:value="${mnd.collid}" hidden="hidden">
+				</div>	
+				
+        	<div id="optModal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+				
+				    <!-- Modal content-->
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        
+				        <h4 class="modal-title">옵션관리</h4>
+				      </div>
+				      <div class="modal-body">
+				      <div class="form-group"  th:each= "o: ${olist}">
+				      <input th:id="'opt'+${o.id}" type="text" name="mopt"   value="mopt" th:value="${o.name}" >
+					</div>		     
+				      </div>
+				      <div class="modal-footer">
+				      	
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+				
+				  </div>
+				</div>
       
     </div>
   </div>

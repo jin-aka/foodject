@@ -16,6 +16,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		left join dopt dt on d.id = dt.did
 		group by s.id, o.sid, s.status
 		having s.status != 0 and  s.mid = #{mid};
+
 	</select>
 	<!-- <insert id="insert" parameterType="HostShopVO" userGeneratedKeys="true" keyProperty="id"> -->
 	<insert id="insertMarker" parameterType="HostShopVO" useGeneratedKeys="true" keyProperty="marker" keyColumn="id">

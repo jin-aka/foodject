@@ -25,6 +25,7 @@ public class UserOrdersMyVO {
 	private Date odate;	
 	private int status;
 	private String ask;
+	private int allprice;
 	
 	//orders detail
 	private int deid;
@@ -42,10 +43,9 @@ public class UserOrdersMyVO {
 	private String sname;
 	private String slogo;
 
-
 	//delete
-	public UserOrdersMyVO(String uid, int status) {
-		this.uid = uid;
+	public UserOrdersMyVO(int oid, int status, int c) {
+		this.oid = oid;
 		this.status = status;
 	}
 
@@ -58,7 +58,12 @@ public class UserOrdersMyVO {
 		this.oid = oid;
 	}
 
-	//selectmenu - allargs
+	public UserOrdersMyVO(int oid, int allprice) {
+		this.oid = oid;
+		this.allprice = allprice;
+	}
+	
+
 
 
 	

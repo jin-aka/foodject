@@ -1,15 +1,14 @@
-
-
 <script>
 
 
-
-
-
+function check(){
+	var oid = $('input[name="oidinput"]').val();
+	if (confirm("주문내역을 삭제하시겠습니까? \n 삭제하면 복구할 수 없습니다.") == true){
+		location.href='/cust/orderdelete?oid='+oid;
+	};
+};
 $(document).ready(function(){
-
-
-
+	
 	//Menu Buttons
 	$('#update').click(function(){
  		location.href='/cust/update';
@@ -20,6 +19,8 @@ $(document).ready(function(){
 	$('#cs').click(function(){
  		location.href='/cust/cs';
 	});	
+
+
 
 });
 </script>
@@ -61,7 +62,7 @@ $(document).ready(function(){
 	      						<!-- 주문정보 odinfo(order info) -->
 						      	<h5 class="text-primary" th:if = "${i.status}  == 1" th:text="배달완료"></h5>
 						      	<h5 class="text-gray" th:if = "${i.status}  == 0" th:text="주문취소"></h5>
-						      	
+						      	<h5 class="text-dark" th:if = "${i.status}  == 2" th:text="배달중"></h5>						      	
 						      	<h2 th:text="${i.sname}"></h2>
 								<h6 th:text="${'주문일시: '+#dates.format(i.odate,'yyyy년 MM월 dd일 HH시 mm분')}"></h6>
 								<h6 class="pb-2" th:text="${'주문번호: '+i.oid+'번'}"></h6>
@@ -82,14 +83,14 @@ $(document).ready(function(){
 				                   <tbody>
 			                         <tr>
 		                               <td><h6 th:text="${m.mname}"></h6></td>	                              
-		                               <td align="right"><h6 th:text="${m.mprice+'W'}"></h6></td>
+		                               <td align="right"></td>
 				                     </tr>
 				                     <tr >
 		                               <td>
 		                               	<ul>
 		                               	  <li>
 		                               	    <p1>기본:&nbsp</p1>
-		                               	    <p1 th:text="${m.mprice+'원'}"></p1>
+		                               	    <p1 th:text="${#numbers.formatInteger(m.mprice, 0, 'COMMA')+'원'}"></p1>
 		                               	  </li> 
 		                               	  <li>
 		                               	    <p1>추가옵션(가격):&nbsp</p1>
@@ -113,7 +114,7 @@ $(document).ready(function(){
 									  <tbody>
 									    <tr>
 									      <td><h6>총 주문금액</h6>   </td>
-									      <td align="right"><h6>....원</h6>   </td>
+									      <td><h6 align="right" th:text="${#numbers.formatInteger(ap.allprice, 0, 'COMMA')}+'원'"></h6>   </td>
 									    </tr>
 									    <tr>
 									      <td><h6>배달팁</h6>   </td>
@@ -126,8 +127,8 @@ $(document).ready(function(){
 								  <table width="100%" cellspacing="0">
 									  <tbody>
 									    <tr>
-									      <td><h5>최종결제가격</h5>   </td>
-									      <td align="right"><h5>....원</h5>   </td>
+									      <td><h5>최종결제가격</h5></td>
+									      <td><h5 align="right" th:text="${#numbers.formatInteger(ap.allprice+3000, 0, 'COMMA')}+'원'"></h5></td>
 									    </tr>
 									  </tbody>
 								  </table>
@@ -156,11 +157,13 @@ $(document).ready(function(){
 					      </div>
 					
 				     	 <!-- 주문내역삭제 footer -->
-					      <div class="modal-footer">
-					      </div>
+						  <hr>
 					      <div class="modal-body">
 					      	<div class="text-center pb-3">
-		  			          <a type="button" class="btn btn-line2 btn-sm text-gray">주문내역삭제</a>					      	
+					      	  <input type="number" name=oidinput th:value="${i.oid}" hidden="hidden">
+		  			          <button id="deletebtn" onclick="check()" class="btn btn-line2 btn-sm text-gray">주문내역삭제</button>					      	
+		  			          
+					      	 
 					      	</div>					      	
 					      </div>
 					</div>

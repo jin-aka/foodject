@@ -37,9 +37,15 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_byUid" parameterType="usercartVO" resultType="usercartVO">
-		SELECT * FROM cart cr
+		SELECT *, (price*num) as total FROM cart cr
 		INNER JOIN menu mn ON mn.id=cr.mnid
 		WHERE cr.uid=#{uid} AND mn.sid=#{sid}
+	</select>
+	
+	<select id="selectSid_byUid" parameterType="String" resultType="Integer">
+		SELECT DISTINCT mn.sid FROM cart cr
+		INNER JOIN menu mn ON cr.mnid = mn.id
+		WHERE uid=#{uid}
 	</select>
 	
 	
