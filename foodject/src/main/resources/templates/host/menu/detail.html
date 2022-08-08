@@ -1,9 +1,27 @@
+
+<style type="text/css">
+.modal-dialog{
+	 position: fixed;
+        
+        
+         max-height: calc(100vh - 110px);
+         max-width: calc(100vh - 70px);
+         overflow-y: auto;
+}
+
+</style>
 <script type="text/javascript"
   th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
 
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script>
+/* function WindowModalResize(){
+	window.dialogWidth = $(document).width('600')+'px';
+	
+}
+ */
+
 $(document).ready(function () {
 	$('#mndcancel').click(function () {
 		var id =   $('input[name="collid1"]').val();
@@ -40,7 +58,59 @@ $(document).ready(function () {
 	      });
 	      $('#updateform').submit();
 	      });
+	 $("#selectall2").click(function() {
+			if($("#selectall2").is(":checked")) $("input[name=selected]").prop("checked", true);
+			else $("input[name=selected]").prop("checked", false);
+		});
+		
+		$("input[name=selected]").click(function() {
+			var total = $("input[name=selected]").length;
+			var checked = $("input[name=selected]:checked").length;
+			
+			if(total != checked) $("#selectall2").prop("checked", false);
+			else $("#selectall2").prop("checked", true); 
+		});
 	
+	$('#optdlt').click(function(){
+		var c = confirm('삭제 하시겠습니까?');
+		var oArray =[];
+		 $("input[name=selected]:checked").each(function(i) {
+			 oArray.push($(this).val());
+		 });
+	
+		
+		if(c == true){
+			 var id =   $('input[name="id"]').val();
+			 var collid =   $('input[name="collid1"]').val();
+			 var sid =   $('input[name="sid"]').val();
+			location.href='/host/menu/detail/optdelete?oArray='+oArray+"&id="+id+"&collid="+collid+"&sid="+sid;
+		}
+	});
+	$('#optadd').click(function () {
+    	var addopt = $('#addopt').val();
+    	var addpopt = $('#addpopt').val();
+    	
+	      
+	      if(addopt == ''){
+	         $('#addopt').focus();
+	         alert("옵션명을 입력하세요.");
+	         return;
+	      }
+	      if(addpopt == ''){
+		         $('#addpopt').focus();
+		         alert("가격을 입력하세요.");
+		         return;
+		      }
+			    
+    	
+    	
+      $('#addoptform').attr({
+        'method': 'post',
+        'action': '/host/menu/detail/optregisterimpl'
+      });
+      $('#addoptform').submit();
+
+    });
 });
 
  
@@ -101,14 +171,30 @@ $(document).ready(function () {
             </div>
        		<div class="form-group">
           <label for="opt">옵션</label>
-         	<ul>
-         		<li th:if = "${olist.isEmpty()}"> 옵션없음 </li>
-         		<li th:unless = "${olist.isEmpty()}" th:each= "o: ${olist}" th:text = "${o.name}" ></li>
+          <table class="table table-striped">
+					<thead>
+                    <tr>
+                        <th>옵션명</th>
+                        <th>가격</th>   
+                    </tr>
+                </thead> 
+                <tbody>
+                    <tr th:each= "o: ${olist}"> 	
+                      <td th:if = "${olist.isEmpty()}"> 옵션없음 </td>
+                      <td th:unless = "${olist.isEmpty()}" th:text = "${o.name}" ></td>
+                      <td th:unless = "${olist.isEmpty()}" th:text = "${o.price}"></td>    
+                    </tr>
+                </tbody>	
+				</table>
+          
+          <hr>
+          <a class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#optModal"> 옵션 관리 </a>
+        
          	
-         	</ul>
-         	<a class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#optModal"> 옵션 관리 </a>
          	
         </div>
+        
+        
           <div class="form-group">
            <label>이미지 수정</label>
             <input type="file" class="form-control file-upload-info" id="mndimg" name="mf" placeholder="Upload Image"
@@ -143,21 +229,72 @@ $(document).ready(function () {
 				    <div class="modal-content">
 				      <div class="modal-header">
 				        
-				        <h4 class="modal-title">옵션관리</h4>
+				        <h4 class="modal-title">옵션 수정 / 삭제</h4>
 				      </div>
+				      
 				      <div class="modal-body">
-				      <div class="form-group"  th:each= "o: ${olist}">
-				      <input type="checkbox" name="selected" th:value="${o.id}">
-				      <input th:id="'opt'+${o.id}" type="text" name="mopt"   value="mopt" th:value="${o.name}" >
+				      <form id="optform">
+				       <div class="form-group" >
+				       <table class="table table-striped">
+					<thead>
+                    <tr>
+                    	<th><input type="checkbox" id="selectall2" /></th>
+                        <th>옵션명</th>
+                        <th>가격</th>   
+                    </tr>
+                </thead> 
+                <tbody>
+                    <tr th:each= "o: ${olist}"> 	
+                      <td th:if = "${olist.isEmpty()}"> <input type="checkbox" name="selected"> </td>
+                      <td th:if = "${olist.isEmpty()}"> 옵션없음 </td>
+                      <td th:if = "${olist.isEmpty()}"> - </td>
+                      <td th:unless = "${olist.isEmpty()}" ><input type="checkbox" name="selected" th:value="${o.id}"> </td>
+                      <td th:unless = "${olist.isEmpty()}" ><input th:id="'opt'+${o.id}" type="text" name="mopt"   value="mopt" th:value="${o.name}" > </td> 
+                      <td th:unless = "${olist.isEmpty()}" ><input th:id="'optp'+${o.id}" type="number" name="popt"   value="popt" th:value="${o.price}" > </td>  
+                    </tr>
+                </tbody>	
+				</table>
+				      
+				      
+				      
+				     
+				    
 					</div>	
+					</form>
 					<div>
+					<hr style="border: dotted 1px blue;">
+					<form id="addoptform">
+					<div>
+					<h4> 옵션 추가</h4>
 					<hr>
-					<input  type="text" id="addopt" name="addopt" >
-					<input type="button" value="옵션추가">
+					</div>
+					<div>
+					 <label for="price">옵션명: </label>
+					 </div>
+					<div class="form-group">
+         			
+					<input class="form-control" type="text" id="addopt" name="name" >
+					</div>
+					<div>
+					<label for="price">가격:</label>
+					</div>
+					<div class="form-group">
+        			  
+					<input class="form-control" type="number" id="addpopt" name="price">
+					</div>
+					<div class="form-group">
+        			<input class="form-control" type="number"  name="collid" th:value="${mnd.collid}" hidden="hidden">
+        			<input class="form-control" type="number"  name="sid" th:value="${mnd.sid}" hidden="hidden">  
+					<input class="form-control" type="number" id="idopt" name="mnid" th:value="${mnd.id}" hidden="hidden">
+					</div>
+					
+					</form>
 					</div>	     
 				      </div>
 				      <div class="modal-footer">
+				      	 <button class="btn btn-primary" id="optadd" type="button">추가</button>
 				      	 <button class="btn btn-primary" id="optudt" type="button">수정</button>
+				      	 <button class="btn btn-primary" id="optdlt" type="button">삭제</button>
 				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				      </div>
 				    </div>
