@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="/bootstrap/skydash/vendors/feather/feather.css">
+  <link rel="stylesheet" href="/bootstrap/skydash/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="/bootstrap/skydash/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+</head>
+
+<body>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+ <script th:inline="javascript">
+      /*<![CDATA[*/
+    var id = [[${ session.loginshop }]];
+  
+   </script>
+
+
+
+<script>
+
+
+$(document).ready(function(){
+	$('#pwdc').click(function(){
+		 var pwd = $('#cpwd').val();
+		 var ipwd = $('#ipwd').val();
+		if( pwd != ipwd){
+			alert("비밀번호가 틀립니다.");	
+		}
+		if( pwd == ipwd){
+			location.href = "/host/changepwd2"
+		}
+		
+		
+	});
+
+	
+	
+	
+});
+
+</script>
+
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+      <div class="content-wrapper d-flex align-items-center auth px-0">
+        <div class="row w-100 mx-0">
+          <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+              <div class="brand-logo">
+                <a href="/host"><img src="/bootstrap/skydash/images/logo.svg" alt="logo"></a>
+              </div>
+              <h4>비밀번호 변경</h4>
+              <h6 class="font-weight-light"  >현재 비밀번호를 입력하세요</h6>
+            
+              
+                
+                <div >
+                  <input type="password" class="form-control form-control-lg" id="cpwd" placeholder="Enter Password" name="cpwd">
+                  
+                </div>
+                 <div >
+                  <input type="text" class="form-control form-control-lg" id="ipwd" placeholder="Enter Password" name="ipwd" th:value="${m.pwd}" hidden="hidden" >
+                  
+                </div>
+                
+               
+                <div class="mt-3">
+                  <button id="pwdc" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">비밀번호 확인</button>
+                </div>
+                
+                <div class="mb-2">
+                  
+                </div>
+                <div class="text-center mt-4 font-weight-light">
+                 비밀번호가 기억나지 않으세요?   <br>
+                  <a href="/host/findpwd" class="text-primary">비밀번호가 찾기</a>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="/bootstrap/skydash/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="/bootstrap/skydash/js/off-canvas.js"></script>
+  <script src="/bootstrap/skydash/js/hoverable-collapse.js"></script>
+  <script src="/bootstrap/skydash/js/template.js"></script>
+  <script src="/bootstrap/skydash/js/settings.js"></script>
+  <script src="/bootstrap/skydash/js/todolist.js"></script>
+  <!-- endinject -->
+</body>
+
+</html>
