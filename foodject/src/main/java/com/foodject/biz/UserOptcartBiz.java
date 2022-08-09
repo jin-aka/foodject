@@ -48,6 +48,9 @@ public class UserOptcartBiz implements Biz<Integer, UserOptcartVO> {
 		return dao.select_byUid(uid);
 	}
 	
+	public Integer getCount(Integer ctid) throws Exception{
+		return dao.count(ctid);
+	}
 	
 	
 }

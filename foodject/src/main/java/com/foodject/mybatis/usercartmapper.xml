@@ -18,6 +18,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		UPDATE cart SET num=#{num} WHERE id=#{id}
 	</update>
 	
+	<update id="updateCount" parameterType="usercartVO">
+		UPDATE cart SET count=#{count} WHERE id=#{id}
+	</update>
+	
 	<delete id="delete" parameterType="Integer">
 		DELETE FROM cart WHERE id=#{id}
 	</delete>

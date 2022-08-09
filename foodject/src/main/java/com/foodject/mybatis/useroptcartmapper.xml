@@ -29,6 +29,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE uid=#{uid}
 	</select>
 	
-	
+
+	<!-- optcart 개수 세기 -->
+	<select id="count" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(ctid) FROM optcart
+		WHERE ctid=#{ctid};
+	</select>
 
 </mapper>

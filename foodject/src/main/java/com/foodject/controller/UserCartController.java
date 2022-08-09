@@ -29,19 +29,6 @@ public class UserCartController {
 	
 	@Autowired
 	UserShopBiz sbiz;
-	
-	public void mainProduct(Model m) {
-//		List<ProductVO> plist = null;
-//		String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","img", "product_img").toString();
-//		System.out.println("imgpath : " +  pimgpath);
-//		try {	
-//			plist = mainbiz.get();
-//			m.addAttribute("plist", plist);
-//			m.addAttribute("imgpath", pimgpath);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
 
 	@RequestMapping("")
 	public String main(Model m, String uid, HttpSession session, String prevUrl) {
@@ -50,16 +37,20 @@ public class UserCartController {
 			return "redirect:/cust/login?prevUrl="+prevUrl;
 		}else if(cust.getId().equals(uid) == false) {
 			return "redirect:/custUidError";
-		}else{
+		}else{	
 			int sid = 0;
 			String id = cust.getId();
 			String nickname = cust.getNick();
 			UserShopVO shop = null;
 			List<UserCartVO> crlist = null;
+			List<UserOptcartVO> oclistForSize = null;
 			List<UserOptcartVO> oclist = null;
-			
-			try {
+			UserCartVO cartForCount = null;
 				
+			int ctid = 0;
+			int cnt = 0;
+				
+			try {
 				sid = crbiz.getSid_byUid(uid);
 				
 				shop = sbiz.get(sid);
@@ -68,30 +59,36 @@ public class UserCartController {
 				UserCartVO obj = new UserCartVO(0, uid,sid);
 				crlist = crbiz.get_byUid(obj);
 				m.addAttribute("crlist",crlist);
-				
+					
 				oclist = ocbiz.get_byUid(uid);
-				m.addAttribute("oclist",oclist);
-				
+					
+				for (UserCartVO cr : crlist) {
+					ctid = cr.getId();
+					System.out.println(ctid);
+					oclistForSize = ocbiz.get_byCtid(cr.getId());
+					for (UserOptcartVO oc : oclistForSize) {
+						System.out.println(oc);
+					}
+					cnt = ocbiz.getCount(ctid);
+					cr.setCount(cnt);
+				}	
+				m.addAttribute("oclist", oclist);
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
+			}	
+				
 			m.addAttribute("user",id+"( "+nickname+" ) ");
 			m.addAttribute("center", "user/cart/center" );
-		}
+		}		
 		return "user/index";
-	}
-	
+	}			
+				
 	@RequestMapping("/quantity_modify")
 	public String quantity_modify(Model m, HttpSession session) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
 		String uid = cust.getId();
-		
-		
-		
+				
 		return "redirect:/cart";
 	}
-
 }
