@@ -36,8 +36,65 @@ public class HostOrdersVO {
 	private String dopt_oname;
 	private int dopt_oprice;
 	private int allprice;
+	private int shop_id;
+	private String shop_name;
+	private String shop_mid;
+	
+	
 	public HostOrdersVO(int id) {
 		this.id = id;
+	}
+
+	public HostOrdersVO(int shop_id, String shop_mid) {
+		this.shop_id = shop_id;
+		this.shop_mid = shop_mid;
+	}
+
+
+	// *.xml/selectorders
+	public HostOrdersVO(int id, String uid, int sid, String addr, String addrd, String phon, String nick, Date date,
+			int status, String ask, int shop_id,  String shop_mid, String shop_name) {
+		this.id = id;
+		this.uid = uid;
+		this.sid = sid;
+		this.addr = addr;
+		this.addrd = addrd;
+		this.phon = phon;
+		this.nick = nick;
+		this.date = date;
+		this.status = status;
+		this.ask = ask;
+		this.shop_id = shop_id;
+		this.shop_mid = shop_mid;
+		this.shop_name = shop_name;
+		
+	}
+
+	public HostOrdersVO(int id, String uid, int sid, String addr, String addrd, String phon, String nick, Date date,
+			int status, String ask, int detail_id, int detail_odid, int detail_mnid, String detail_mname,
+			int detail_num, int detail_price, int dopt_did, int dopt_opid, String dopt_oname, int dopt_oprice,
+			int allprice) {
+		this.id = id;
+		this.uid = uid;
+		this.sid = sid;
+		this.addr = addr;
+		this.addrd = addrd;
+		this.phon = phon;
+		this.nick = nick;
+		this.date = date;
+		this.status = status;
+		this.ask = ask;
+		this.detail_id = detail_id;
+		this.detail_odid = detail_odid;
+		this.detail_mnid = detail_mnid;
+		this.detail_mname = detail_mname;
+		this.detail_num = detail_num;
+		this.detail_price = detail_price;
+		this.dopt_did = dopt_did;
+		this.dopt_opid = dopt_opid;
+		this.dopt_oname = dopt_oname;
+		this.dopt_oprice = dopt_oprice;
+		this.allprice = allprice;
 	}
 
 

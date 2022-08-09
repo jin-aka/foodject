@@ -35,4 +35,5 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT COUNT(ctid) FROM optcart
 		WHERE ctid=#{ctid};
 	</select>
+
 </mapper>

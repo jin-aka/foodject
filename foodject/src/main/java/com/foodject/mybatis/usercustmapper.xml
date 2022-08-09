@@ -14,7 +14,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		INSERT INTO cust VALUES(#{id}, #{pwd}, #{nick}, #{name}, #{birth},SYSDATE(), #{phon}, #{addr}, #{addrd},1, #{img})
 	</insert>
 	<update id="update" parameterType="usercustVO">
-		UPDATE cust SET pwd=#{pwd}, nick=#{nick}, name=#{name}, birth=#{birth},phon=#{phon}, addr=#{addr}, addrd=#{addrd},img=#{img} WHERE id=#{id}
+		<if	test="img != null"> 
+		 	UPDATE cust SET pwd=#{pwd}, nick=#{nick}, name=#{name}, birth=#{birth},phon=#{phon}, addr=#{addr}, addrd=#{addrd},img=#{img} WHERE id=#{id}
+		</if>
+		<if	test="img == null"> 
+		 	UPDATE cust SET pwd=#{pwd}, nick=#{nick}, name=#{name}, birth=#{birth},phon=#{phon}, addr=#{addr}, addrd=#{addrd} WHERE id=#{id}
+		</if>
+		
 	</update>
 	<delete id="updatests" parameterType="usercustVO">
 		UPDATE cust SET status=0 WHERE id=#{id}
