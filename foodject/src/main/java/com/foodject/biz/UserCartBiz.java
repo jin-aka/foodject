@@ -51,5 +51,9 @@ public class UserCartBiz implements Biz<Integer, UserCartVO> {
 	public Integer getSid_byUid(String uid) throws Exception{
 		return dao.selectSid_byUid(uid);
 	}
+	
+	public void set(UserCartVO v) throws Exception{
+		dao.updateCount(v);
+	}
 
 }

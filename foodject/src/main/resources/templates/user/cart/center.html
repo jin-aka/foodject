@@ -1,7 +1,6 @@
 <section class="py-8 overflow-hidden">
 
 <style>
-
 .cartbox{
 	/* offset-x | offset-y | blur-radius | spread-radius | color */
 	box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.1);
@@ -86,18 +85,18 @@ $(document).ready(function(){
     	<!-- 우측 장바구니 정보 start -->
     	<br>
     	<!-- 하단 옵션 start -->
-    	<div>
-    		<div class="optionbox" >
-    		<h5 style="text-align: center">옵션</h5>
-    		<table class="optiontable">
-    			<tr th:each="oc:${oclist}" th:if="${oc.ctid==cr.id}">
-    				<td th:text="${oc.name}+' / '">옵션 이름</td>
-    				<td th:text="${oc.price}+' 원'">옵션 가격</td>    				
-    			</tr>
-    				
-    		</table>
+    	<div th:if="${cr.count != 0}">
+    		<div class="optionbox">
+	    		<h5 style="text-align: center">옵션</h5>
+	    		<table class="optiontable">
+	    			<tr th:each="oc:${oclist}" th:if="${oc.ctid == cr.id}">
+	    				<td th:text="${oc.name}+' / '">옵션 이름</td>
+	    				<td th:text="${oc.price}+' 원'">옵션 가격</td>
+	    			</tr>
+	    				
+	    		</table>
     		</div>
-    	</div>
+		</div>
 		<!-- 하단 옵션 end -->
     </div>
    
