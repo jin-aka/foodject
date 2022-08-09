@@ -31,4 +31,16 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		where d.odid = #{id}
 		order by d.id asc;
 	</select>
+	<select id="selectorders" parameterType="HostOrdersVO" resultType="HostOrdersVO">
+		select 
+			o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask, s.name as shop_name
+		from 
+			orders o
+		left join 
+			shop s on o.sid = s.id
+		where
+			mid = "mid01"
+		order by 
+			o.status desc, o.id asc
+	</select>
 </mapper>

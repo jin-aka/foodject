@@ -25,6 +25,7 @@ public class UserOrdersVO {
 	private Date date;
 	private int status;
 	private String ask;
+	
 	public UserOrdersVO(int id, String uid, int sid, String addr, String addrd, String phon, String nick, Date date,
 			String ask) {
 		this.id = id;
