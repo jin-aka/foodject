@@ -36,8 +36,7 @@ public class HostOrdersAJAX {
 			return mv;
 		}
 		manager = (HostManagerVO) session.getAttribute("loginshop");
-		System.out.println("getDatas get id : " +manager.getId());
-		System.out.println("int id  : " + id);
+
 		obj = new HostOrdersVO(id, manager.getId());
 		
 
@@ -46,14 +45,24 @@ public class HostOrdersAJAX {
 		try {
 			list = biz.selectorders(obj);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("list : " + list);
-	
+		
+
 		return list;
 	}
-	
+	@RequestMapping("changeStatus")
+	public Object changeStatus( HostOrdersVO obj) {
+		System.out.println("changeStatus : " + obj);
+		try {
+			biz.changeStatus(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("changeStatus : " + obj);
+		return obj;
+	}
 
 }
 

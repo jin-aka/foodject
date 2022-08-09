@@ -87,6 +87,7 @@
 
 		}
 		function bill(id) {
+			
 			$.ajax({
 				url: '/host/shop/bill',
 				type: "POST",
@@ -94,7 +95,7 @@
 				success: function (data) {
 
 					display(data);
-
+					
 					$('#open_modal_btn').click();
 				}
 			});

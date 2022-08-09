@@ -55,10 +55,10 @@ public class HostShopAJAX {
 	@RequestMapping("shopdelete")
 	public void shopdelete( int[] sArray  ) {
 		// HostManagerVO manager = (HostManagerVO) session.getAttribute("loginshop");
-		System.out.println("shopdelete start : " + sArray[0]);
+	
 
 		for (int i = 0; i < sArray.length; i++) {
-			System.out.println("sArray : " + sArray[i]);
+		
 		}
 			try {
 				

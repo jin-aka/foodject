@@ -19,7 +19,7 @@ public interface HostOrdersMapper {
 	public List<HostOrdersVO> selectbills(int id) throws Exception;
 	public List<HostOrdersVO> selectbill(int id) throws Exception;
 	public List<HostOrdersVO> selectorders(HostOrdersVO obj) throws Exception;
-	
+	public HostOrdersVO changestatus(HostOrdersVO obj) throws Exception;
 	
 	
 }

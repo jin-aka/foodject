@@ -3,9 +3,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Shop Websocket</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<style>
@@ -39,7 +40,8 @@
 		// 서버소켓에 연결
 
 
-		var orders_status = new Set();
+		var orders_status = new Map();
+		var modal_id = null;
 		
 		function connect() {
 			var socket = new SockJS('/ws');
@@ -118,8 +120,18 @@
 		}
 		
 		function modal(id){
-alert("id : " + id)
-			$('#open_modal_btn').click();
+
+			$.ajax({
+				url: '/host/shop/bill',
+				type: "POST",
+				data: { "id": id },
+				success: function (data) {
+
+					modal_display(data);
+					
+					
+				}
+			});
 		}
 
 		function display(data) {
@@ -129,20 +141,25 @@ alert("id : " + id)
 				const element = data[index];
 				list_str = "";
 				if (element.status == 4) {
-					list_str = '<tr class="table-danger" onclick="modal('+element.id+')">';
-						element.status = "주문 대기";
+					list_str = '<tr class="table-danger" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
+					orders_status.set(element.status, 'orders_tr'+ element.id );
+					element.status = "주문 대기";
+						
 
 				} else if (element.status == 3) {
-					list_str = '<tr class="table-warning" onclick="modal('+element.id+')">';
-						element.status = "주문 수락";
+					list_str = '<tr class="table-warning" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
+					orders_status.set(element.status, 'orders_tr'+ element.id );
+					element.status = "주문 수락";
 
 				} else if (element.status == 2) {
-					list_str = '<tr class="table-info" onclick="modal('+element.id+')">';
-						element.status = "배송 중";
+					list_str = '<tr class="table-info" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
+					orders_status.set(element.status, 'orders_tr'+ element.id );
+					element.status = "배송 중";
 				}
 				else if (element.status == 1) {
-					list_str = '<tr class="table-success" onclick="modal('+element.id+')">';
-						element.status = "배송 완료";
+					list_str = '<tr class="table-success" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
+					orders_status.set(element.status, 'orders_tr'+ element.id );
+					element.status = "배송 완료";
 				}
 
 				list_str += '<td>' + element.id + '</td>'
@@ -156,16 +173,6 @@ alert("id : " + id)
 				$('#orders_list').append(list_str);
 
 			}
-			// <th>주문 번호</th>
-			// <th>가게 이름</th>
-			// <th>주문 고객</th>
-			// <th>배송지</th>
-			// <th>전화번호</th>
-			// <th>수락/거절</th>
-			// <th>주문 시간</th>
-
-
-
 		}
 		function ajaxDatas(id) {
 
@@ -179,6 +186,7 @@ alert("id : " + id)
 				}
 			});
 		}
+
 		function getData(name, id) {
 			if (name == null) {
 				$('#dropdownMenuDate2').text("전 체");
@@ -190,9 +198,114 @@ alert("id : " + id)
 
 
 		}
+		function modal_display(data) {
+
+			var arr = new Array();
+			var did = 0;
+			var modal_str = "";
+			var allprice = 0;
+			arr = data;
+
+			$('#modal_id').text("주문 번호 : " + arr[0].id);
+			$('#modal_uid').text(arr[0].uid);
+			$('#modal_nick').text(arr[0].nick);
+			$('#modal_date').text(moment(arr[0].date).format("YYYY년 MM월 DD일 HH시mm분"));
+			$('#modal_addr').text(arr[0].addr + " " + arr[0].addrd);
+			$('#modal_phon').text(arr[0].phon);
+			if (arr[0].status == 0) {
+				$('#modal_status').text("주문 취소");
+			} else if (arr[0].status == 1) {				
+				$('#modal_status').text("배송 완료");
+
+			} else if (arr[0].status == 2) {
+				$('#modal_status').text("배송 중");
+
+
+			}else if (arr[0].status == 3) {
+				$('#modal_status').text("주문 수락");
+			}else if (arr[0].status == 4) {
+				$('#modal_status').text("주문 대기");
+				
+			}
+			$('#modal_ask').text(arr[0].ask);
+
+			$('#modal_body').empty();
+			for (let index = 0; index < arr.length; index++) {
+				const element = arr[index];
+
+				if (did != element.detail_id) {
+					modal_str = '<tr id=detail_' + element.detail_id + '>'
+						+ '<td class="font-weight-bold" colspan="2">' + element.detail_mname + '</td>'
+						+ '<td>' + element.detail_num + '</td>'
+						+ '<td class="right_align">' + element.detail_price + '원</td>'
+						+ '</tr>';
+					if (element.dopt_oname != null) {
+						modal_str += '<tr >'
+							+ '<td></td>'
+							+ '<td class="right_align">' + element.dopt_oname + '</td>'
+							+ '<td> + </td>'
+							+ '<td class="right_align">' + element.dopt_oprice + '원</td>'
+							+ '</tr>'
+					}
+
+					$('#modal_body').append(modal_str);
+					did = element.detail_id;
+					allprice += (element.detail_num * element.detail_price) + element.dopt_oprice;
+				} else {
+					modal_str = '<tr >'
+						+ '<td></td>'
+						+ '<td class="right_align">' + element.dopt_oname + '</td>'
+						+ '<td> + </td>'
+						+ '<td class="right_align">' + element.dopt_oprice + '원 </td>'
+						+ '</tr>'
+					$('#modal_body').append(modal_str);
+					allprice += element.dopt_oprice;
+				}
+
+			}
+			modal_str = '<tr >'
+						+ '<td></td>'
+						+ '<td ></td>'
+						+ '<td class="font-weight-bold"> 총액  </td>'
+						+ '<td class="right_align">' + allprice + '원 </td>'
+						+ '</tr>'
+					$('#modal_body').append(modal_str);
+					modal_id = arr[0].id;
+		$('#open_modal_btn').click();
+		}
+		function changeStatus(id, status){
+		
+			$.ajax({
+				url: '/host/orders/changeStatus',
+				type: "POST",
+				data: { "id": id, 
+					"status" : status },
+				success: function (data) {
+
+				}
+			});
+		}
+
 		$(document).ready(function () {
 
 			getData();
+			$("#modal_ok").click(function () {
+				changeStatus(modal_id, 3);
+			});
+			$("#modal_delivery").click(function () {		
+				changeStatus(modal_id, 2);
+			});
+			$("#modal_delivery_success").click(function () {			
+				changeStatus(modal_id, 1);
+			});
+			$("#modal_no").click(function () {			
+				changeStatus(modal_id, 0);
+			});
+			$("#modal_cancel").click(function () {			
+				changeStatus(modal_id, 0);
+			});
+
+			// <웹 소켓>
 			$("#connect").click(function () {
 				connect();
 			});
@@ -208,6 +321,7 @@ alert("id : " + id)
 			$("#sendto").click(function () {
 				sendTo();
 			});
+			// </웹 소켓>
 		});
 	</script>
 </head>
@@ -308,10 +422,12 @@ alert("id : " + id)
 
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<!-- <button type="button" class="btn btn-info btn-rounded btn-fw" id="modifybtn">수정</button> -->
-				<!-- <button type="button" class="btn btn-success" id="confirmbtn">확인</button> -->
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="closebtn">닫기</button>
-				<!-- <button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button> -->
+				<button type="button" class="btn btn-warning btn-rounded btn-fw" id="modal_ok">수락</button>
+				<button type="button" class="btn btn-info btn-rounded btn-fw" id="modal_delivery">배달</button>
+				<button type="button" class="btn btn-success btn-rounded btn-fw" id="modal_delivery_success">배달 완료</button>
+				<button type="button" class="btn btn-danger btn-rounded btn-fw" id="modal_no">거절</button>
+				<button type="button" class="btn btn-warning" id="modal_cancel">취소</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal_close">닫기</button>
 			</div>
 		</div>
 	</div>

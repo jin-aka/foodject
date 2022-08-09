@@ -34,7 +34,7 @@ public class HostShopController {
 	
 	@RequestMapping("bills")
 	public ModelAndView bills(ModelAndView mv, HttpSession session, int id) {
-		System.out.println("bills in : " + id);
+
 		List<HostOrdersVO> list = null;
 		if (session.getAttribute("loginshop") == null) {
 			mv.setViewName("redirect:/host");
@@ -49,7 +49,7 @@ public class HostShopController {
 		if (list.size() != 0) {
 			mv.addObject("olist", list);
 		}
-		System.out.println("olist : " + list);
+
 		mv.addObject("kakaosrc",kakaoJSKey);
 		mv.setViewName("/host/index");
 		mv.addObject("contents", "/host/shop/bills");
@@ -76,7 +76,7 @@ public class HostShopController {
 		if (list.size() != 0) {
 			mv.addObject("slist", list);
 		}
-		System.out.println("slist : " + list);
+
 		mv.addObject("kakaosrc",kakaoJSKey);
 		mv.setViewName("/host/index");
 		mv.addObject("contents", "/host/shop/billcharts");
@@ -103,7 +103,7 @@ public class HostShopController {
 		if (list.size() != 0) {
 			mv.addObject("slist", list);
 		}
-		System.out.println("slist : " + list);
+		
 		mv.addObject("kakaosrc",kakaoJSKey);
 		mv.setViewName("/host/index");
 		mv.addObject("center", "/host/shop/analysis");
@@ -128,7 +128,7 @@ public class HostShopController {
 		if (list.size() != 0) {
 			mv.addObject("slist", list);
 		}
-		System.out.println("slist : " + list);
+		
 		mv.addObject("kakaosrc",kakaoJSKey);
 		mv.setViewName("/host/index");
 		mv.addObject("center", "/host/shop/center");
@@ -147,26 +147,24 @@ public class HostShopController {
 	public ModelAndView registerimpl(ModelAndView mv, HostShopVO obj, HttpSession session) {
 		HostManagerVO manager = null;
 		manager = (HostManagerVO) session.getAttribute("loginshop");
-		System.out.println("obj : " + obj);
+	
 
 		obj.setMid(manager.getId());
 		obj.setStatus(1);
 		// ?????.jpg
 
-		System.out.println("latt : " + obj.getLatt());
-		System.out.println("logt : " + obj.getLogt());
+
 		// System.out.println("latt : " + latt);
 		// System.out.println("logt : " + logt);
 
 
 		try {
 			biz.registerMarker(obj);
-			
-			System.out.println("registerMarker.obj : "+obj);
+
 			
 			biz.registerShop(obj);
 
-			System.out.println("register.obj : "+obj);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

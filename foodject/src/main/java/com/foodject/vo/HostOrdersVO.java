@@ -45,6 +45,11 @@ public class HostOrdersVO {
 		this.id = id;
 	}
 
+	public HostOrdersVO(int id, int status) {
+		this.id = id;
+		this.status = status;
+	}
+
 	public HostOrdersVO(int shop_id, String shop_mid) {
 		this.shop_id = shop_id;
 		this.shop_mid = shop_mid;
