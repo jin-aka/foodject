@@ -39,8 +39,13 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		left join 
 			shop s on o.sid = s.id
 		where
-			mid = "mid01"
+			mid = #{shop_mid}
 		order by 
 			o.status desc, o.id asc
 	</select>
+	<update id="changestatus" parameterType="HostOrdersVO" >
+		update orders set status=#{status} where id=#{id};
+	</update >
+	
+	
 </mapper>
