@@ -43,6 +43,18 @@ public class UserCustBiz implements Biz<String, UserCustVO>{
 	public void modifysts(UserCustVO v) throws Exception{
 		dao.updatests(v);
 	}
+	
+	public void modifyetc(UserCustVO v) throws Exception{
+		dao.updateetc(v);
+	}
+	
+	public void modifyimg(UserCustVO v) throws Exception{
+		dao.updateimg(v);
+	}
+	
+	public void modifypwd(UserCustVO v) throws Exception{
+		dao.updatepwd(v);
+	}
 
 
 }
