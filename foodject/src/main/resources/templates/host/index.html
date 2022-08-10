@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<style>
+.nav-item{
+	
+}
 
+</style>
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -18,6 +23,11 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
+   <link rel="apple-touch-icon" sizes="180x180" href="/bootstrap/foodwagon/assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/bootstrap/foodwagon/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/bootstrap/foodwagon/assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/bootstrap/foodwagon/assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="/bootstrap/foodwagon/assets/img/favicons/manifest.json">
   <!-- style -->
   <style type="text/css">
     a:link {  text-decoration: none }
@@ -27,13 +37,16 @@
   </style>
   <!-- endinject -->
   <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+    <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script src="/bootstrap/skydash/js/chart.js"></script>
-
+  
   <script th:inline="javascript">
 		/*<![CDATA[*/
     var id = [[${ session.loginshop }]];
@@ -48,7 +61,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="/host"><img src="/bootstrap/skydash/images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo mr-5" href="/host"><img src="/bootstrap/foodwagon/assets/img/gallery/logo.svg" class="mr-2" alt="logo"/><span class="text-1000 fs-3 fw-bold ms-2 text-gradient">Foodject</span></a>
         <a class="navbar-brand brand-logo-mini" href="/host"><img src="/bootstrap/skydash/images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -63,7 +76,9 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+             <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
+                <input class="form-control border-0 input-box bg-100" type="search" placeholder="Search" aria-label="Search" />
+              </div>  
             </div>
           </li>
         </ul>

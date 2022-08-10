@@ -1,6 +1,9 @@
 package com.foodject.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +115,7 @@ public class HostMainController {
 	}
 	@RequestMapping("/findpwd")
 	public ModelAndView findpwd(ModelAndView mv) {
+		
 		mv.setViewName("host/findpwd");
 		return mv;
 	}
@@ -131,19 +135,27 @@ public class HostMainController {
 		return mv;
 	}
 	@RequestMapping("/changepwd2")
-	public ModelAndView changepwd2(ModelAndView mv) {
+	public ModelAndView changepwd2(ModelAndView mv, HttpSession session) {
+		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
+		session.setAttribute("loginshop", mng);
+		try {
+			mng= mbiz.get(mng.getId());
+			mv.addObject("m", mng);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		mv.setViewName("host/changepwd2");
 		return mv;
 	}
 	@RequestMapping("/update2")
-	public String update2(Model m, HostManagerVO obj, HttpSession session) {
-		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
-		session.setAttribute("loginshop", mng);
-		System.out.println(mng);
+	public String update2(Model m, HostManagerVO obj) {
+		
 		try {
-			mng= mbiz.get(mng.getId());
-			m.addAttribute("m", mng);
-			mbiz.modify(obj);
+			
+			mbiz.modifypwd(obj);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -151,4 +163,29 @@ public class HostMainController {
 		
 		return "redirect:mypage";
 	}
+	
+	
+	@RequestMapping("/findpwd/findpwdimpl")
+	public String findpwdimpl(Model m, String id, String email, String pwd) {
+		HostManagerVO manager = null;
+		try {
+			manager = mbiz.get(manager.getId());
+			System.out.println(manager);
+			if(manager == null) {
+				throw new Exception("아이디가 존재하지 않습니다.");
+			}
+			
+			if (manager.getEmail().equals(email)) {
+				throw new Exception(manager.getPwd());
+				
+			}else {
+				throw new Exception("이메일이 틀립니다.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "host/login";
+	}
+	
+	
 }
