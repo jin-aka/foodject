@@ -115,4 +115,40 @@ public class HostMainController {
 		mv.setViewName("host/findpwd");
 		return mv;
 	}
+	@RequestMapping("/changepwd")
+	public ModelAndView changepwd(ModelAndView mv, HttpSession session) {
+		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
+		session.setAttribute("loginshop", mng);
+		try {
+			mng= mbiz.get(mng.getId());
+			mv.addObject("m", mng);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		mv.setViewName("host/changepwd");
+		return mv;
+	}
+	@RequestMapping("/changepwd2")
+	public ModelAndView changepwd2(ModelAndView mv) {
+		mv.setViewName("host/changepwd2");
+		return mv;
+	}
+	@RequestMapping("/update2")
+	public String update2(Model m, HostManagerVO obj, HttpSession session) {
+		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
+		session.setAttribute("loginshop", mng);
+		System.out.println(mng);
+		try {
+			mng= mbiz.get(mng.getId());
+			m.addAttribute("m", mng);
+			mbiz.modify(obj);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:mypage";
+	}
 }

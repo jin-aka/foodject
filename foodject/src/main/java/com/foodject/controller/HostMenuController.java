@@ -339,6 +339,7 @@ public class HostMenuController {
 		return "redirect:/host/menu/detail?id="+ov.getMnid()+"&collid="+mnv.getCollid()+"&sid="+mnv.getSid();
 	}
 	
+	
 //	@RequestMapping("/menuregisterimpl")
 //	public String addimpl(Model m, HostMenuVO mn ) {
 //		String imgname = p.getMf().getOriginalFilename();
