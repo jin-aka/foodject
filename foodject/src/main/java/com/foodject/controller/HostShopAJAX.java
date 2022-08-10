@@ -40,8 +40,6 @@ public class HostShopAJAX {
 	
 	@RequestMapping("bill")
 	public Object bill( int id  ) {
-		
-		System.out.println("bilss : " + id);
 		List<HostOrdersVO> list = null;
 		try {
 			list = obiz.selectbill(id);
@@ -49,7 +47,6 @@ public class HostShopAJAX {
 			
 			e.printStackTrace();
 		}
-		System.out.println("HostOrderVO list : " + list);
 		return list;
 	}
 	@RequestMapping("shopdelete")
