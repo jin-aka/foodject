@@ -16,6 +16,7 @@ function execDaumPostcode(){
 
 
 $(document).ready(function(){	
+	
 	//전화번호 유효성 검사
 	function autoHypenTel(str) {
 		  str = str.replace(/[^0-9]/g, '');
@@ -81,18 +82,48 @@ $(document).ready(function(){
 
 	
 	
-	//비밀번호2 유효성 검사
+	// 비밀번호 입력창 hide/show
 	$('#update-pwd-form').hide(function(){});
 	$('#pwdcheck').keyup(function(){
+		var uid = $('#id').val();
 		var pwd = $('#pwd').val();
 		var pwd2 = $('#pwdcheck').val();
 			if(pwd != pwd2){								
 				$('#pwdcheckspan').text('비밀번호가 일치하지 않아 비밀번호를 변경할 수 없습니다.');
+				$('#update-pwd-form').hide(function(){});
 			}else {
 				$('#pwdcheckspan').text('비밀번호를 변경할 수 있습니다');
-				$('#update-pwd-form').show(function(){});				
+				$('#update-pwd-form').show(function(){});
 			}
 	 });
+
+	// 비밀번호 유효성검사 
+	$('#newpwd').keyup(function () {
+		var uid = $('input[name="id"]').val();
+		var pwd = $('#newpwd').val();
+		if (pwd != uid) {
+			$('#newpwdspan').text('');
+		} else {
+			$('#newpwdspan').text('아이디와 비밀번호는 같을 수 없습니다');
+
+		}
+	});
+	
+	// 비밀번호 유효성검사 ajax
+	$('#newpwd').keyup(function () {
+		var inputpwd = $(this).val();
+		$.ajax({
+			url: '/checkpwd',
+			data: { pwd: inputpwd },
+			success: function (result) {
+				if (result == '1') {
+					$('#newpwdspan').text('사용이 불가능한 비밀번호입니다');
+				} else {
+					$('#newpwdspan').text('비밀번호를 변경할 수 있습니다');
+				}
+			}
+		});
+	});
 	//Cust pwd update button
 	$('#updatebtn-pwd').click(function(){
 		var c = confirm('확인을 누르면 비밀번호가 변경됩니다');
@@ -103,7 +134,8 @@ $(document).ready(function(){
 				'method':'post',
 				'action':'/cust/updatepwd'
 			});
-			$('#update-pwd-form').submit();						
+			$('#update-pwd-form').submit();
+			alert("비밀번호가 변경되었습니다. 다시 로그인해주시기 바랍니다.");
 		}		
 	});		
 	
@@ -222,12 +254,12 @@ $(document).ready(function(){
 			                <form id="update-pwd-form">
 			                	<div class="col pt-2">   			                
 			                        <input id="id" name="id" th:value="${c.id}" type="hidden"> 
-			                        <label for="pwdcheck">새 비밀번호 입력:</label>
+			                        <label for="newpwd">새 비밀번호 입력:</label>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
-			                          id="pwd" name="pwd" type="password"  placeholder="New Password" required>
-			                          <span style="font-size: smaller; color:gray;" id="newpwdspan"></span><p></p>			                        
-			                        </div> <p></p>
+			                          id="newpwd" name="pwd" type="password"  placeholder="New Password" required>		                        
+			                        </div>
+			                        <span style="font-size: smaller; color:gray;" id="newpwdspan"></span><p></p>	
 			                        
                        				<div class="text-center p-3">
 			                    		<button id="updatebtn-pwd" class="btn btn-line text-dark btn-sm" type="button">비밀번호변경</button>

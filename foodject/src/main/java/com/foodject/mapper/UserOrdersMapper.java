@@ -18,5 +18,6 @@ public interface UserOrdersMapper {
 	public UserOrdersMyVO selectoddemenu(int deid) throws Exception;
 	public List<UserOrdersMyVO> selectoddeopt(int deid) throws Exception;
 	public UserOrdersMyVO selectallprice(int oid) throws Exception;
+	public Integer selectcount(String uid) throws Exception;
 
 }

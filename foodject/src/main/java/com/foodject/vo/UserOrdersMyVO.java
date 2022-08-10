@@ -62,9 +62,14 @@ public class UserOrdersMyVO {
 		this.oid = oid;
 		this.allprice = allprice;
 	}
+
+	public UserOrdersMyVO(int oid, String uid) {
+		super();
+		this.oid = oid;
+		this.uid = uid;
+	}
 	
-
-
+	
 
 	
 	
