@@ -23,7 +23,10 @@
 .mn_name{
 	position:relative;
 	top:2%;
-
+	display:inline-block;
+}
+.delete_box{
+	display:inline-block;
 }
 .quantity{
 	display:inline-block;
@@ -48,9 +51,28 @@
 </style>
 
 <script>
+function dispalyTotalPrice(){
+	var arr = document.getElementsByClassName("price_val");
+	var totalPrice = 0;
+	for (var i = 0; i < arr.length; i++) {
+		var price = parseInt(arr[i]);
+		alert(price);
+		//totalPrice = totalPrice + arr[i];
+	}
+	$('#totalPrice').text(totalPrice);
+}
+
+function deleteCart(cartId){
+	var uid = $('#uid_index').val();
+	var prevUrl = $('#prevUrl_index').val();
+	location.href='/cart/delete?uid='+uid+'&cartId='+cartId+'&prevUrl='+prevUrl;
+}
 
 $(document).ready(function(){
-
+	//var prevUrl = $('#prevUrl_index').val();
+	//alert(prevUrl);
+	
+	dispalyTotalPrice();
 });
 
 </script>
@@ -71,15 +93,20 @@ $(document).ready(function(){
     	<!-- 좌측 이미지 end-->
     	<!-- 우측 장바구니 정보 start -->
 	    <div class="cartdata">
-	    	<div class="mn_name">
-	    		<h3 th:text="${cr.name}">메뉴 이름</h3>
+	    	<div class="mn_name col-10">
+	    		<h3 th:text="${cr.name}" class="mn_name_txt">메뉴 이름</h3>
 	    	</div>
+	    	<div class="delete_box col-1">
+	    		<h1><a href="#" th:onclick="deleteCart([[${cr.id}]]);">✖</a>️</h1>
+	    	</div>
+	    	
 			<div class="quantity col-3">
 	    		<lable for="quantity">수량:</lable>
-	    		<input id="quantity" type="number" th:value="${cr.num}" min="1" style="width:50px">
+	    		<input id="quantity" type="number" th:value="${cr.num}" min="1" style="width:50px" readonly="readonly">
 	    	</div>
 	    	<div class="price" >
 	    		<h4 th:text="'￦ '+${cr.total}"></h4>
+	    		<input type="hidden" th:value="${cr.total}" class="price_val">
 	    	</div>
 	    </div>
     	<!-- 우측 장바구니 정보 start -->
@@ -87,7 +114,7 @@ $(document).ready(function(){
     	<!-- 하단 옵션 start -->
     	<div th:if="${cr.count != 0}">
     		<div class="optionbox">
-	    		<h5 style="text-align: center">옵션</h5>
+	    		<h5 style="text-align: center">추가 옵션</h5>
 	    		<table class="optiontable">
 	    			<tr th:each="oc:${oclist}" th:if="${oc.ctid == cr.id}">
 	    				<td th:text="${oc.name}+' / '">옵션 이름</td>
@@ -99,7 +126,9 @@ $(document).ready(function(){
 		</div>
 		<!-- 하단 옵션 end -->
     </div>
-   
+   <div>
+   <h1><span text="Total : ">dsfsd</span><span id=totalPrice ></span></h1>
+   </div>
     
   </div><!-- end of .container-->
 </section>

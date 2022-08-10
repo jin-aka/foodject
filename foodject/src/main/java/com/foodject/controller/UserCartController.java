@@ -43,9 +43,8 @@ public class UserCartController {
 			String nickname = cust.getNick();
 			UserShopVO shop = null;
 			List<UserCartVO> crlist = null;
-			List<UserOptcartVO> oclistForSize = null;
 			List<UserOptcartVO> oclist = null;
-			UserCartVO cartForCount = null;
+			
 				
 			int ctid = 0;
 			int cnt = 0;
@@ -64,11 +63,11 @@ public class UserCartController {
 					
 				for (UserCartVO cr : crlist) {
 					ctid = cr.getId();
-					System.out.println(ctid);
-					oclistForSize = ocbiz.get_byCtid(cr.getId());
-					for (UserOptcartVO oc : oclistForSize) {
-						System.out.println(oc);
-					}
+//					System.out.println(ctid);
+					//oclistForSize = ocbiz.get_byCtid(cr.getId());
+//					for (UserOptcartVO oc : oclistForSize) {
+//						System.out.println(oc);
+//					}
 					cnt = ocbiz.getCount(ctid);
 					cr.setCount(cnt);
 				}	
@@ -83,12 +82,33 @@ public class UserCartController {
 		}		
 		return "user/index";
 	}			
-				
-	@RequestMapping("/quantity_modify")
-	public String quantity_modify(Model m, HttpSession session) {
+	
+	@RequestMapping("/delete")
+	public String deleteCart(Model m, String uid, int cartId, HttpSession session, String prevUrl) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
-		String uid = cust.getId();
-				
-		return "redirect:/cart";
+		if(cust == null) {
+			return "redirect:/cust/login";
+		}else if(cust.getId().equals(uid) == false) {
+			
+			return "redirect:/pathError";
+		}else{
+			//System.out.println("delete");
+			try {
+				crbiz.remove(cartId);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "redirect:"+prevUrl;
+		}
 	}
+	
+				
+//	@RequestMapping("/quantity_modify")
+//	public String quantity_modify(Model m, HttpSession session) {
+//		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+//		String uid = cust.getId();
+//				
+//		return "redirect:/cart";
+//	}
 }

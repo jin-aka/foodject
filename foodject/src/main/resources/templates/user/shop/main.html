@@ -291,10 +291,12 @@ $(document).ready(function(){
 					    <div class="modal-body">
 					      <br>
 					      <!-- 메뉴 이미지 -->
+					      <div class="menu_modal_img">
 		                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
 								th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
 							<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
 								src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+						  </div>	
 					      <input type="hidden" th:value="${mn.id}" id="mnid">
 					      <input type="hidden" th:value="${session.loginid.id}" id="uid">
 					      <h5>주문 수량 : <input type="number" th:id="${mn.id}+'num'" class="number_num col-2" value="1" min="1"></h5><br>
