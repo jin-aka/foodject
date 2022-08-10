@@ -17,4 +17,5 @@ public interface HostManagerMapper {
 	public HostManagerVO select(String id) throws Exception;
 	public List<HostManagerVO> selectall() throws Exception;
 	public void selectpwd(HostManagerVO obj) throws Exception;
+	public void updatepwd(HostManagerVO obj) throws Exception;
 }
