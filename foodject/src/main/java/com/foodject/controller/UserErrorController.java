@@ -22,4 +22,8 @@ public class UserErrorController {
 		return "user/error/cartsiderror";
 	}
 
+	@RequestMapping("/pathError")
+	public String pathError(Model m) {
+		return "user/error/patherror";
+	}
 }
