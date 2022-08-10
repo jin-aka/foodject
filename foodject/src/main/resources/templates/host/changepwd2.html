@@ -38,7 +38,7 @@ $(document).ready(function(){
 	$('#pwdc2').click(function(){
 		 var chpwd1 = $('#chpwd1').val();
 		 var chpwd2 = $('#chpwd2').val();
-		
+		 
 		
 		 if( chpwd1 == ''){
 				alert("비밀번호를 입력하세요.");	
@@ -52,11 +52,11 @@ $(document).ready(function(){
 		if( chpwd1 == chpwd2){
 			var c = confirm('수정 하시겠습니까?')
 			if(c == true){
-				$('#update_form2').attr({
+				$('#update2_form').attr({
 					'method':'post',
 					'action':'update2'
 				}); 
-				$('#update_form2').submit(); 
+				$('#update2_form').submit(); 
 			}
 		}
 		
@@ -83,7 +83,12 @@ $(document).ready(function(){
               <h6 class="font-weight-light"  >바꾸실 비밀번호를 입력하세요.</h6>
             
                <form class="pt-3" id="update2_form">
-                
+                <div class="form-group" hidden="hidden">
+                <label for="id">아이디:</label>
+                <span id="ispan"></span>
+                  <input type="text" class="form-control form-control-lg" id="id" placeholder="ID" name="id"  value="mid01" th:value=${m.id} readonly="readonly">
+                </div>
+               
                 <div class="form-group">
                 <label for="chpwd1">비밀번호:</label>
                   <input type="password" class="form-control form-control-lg" id="chpwd1" placeholder="Enter Password" name="chpwd1">
@@ -103,10 +108,7 @@ $(document).ready(function(){
                 <div class="mb-2">
                   
                 </div>
-                <div class="text-center mt-4 font-weight-light">
-                 비밀번호가 기억나지 않으세요?   <br>
-                  <a href="/host/findpwd" class="text-primary">비밀번호가 찾기</a>
-                </div>
+                
               </form>
             </div>
           </div>

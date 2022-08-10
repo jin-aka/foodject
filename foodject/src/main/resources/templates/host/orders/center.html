@@ -41,8 +41,31 @@
 
 
 		var orders_status = new Map();
-		var modal_id = null;
+		var modal_data = null;
+
+		function isEmpty(str){
 		
+		if(typeof str == "undefined" || str == null || str == "")
+			return true;
+		else
+			return false ;
+		}
+		
+		/**
+		 * 문자열이 빈 문자열인지 체크하여 기본 문자열로 리턴한다. 
+		 * @param str			: 체크할 문자열
+		 * @param defaultStr	: 문자열이 비어있을경우 리턴할 기본 문자열
+		 */	
+		function nvl(str, defaultStr){
+			
+			if(typeof str == "undefined" || str == null || str == "")
+				str = defaultStr ;
+			
+			return str ;
+		}
+
+
+
 		function connect() {
 			var socket = new SockJS('/ws');
 			stompClient = Stomp.over(socket);
@@ -135,17 +158,19 @@
 		}
 
 		function display(data) {
-			var list_str = "";
+			
 			$('#orders_list').empty();
 			for (let index = 0; index < data.length; index++) {
-				const element = data[index];
-				list_str = "";
+				const element = data[index];				
+				$('#orders_list').append(makeTr(element));
+			}
+		}
+		function makeTr(element){
+			list_str = "";
 				if (element.status == 4) {
 					list_str = '<tr class="table-danger" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
 					orders_status.set(element.status, 'orders_tr'+ element.id );
 					element.status = "주문 대기";
-						
-
 				} else if (element.status == 3) {
 					list_str = '<tr class="table-warning" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
 					orders_status.set(element.status, 'orders_tr'+ element.id );
@@ -161,6 +186,11 @@
 					orders_status.set(element.status, 'orders_tr'+ element.id );
 					element.status = "배송 완료";
 				}
+				else if (element.status == 0) {
+					list_str = '<tr class="table-danger" onclick="modal('+element.id+')" id="orders_tr'+ element.id+'">';
+					orders_status.set(element.status, 'orders_tr'+ element.id );
+					element.status = "주문 거절";
+				}
 
 				list_str += '<td>' + element.id + '</td>'
 					+ '<td>' + element.shop_name + '</td>'
@@ -168,11 +198,9 @@
 					+ '<td class="right_align">' + element.addr + " : " + element.addrd + ' </td>'
 					+ '<td class="right_align">' + element.phon + ' </td>'
 					+ '<td class="right_align">' + element.status + ' </td>'
-					+ '<td class="right_align">' + element.date + ' </td>'
+					+ '<td class="right_align">' + moment(element.date ).format("YYYY년 MM월 DD일 HH시mm분") + ' </td>'
 					+ '</tr>';
-				$('#orders_list').append(list_str);
-
-			}
+				return list_str;
 		}
 		function ajaxDatas(id) {
 
@@ -188,6 +216,7 @@
 		}
 
 		function getData(name, id) {
+	
 			if (name == null) {
 				$('#dropdownMenuDate2').text("전 체");
 				id = 0;
@@ -195,8 +224,6 @@
 				$('#dropdownMenuDate2').text(name);
 			}
 			ajaxDatas(id);
-
-
 		}
 		function modal_display(data) {
 
@@ -205,8 +232,9 @@
 			var modal_str = "";
 			var allprice = 0;
 			arr = data;
-
-			$('#modal_id').text("주문 번호 : " + arr[0].id);
+			modal_data = arr[0];
+			
+			$('#modal_id').text("주문 번호 : " + arr[0].id + " ( " + arr[0].shop_name + " )");
 			$('#modal_uid').text(arr[0].uid);
 			$('#modal_nick').text(arr[0].nick);
 			$('#modal_date').text(moment(arr[0].date).format("YYYY년 MM월 DD일 HH시mm분"));
@@ -270,7 +298,6 @@
 						+ '<td class="right_align">' + allprice + '원 </td>'
 						+ '</tr>'
 					$('#modal_body').append(modal_str);
-					modal_id = arr[0].id;
 		$('#open_modal_btn').click();
 		}
 		function changeStatus(id, status){
@@ -285,26 +312,24 @@
 				}
 			});
 		}
+		function upDateStatus(status){	
+			var cnt = 0;
+			changeStatus(modal_data.id, status);
+			modal_data.status = status;
+
+
+
+			$('#'+orders_status.get(status)).after(makeTr(modal_data));
+			$('#modal_close').click();
+			$('#orders_tr'+ modal_data.id).remove();
+			getData();
+		}
+
 
 		$(document).ready(function () {
 
 			getData();
-			$("#modal_ok").click(function () {
-				changeStatus(modal_id, 3);
-			});
-			$("#modal_delivery").click(function () {		
-				changeStatus(modal_id, 2);
-			});
-			$("#modal_delivery_success").click(function () {			
-				changeStatus(modal_id, 1);
-			});
-			$("#modal_no").click(function () {			
-				changeStatus(modal_id, 0);
-			});
-			$("#modal_cancel").click(function () {			
-				changeStatus(modal_id, 0);
-			});
-
+		
 			// <웹 소켓>
 			$("#connect").click(function () {
 				connect();
@@ -328,9 +353,11 @@
 <!-- modal -->
 <div class="container mt-3">
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="open_modal_btn"
-		>
+		hidden>
 		Open modal
 	</button>
+
+	
 </div>
 <div class="modal" id="myModal">
 	<div class="modal-dialog">
@@ -420,13 +447,15 @@
 				</div>
 			</div>
 
+	
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-warning btn-rounded btn-fw" id="modal_ok">수락</button>
-				<button type="button" class="btn btn-info btn-rounded btn-fw" id="modal_delivery">배달</button>
-				<button type="button" class="btn btn-success btn-rounded btn-fw" id="modal_delivery_success">배달 완료</button>
-				<button type="button" class="btn btn-danger btn-rounded btn-fw" id="modal_no">거절</button>
-				<button type="button" class="btn btn-warning" id="modal_cancel">취소</button>
+				<button type="button" class="btn btn-warning btn-rounded btn-fw" id="modal_ok" onclick="upDateStatus(3)">수락</button>
+				<button type="button" class="btn btn-info btn-rounded btn-fw" id="modal_delivery" onclick="upDateStatus(2)">배달</button>
+				<button type="button" class="btn btn-success btn-rounded btn-fw" id="modal_delivery_success" onclick="upDateStatus(1)">배달 완료</button>
+				<button type="button" class="btn btn-danger btn-rounded btn-fw" id="modal_no" onclick="upDateStatus(0)">거절</button>
+				<button type="button" class="btn btn-warning" id="modal_cancel" onclick="upDateStatus(0)">취소</button>
+				<button type="button" onclick="modal_close()">모달 닫기</button>
 				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal_close">닫기</button>
 			</div>
 		</div>
@@ -513,7 +542,7 @@
 
 
 <body>
-	<H1 th:text="${session.loginid}">ID</H1>
+	<!-- <H1 th:text="${session.loginid.id}">ID</H1> -->
 	<H1 id="status">Status</H1>
 	<H1 id="servermsg1">Server Msg1</H1>
 	<H1 id="servermsg2">Server Msg2</H1>

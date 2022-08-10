@@ -50,7 +50,7 @@ public class HostOrdersBiz implements Biz<Integer, HostOrdersVO> {
 	public List<HostOrdersVO> selectorders(HostOrdersVO obj) throws Exception{
 		return dao.selectorders(obj);
 	}
-	public HostOrdersVO changeStatus(HostOrdersVO obj) throws Exception{
+	public int changestatus(HostOrdersVO obj) throws Exception{
 		return dao.changestatus(obj);
 	}
 

@@ -22,28 +22,42 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		order by o.id desc;
 	</select>
 	<select id="selectbill" parameterType="int" resultType="HostOrdersVO">
-		select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask
+		 select o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask
 		, d.id as detail_id, d.odid as detail_odid, d.mnid as detail_mnid, d.mname as detail_mname, d.num as detail_num, d.price as detail_price
-		, dt.did as dopt_did, dt.opid as dopt_opid, dt.oname as dopt_oname, dt.oprice as dopt_oprice
+		, dt.did as dopt_did, dt.opid as dopt_opid, dt.oname as dopt_oname, dt.oprice as dopt_oprice, s.name as shop_name
 		from orders o 
 		left join detail d on o.id = d.odid
 		left join dopt dt on d.id = dt.did
+        left join shop s on o.sid = s.id
 		where d.odid = #{id}
 		order by d.id asc;
 	</select>
 	<select id="selectorders" parameterType="HostOrdersVO" resultType="HostOrdersVO">
-		select 
-			o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask, s.name as shop_name
-		from 
-			orders o
-		left join 
-			shop s on o.sid = s.id
-		where
-			mid = #{shop_mid}
-		order by 
-			o.status desc, o.id asc
+		<if   test="shop_id == 0"> 
+			select 
+				o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask, s.name as shop_name
+			from 
+				orders o
+			left join 
+				shop s on o.sid = s.id
+			where
+				mid = #{shop_mid}
+			order by 
+				o.status desc, o.id desc
+		</if><if   test="shop_id != 0"> 
+			select 
+				o.id, o.uid, o.sid, o.addr, o.addrd, o.phon, o.nick, o.date, o.status, o.ask, s.name as shop_name
+			from 
+				orders o
+			left join 
+				shop s on o.sid = s.id
+			where
+				mid = #{shop_mid} and s.id = #{shop_id}
+			order by 
+				o.status desc, o.id desc
+		</if> 
 	</select>
-	<update id="changestatus" parameterType="HostOrdersVO" >
+	<update id="changestatus" parameterType="HostOrdersVO"  >
 		update orders set status=#{status} where id=#{id};
 	</update >
 	
