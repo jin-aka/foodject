@@ -74,7 +74,7 @@ public class UserCartController {
 				m.addAttribute("oclist", oclist);
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("cart is empty");
 			}	
 				
 			m.addAttribute("user",id+"( "+nickname+" ) ");

@@ -47,6 +47,15 @@
 .optiontable{
 	margin:3% 3% 3% 3%;
 }
+.summarybox{
+	margin-top:20px;
+}
+.summaryArea{
+	display: inline-block;
+	float: right;
+	margin-left: 20px;
+	margin-right: 20px;
+}
 
 </style>
 
@@ -139,7 +148,7 @@ $(document).ready(function(){
 	    		<input id="quantity" type="number" th:value="${cr.num}" min="1" style="width:50px" readonly="readonly">
 	    	</div>
 	    	<div class="price" >
-	    		<h4 th:id="'crprice_text'+${cr.id}" th:text="'￦ '+${cr.total}"></h4>
+	    		<h4 th:id="'crprice_text'+${cr.id}"></h4>
 	    		<input type="hidden" th:id="'crprice_val'+${cr.id}" th:value="${cr.total}" class="price_val">
 	    	</div>
 	    </div>
@@ -161,9 +170,13 @@ $(document).ready(function(){
 		</div>
 		<!-- 하단 옵션 end -->
     </div>
-   <div>
-   <h1><span text="Total : ">Total : </span><span id=totalPrice ></span></h1>
-   </div>
-    
+    <div class="summarybox">
+	   	<div class="summaryArea">
+	   		<button type="button" class="btn btn-danger">주문하기</button>
+	   	</div>
+	    <div class="summaryArea">
+	    	<h1><span >총 가격 : </span><span id=totalPrice ></span></h1>
+	    </div>
+    </div>
   </div><!-- end of .container-->
 </section>

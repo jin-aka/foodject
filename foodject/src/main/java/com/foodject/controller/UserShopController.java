@@ -104,7 +104,7 @@ public class UserShopController {
 				String uid = cust.getId();
 				crlist = crbiz.get_byUid(new UserCartVO(0,uid,sid));
 				row = crlist.size();
-				System.out.println(row);
+				// System.out.println(row);
 				m.addAttribute("row",row);
 			}else {
 				System.out.println("Login session is null");
