@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserOptcartBiz;
+import com.foodject.biz.UserOrdersBiz;
 import com.foodject.biz.UserShopBiz;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOptcartVO;
+import com.foodject.vo.UserOrdersVO;
 import com.foodject.vo.UserShopVO;
 
 @Controller
@@ -30,6 +32,9 @@ public class UserCartController {
 	@Autowired
 	UserShopBiz sbiz;
 
+	@Autowired
+	UserOrdersBiz obiz;
+	
 	@RequestMapping("")
 	public String main(Model m, String uid, HttpSession session, String prevUrl) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
@@ -74,7 +79,7 @@ public class UserCartController {
 				m.addAttribute("oclist", oclist);
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("cart is empty");
 			}	
 				
 			m.addAttribute("user",id+"( "+nickname+" ) ");
@@ -103,6 +108,59 @@ public class UserCartController {
 		}
 	}
 	
+	@RequestMapping("order")
+	public String orderimple(Model m, String uid, HttpSession session) {
+		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		
+		if(cust == null) {
+			return "redirect:/cust/login";
+		}else if(cust.getId().equals(uid) == false) {
+			return "redirect:/pathError";
+		}else{
+			int sid=0;
+			List<UserCartVO> crlist = null;
+			List<UserOptcartVO> oclist = null;
+			UserOrdersVO order = null;
+			
+			
+			/* 매개변수 */
+			String addr = "주소";
+			String addrd = "상세주소";
+			String phon = "010-0000-00000";
+			String nick = cust.getNick();
+			String ask = "많이 주세요.";
+					
+			
+			try {
+				sid = crbiz.getSid_byUid(uid);
+				UserCartVO obj = new UserCartVO(0, uid,sid);
+				crlist = crbiz.get_byUid(obj);
+				oclist = ocbiz.get_byUid(uid);
+				
+				order = new UserOrdersVO(uid,sid,addr,addrd,phon,nick,ask);
+				obiz.register(order);
+				
+				
+				
+				for (UserCartVO cart : crlist) {
+					System.out.println(cart);
+					
+				}
+				
+				
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return "redirect:/";
+		}
+	}
 				
 //	@RequestMapping("/quantity_modify")
 //	public String quantity_modify(Model m, HttpSession session) {
