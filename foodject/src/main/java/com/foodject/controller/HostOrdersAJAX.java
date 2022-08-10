@@ -39,28 +39,26 @@ public class HostOrdersAJAX {
 
 		obj = new HostOrdersVO(id, manager.getId());
 		
-
-
-		System.out.println("getDatas ojb : " + obj);
 		try {
 			list = biz.selectorders(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-
+		System.out.println("asdfasdfasdfasdf" +obj);
+		System.out.println("list : 11111111111 " + list);
 		return list;
 	}
 	@RequestMapping("changeStatus")
 	public Object changeStatus( HostOrdersVO obj) {
-		System.out.println("changeStatus : " + obj);
+
 		try {
-			biz.changeStatus(obj);
+			biz.changestatus(obj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		System.out.println("changeStatus : " + obj);
+		System.out.println("changeStatus end : " + obj);
 		return obj;
 	}
 
