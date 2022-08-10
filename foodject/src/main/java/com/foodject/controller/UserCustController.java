@@ -52,17 +52,21 @@ public class UserCustController {
    
 
    @RequestMapping("")
-   public ModelAndView cust(ModelAndView mv, HttpSession session) {
+   public String cust(Model m, HttpSession session, String prevUrl) {
       UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
-      mv.setViewName("user/index");
+	  System.out.println(prevUrl);
+      if(cust==null) {
+    	  return "redirect:/cust/login?prevUrl="+prevUrl;
+      }else{    	  
+      }
       try {
          cust = custbiz.get(cust.getId());
-         mv.addObject("c", cust);
+         m.addAttribute("c", cust);
       } catch (Exception e) {
          e.printStackTrace();
       }
-      mv.addObject("center", "/user/cust/mypage" );
-      return mv;
+      m.addAttribute("center", "/user/cust/mypage" );
+      return "user/index";
    }
    
    
@@ -196,12 +200,15 @@ public class UserCustController {
    }
    
    @RequestMapping("/updatepwd")
-   public String updatepwd(Model m, UserCustVO cust) {
+   public String updatepwd(Model m, UserCustVO cust, HttpSession session) {
 	   
 	   try {
 		custbiz.modifypwd(cust);
-		
-		System.out.println(cust);
+	      if(session != null) {
+	          session.invalidate();
+	       }
+	       return "redirect:/";
+
 	} catch (Exception e) {		
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -235,9 +242,13 @@ public class UserCustController {
    public String myorders(HttpSession session, Model m) {
       UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
       List<UserOrdersMyVO> olist = null;
+      Integer count = null;
       try {
          olist = ordersbiz.getod(cust.getId());
+         count = ordersbiz.getcount(cust.getId());
          m.addAttribute("olist",olist);
+         m.addAttribute("count",count);
+         System.out.println(count);
       } catch (Exception e) {
          e.printStackTrace();
       }

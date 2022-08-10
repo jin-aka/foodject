@@ -42,6 +42,10 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersMyVO> {
 	public UserOrdersMyVO getallprice(Integer k) throws Exception{
 		return dao.selectallprice(k);
 	}
+	
+	public Integer getcount(String k) throws Exception{
+		return dao.selectcount(k);
+	}
 
 	@Override
 	public void register(UserOrdersMyVO v) throws Exception {
