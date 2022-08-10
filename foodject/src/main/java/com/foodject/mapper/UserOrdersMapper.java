@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.foodject.vo.UserOrdersMyVO;
+import com.foodject.vo.UserOrdersVO;
 
 @Repository
 @Mapper
 public interface UserOrdersMapper {
+	public void insert(UserOrdersVO obj) throws Exception;
 	
 	public List<UserOrdersMyVO> selectod(String uid) throws Exception;
 	public List<UserOrdersMyVO> selectodde(int oid) throws Exception;

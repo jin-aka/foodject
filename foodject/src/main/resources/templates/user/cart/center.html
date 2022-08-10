@@ -83,6 +83,8 @@ function goOrder(){
 	});
 	if(error ==0){
 		alert("주문 화면으로 이동합니다.");
+		var uid = $('#uid_index').val();
+		location.href="/cart/order?uid="+uid;
 	}
 	
 	
