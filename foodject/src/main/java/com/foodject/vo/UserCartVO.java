@@ -22,6 +22,7 @@ public class UserCartVO {
 	private String name;
 	private int total;
 	private int count;
+	private int deprice;
 	
 	// For insert
 	public UserCartVO(String uid, int mnid, int num) {
@@ -41,7 +42,7 @@ public class UserCartVO {
 		this.id = id;
 		this.count = count;
 	}
-
+	
 	// For selectForInsert
 	public UserCartVO(String uid, int mnid) {
 		this.uid = uid;
@@ -52,6 +53,8 @@ public class UserCartVO {
 		this.uid = uid;
 		this.sid = sid;
 	}
+	
+	
 
 	
 	
