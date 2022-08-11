@@ -43,21 +43,31 @@ public class UserCartController {
 	
 	@Autowired
 	UserDoptBiz dbiz;
+
+	@RequestMapping("paytest")
+	public String paytest(Model m) {
+		m.addAttribute("center", "user/cart/center2" );
+		return "user/index";
+	}		
+
+	
+
 	@RequestMapping("")
 	public String main(Model m, String uid, HttpSession session, String prevUrl) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+
 		if(cust == null) {
 			return "redirect:/cust/login?prevUrl="+prevUrl;
 		}else if(cust.getId().equals(uid) == false) {
 			return "redirect:/custUidError";
 		}else{	
+			int count = 0;
 			int sid = 0;
 			String id = cust.getId();
 			String nickname = cust.getNick();
 			UserShopVO shop = null;
 			List<UserCartVO> crlist = null;
 			List<UserOptcartVO> oclist = null;
-			
 				
 			int ctid = 0;
 			int cnt = 0;
@@ -73,7 +83,8 @@ public class UserCartController {
 				m.addAttribute("crlist",crlist);
 					
 				oclist = ocbiz.get_byUid(uid);
-					
+				
+	
 				for (UserCartVO cr : crlist) {
 					ctid = cr.getId();
 //					System.out.println(ctid);
@@ -85,13 +96,17 @@ public class UserCartController {
 					cr.setCount(cnt);
 				}	
 				m.addAttribute("oclist", oclist);
+
 				
 			} catch (Exception e) {
+				m.addAttribute("count",count);
 				System.out.println("cart is empty");
 			}	
 				
 			m.addAttribute("user",id+"( "+nickname+" ) ");
 			m.addAttribute("center", "user/cart/center" );
+
+
 		}		
 		return "user/index";
 	}			

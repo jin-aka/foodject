@@ -1,0 +1,368 @@
+<meta charset="UTF-8">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pill-nav a {
+  display: block;
+  color: black;
+  padding: 14px;
+  text-decoration: none;
+  font-size: 17px;
+  border-radius: 5px;
+}
+
+.pill-nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.pill-nav a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+#collection{
+	/* offset-x | offset-y | blur-radius | spread-radius | color */
+	box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.1);
+	border-radius:5px;
+	margin:auto;
+}
+
+
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 20%; /* Location of the box */
+  padding-left:20%;
+  padding-right:20%;
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+</style>
+
+<script>
+/* 장바구니로 이동 */
+function goCart(){
+	var uid = $('#uid_index').val();
+	//var sid = document.location.href.split("?");
+	location.href='/cart?uid='+uid //+'&'+sid[1];
+}
+
+
+
+/* 옵션 장바구니 추가 */
+function addOptcart(mnid){	
+	//alert("Start addOptcart// mnid="+mnid)
+	$('#'+mnid+'option_form').attr({
+		'method':'post',
+		'action':'/shop/addOptcart'
+	});
+	$('#'+mnid+'option_form').submit();
+	//alert("End addOptcart");
+}
+
+/* 메뉴 장바구니 추가 */
+function addCart(uid,mnid,num,chk,sid){
+	$.ajax({
+		url:'/shop/main/addCart',
+		data:{'uid':uid, 'mnid':mnid, 'num':num, 'chk':chk, 'sid':sid},
+		async: false,	//동기식으로 처리
+		success:function(data){
+			if(data == "siderror"){
+				alert('장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.');
+			}else{
+				// alert('cartIn:'+data+' 메뉴가 장바구니에 정상적으로 등록되었습니다');
+				alert('장바구니에 정상적으로 등록되었습니다');
+				$('#'+mnid+'cartId').val(data);
+			}
+		}
+	});
+};
+
+function changeCnt(uid,sid){
+	$.ajax({
+		url:'/shop/main/changeCnt',
+		data:{'uid':uid, 'sid':sid},
+		// async: false,	//동기식으로 처리
+		success:function(data){
+			if(data == "error"){
+				console.log(data)
+			}else{
+				$('#cartCnt').text('( '+data+' )')
+			}
+		}
+	});
+}
+
+/* 주문서에 메뉴,옵션 추가 */
+function addOrderSheet(mnid){
+	var chk = $("input:checkbox[name=option]:checked").length
+	var uid = $('#uid').val();
+	var num = $('#'+mnid+'num').val();
+	var sid = $('#sid').val();
+	
+	addCart(uid,mnid,num,chk,sid);
+	changeCnt(uid,sid);
+	if(chk != 0){
+		addOptcart(mnid);
+	}
+	closeModal(mnid);
+}
+
+/* Login page로 날리기 */
+function goLogin(){
+	alert("로그인이 필요합니다.");
+	$('#url').attr({
+		'method':'post',
+		'action':'/cust/login'
+	});
+	$('#url').submit();
+}
+
+/* modal을 열거나, 옵션이 존재하지 않을 경우 바로 주문서에 추가함. */
+
+function openModal(mnid){
+	// if문으로 로그인세션 검사
+	if($('#uid').val() == 0){
+		// 로그인 세션 없으면 url 가지고 login 페이지로 날림.
+		goLogin();
+	}else{
+		// Get the modal
+		var modal = document.getElementById('m'+mnid);
+		// When the user clicks the button, open the modal 
+		modal.style.display = "block";
+	}
+}
+/* x를 누르면 modal이 닫히도록 함. */
+function closeModal(mnid){
+	// var btn = document.getElementById(mname+'_closebtn');
+	var modal = document.getElementById('m'+mnid);
+	modal.style.display = "none";
+	$('input[name="option"]').each(function(){
+		this.checked=false;
+	});
+	$('#'+mnid+'num').val('1');
+}
+
+/* 모든 모달을 HTMLCollection으로 받아옴. */ 
+var modalArr = document.getElementsByClassName("modal");
+
+/* 모달 이외의 부분을 클릭하면 모달이 close 되도록 함. */
+window.onclick = function(event) {
+	for(let i = 0; i < modalArr.length ; i++){
+		if (event.target == modalArr[i]) {
+			modalArr[i].style.display = "none";
+			$('input[name="option"]').each(function(){
+				this.checked=false;
+			});
+		}
+	}
+
+}
+
+$(document).ready(function(){
+	var prevUrl = document.location.href;
+	$('#prevUrl').val(prevUrl);
+	//alert($('#prevUrl').val());
+	var shopStatus = $('#status').val();
+	if (shopStatus != 1){
+		$('.btn_disabled').attr({
+			'disabled':'true'
+		});
+	}
+});
+</script>
+     <section class="py-0 bg-primary-gradient">
+
+        <div class="container">
+          <div class="row justify-content-center g-0">
+            <div class="col-xl-9">          
+             
+              <div class="col-lg-6 text-center mx-auto mb-3 mt-4 pt-6">              	
+              	<div class="mx-auto mb-3 mb-md-5 mt-4 pt-8" style= "width:200px;">
+   				  <img id="imgviewer" class="img-fluid rounded-3 h-10"  src="https://kr.object.ncloudstorage.com/foodject/cust/icon.jpg" alt="image" />              	
+                  <h2 class="fw-bold fs-3 fs-lg-5 lh-sm my-3" th:text="${shop.name}"></h2>
+                  <p class="fs-1" th:text="${shop.info}">가게 정보</p>
+                  <span class="badge bg-soft-success p-2"><span class="fw-bold fs-1 text-success">Open Now</span></span>&nbsp<a id="heart" type="button"><i class='far fa-heart' style='font-size:24px'></i></a>
+              	</div>
+              </div>
+              <div class="modal-footer justify-content-center">  
+               	  <table>
+              	  	<tbody>
+              	  	  <tr>
+
+              	  	  	<td><h5>최소주문금액</h5></td>
+
+              	  	  	<td  align="right"><h5>th:text="allmin"</h5></td>
+
+              	  	  </tr>
+              	  	  <tr>
+
+              	  	    <td><h5>배달팁</h5></td>
+
+              	  	  	<td  align="right"><h5>3,000원</h5></td> 
+          	  	  
+              	  	  </tr>
+              	  	</tbody>
+              	  </table>              
+              	
+             </div>
+                <input type="hidden" id="status" th:value="${shop.status}">
+                <div class="d-grid bottom-0" th:if="${session.loginid != null}"><button class="btn btn-lg btn-primary btn_disabled mt-xl-6" onclick="goCart();">주문하기<span id="cartCnt" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i></button></div>
+                <div class="d-grid bottom-0" th:unless="${session.loginid != null}"><button class="btn btn-lg btn-primary btn_disabled mt-xl-6" onclick="goLogin();">주문하기<i class="fas fa-chevron-right ms-2"></i></button></div>
+
+              
+            </div>
+          </div>
+        </div><!-- end of .container-->
+
+      </section>
+
+
+
+<!-- ============================================-->
+<!-- ============================================-->
+<div id="collection" class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 pill-nav" >
+  <a th:href="'#c'+${c.id}" th:each="c:${clist}" th:text="${c.name}">collection</a>
+</div>
+
+<!-- ============================================-->
+<!-- <section> begin ============================-->
+<section class="py-4 overflow-hidden">
+  <div class="container">
+    <div class="row h-100" th:each="c:${clist}">
+      <div class="col-lg-7 mx-auto text-center mt-7 mb-5">
+        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm" th:text="${c.name}" th:id="'c'+${c.id}">Collection name</h5>
+      </div>
+      <div class="col-12">
+        <div class="carousel slide" id="carouselPopularItems" data-bs-touch="false" data-bs-interval="false">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+              <div class="row gx-3 h-100 align-items-center">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2 mb-5 h-100" th:each="mn:${mlist}" th:if="${mn.collid == c.id}">
+                  <div class="card card-span h-100 rounded-3">
+                  	<!-- 메뉴 이미지 -->
+                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
+						th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
+					<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
+						src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+                    <div class="card-body ps-0">
+                      <h5 class="fw-bold text-1000 text-truncate mb-1" th:text="${mn.name}">메뉴 이름</h5>
+                      <span class="text-1000 fw-bold" th:text="'￦ '+${mn.price}">가격</span>
+                    </div>
+                  </div>
+                  <div class="d-grid gap-2"><button th:onclick="openModal([[${mn.id}]]);" class="btn btn-primary btn_disabled">주문</button></div>
+                  
+                  	<!-- The Modal -->
+					<div th:if="${session.loginid != null}" th:id="'m'+${mn.id}" class="modal">
+					
+					  <!-- Modal content -->
+					  <div class="modal-content">
+					    <div class="modal-header">
+					    <span class="close" th:onclick="closeModal([[${mn.id}]]);">&times;</span>
+					      <h2>옵션</h2>
+					    </div>
+					    <div class="modal-body">
+					      <br>
+					      <!-- 메뉴 이미지 -->
+					      <div class="menu_modal_img">
+		                  	<img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
+								th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${mn.img}" alt="error1" />
+							<img class="img-fluid rounded-3 h-100" th:unless="${mn.img != null }" 
+								src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+						  </div>	
+					      <input type="hidden" th:value="${mn.id}" id="mnid">
+					      <input type="hidden" th:value="${session.loginid.id}" id="uid">
+					      <h5>주문 수량 : <input type="number" th:id="${mn.id}+'num'" class="number_num col-2" value="1" min="1"></h5><br>
+					      
+					      <form th:id="${mn.id}+'option_form'">
+					      	<input type="hidden" id="sid" name="sid" th:value="${sid}">
+					      	<input type="hidden" th:id="${mn.id}+'cartId'" name="cartId" value="100" >
+					      	<h5 th:each="o:${olist}"><input type="checkbox" name="option" th:if="${o.mnid == mn.id}" th:text="' '+${o.name}" th:value="${o.id}"></h5><br>
+					      </form>
+					    </div>
+					    <div class="modal-footer">
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-danger" th:id="${mn.id}+'_closebtn'" th:onclick="addOrderSheet([[${mn.id}]]);">담기</button>
+					      </div>
+					    </div>
+					  </div>
+                  	</div>
+                  	<div th:unless="${session.loginid != null}">
+                  		<input type="hidden" value="0" id="uid">
+                  	</div>
+                  	<form id="url">
+                  		<input type="hidden" name="prevUrl" id="prevUrl">
+                  	</form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end of .container-->
+</section>
+<!-- <section> close ============================-->
+<!-- ============================================-->

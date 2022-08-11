@@ -56,8 +56,7 @@ public class UserCustController {
       }
    }
    
-   
-   
+
    @RequestMapping("/update")
    public String update(Model m, String uid, HttpSession session, String prevUrl) {
       UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
