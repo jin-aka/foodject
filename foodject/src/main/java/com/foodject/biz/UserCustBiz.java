@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.foodject.frame.Biz;
 import com.foodject.mapper.UserCustMapper;
+import com.foodject.vo.AddrVO;
 import com.foodject.vo.UserCustVO;
 
 @Service
@@ -55,6 +56,9 @@ public class UserCustBiz implements Biz<String, UserCustVO>{
 	public void modifypwd(UserCustVO v) throws Exception{
 		dao.updatepwd(v);
 	}
-
+	
+	public void modifyAddr(AddrVO v) throws Exception{
+		dao.updateAddr(v);
+	}
 
 }

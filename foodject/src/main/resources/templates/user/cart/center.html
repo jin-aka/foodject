@@ -82,11 +82,23 @@ function goOrder(){
 	});
 	if(error ==0){
 		alert("주문 화면으로 이동합니다.");
-		var uid = $('#uid_index').val();
-		location.href="/cart/order?uid="+uid;
+		var totalPrice = $('#totalPrice_data').val();
+		//var uid = $('#uid_data').val();
+		//alert(uid+'  '+ totalPrice);
+		if(totalPrice == 0){
+			alert('장바구니가 비었습니다.');
+		}else{
+			$('#order_form').attr({
+				'method':'post',
+				'action':'/cart/order'
+			});
+			$('#order_form').submit();
+			
+			//location.href="/cart/order?uid="+uid;	
+		}
+		
 	}
-	
-	
+
 }
 
 function displayPrice(){
@@ -121,6 +133,7 @@ function displayPrice(){
 
 
 function displayTotalPrice(){
+	
 	var arr = document.getElementsByClassName("price_val");
 	var totalPrice = 0;
 	for (var i = 0; i < arr.length; i++) {
@@ -129,6 +142,7 @@ function displayTotalPrice(){
 		totalPrice = totalPrice + price;
 	}
 	$('#totalPrice').text(totalPrice);
+	$('#totalPrice_data').val(totalPrice);
 }
 
 
@@ -140,6 +154,9 @@ function deleteCart(cartId){
 }
 
 $(document).ready(function(){
+	var uid = $('#uid_index').val();
+	$('#uid_data').val(uid);
+	
 	//var prevUrl = $('#prevUrl_index').val();
 	//alert(prevUrl);
 	displayPrice();
@@ -207,12 +224,19 @@ $(document).ready(function(){
     </div>
 
     <div class="summarybox">
+    	
 	   	<div class="summaryArea">
 	   		<button type="button" class="btn btn-danger" onclick="goOrder();">주문하기</button>
 	   	</div>
 	    <div class="summaryArea">
 	    	<h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
 	    </div>
+	    
+	    
+		<form id="order_form">
+			<input type="hidden" id="uid_data" name="uid">
+			<input type="hidden" id="totalPrice_data" name="totalPrice">
+	    </form>
     </div>
   </div><!-- end of .container-->
   

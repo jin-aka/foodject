@@ -117,7 +117,42 @@ public class UserCartController {
 	}
 	
 	@RequestMapping("order")
-	public String orderimple(Model m, String uid, HttpSession session) {
+	public String order(Model m, String uid, HttpSession session, int totalPrice) {
+		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		
+		if(cust == null) {
+			return "redirect:/cust/login";
+		}else if(cust.getId().equals(uid) == false) {
+			return "redirect:/pathError";
+		}else{
+			int sid = 0;
+			UserShopVO shop = null;
+			List<UserCartVO> crlist = null;
+			
+			try {
+				sid = crbiz.getSid_byUid(uid);
+				shop = sbiz.get(sid);
+				m.addAttribute("shop",shop);
+				
+				UserCartVO obj = new UserCartVO(0, uid,sid);
+				crlist = crbiz.get_byUid(obj);
+				
+				m.addAttribute("mname",crlist.get(0).getMname());
+				m.addAttribute("cnt",crlist.size()-1);
+				m.addAttribute("cust",cust);
+				m.addAttribute("uid",uid);
+				m.addAttribute("totalPrice",totalPrice);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			m.addAttribute("center","user/cart/order");
+			return "user/index";
+		}
+	}
+	
+	@RequestMapping("orderimple")
+	public String orderimple(Model m, String uid, HttpSession session, UserOrdersVO order) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
 		
 		if(cust == null) {
@@ -129,16 +164,18 @@ public class UserCartController {
 			int cartId = 0;
 			List<UserCartVO> crlist = null;
 			List<UserOptcartVO> oclist = null;
-			UserOrdersVO order = null;
+			//UserOrdersVO order = null;
 			
 			
-			/* Orders */
-			String addr = "주소";
-			String addrd = "상세주소";
-			String phon = "010-0000-00000";
-			String nick = cust.getNick();
-			String ask = "많이 주세요.";
-					
+//			/* Orders */
+//			String addr = "주소";
+//			String addrd = "상세주소";
+//			String phon = "010-0000-00000";
+//			String nick = cust.getNick();
+//			String ask = "많이 주세요.";
+			System.out.println(order);
+			order.setUid(uid);
+			
 			/* detail */
 			int odid = 0;
 			int mnid = 0;
@@ -155,11 +192,13 @@ public class UserCartController {
 			
 			try {
 				sid = crbiz.getSid_byUid(uid);
+				System.out.println(sid);
+				order.setSid(sid);
 				UserCartVO obj = new UserCartVO(0, uid,sid);
 				crlist = crbiz.get_byUid(obj);
 				
 				
-				order = new UserOrdersVO(uid,sid,addr,addrd,phon,nick,ask);
+				// order = new UserOrdersVO(uid,sid,addr,addrd,phon,nick,ask);
 				obiz.register(order);
 				odid = order.getId();
 				System.out.println("odid : " + odid);
