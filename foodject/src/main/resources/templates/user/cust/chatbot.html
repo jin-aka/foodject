@@ -3,14 +3,14 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Shop Websocket</title>
+	<title>Cust Websocket</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
 	<style>
 		#me {
 			width: 400px;
-			height: 400px;
+			height: 300px;
 			overflow: auto;
 			/* border: 2px solid blue; */
 		}
@@ -47,7 +47,8 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 		var stompClient = null;
-		var id = [[${ session.loginshop.id }]];
+		
+		var id = [[${ session.loginid.id }]];
 		/* ]]> */
 		// 서버소켓에 연결
 		function connect() {
@@ -148,36 +149,5 @@
 	<!-- <div id="me" class="table-responsive"></div> -->
 	<!-- partial -->
 
-	<div class="col-xl-9 grid-margin stretch-card">
-		<div class="card">
-			<div class="card-body">
-				<h4 class="card-title" th:text="${session.loginshop.id}">Striped Table</h4>
-				<div class="table-responsive" id="size">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th class="chatbot">
-									ChatBot
-								</th>
-								<th class="user">
-									User
-								</th>
-							</tr>
-						</thead>
-						<tbody id="chatbot">
-						</tbody>
-					</table>
-					
-				</div>
-				<div class="form-group">
-					<label for="exampleInputCity1"></label> <input type="text" class="form-control" id="metext"
-						placeholder="질문을 적어주세요">
-				</div>
-				<button id="sendme" class="btn btn-primary mr-2">질문</button>
-				<button class="btn btn-light" id="disconnect">종료</button>
-			</div>
-			
-
-		</div>
-	</div>
+	
 </html>

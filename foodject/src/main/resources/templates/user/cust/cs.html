@@ -1,11 +1,142 @@
-<script>
 
-$(document).ready(function(){
-  $("#ajaxmodal").click(function(){
-    alert("모달 에이작스");
-    $("#modalbtn").click();
-  });
-});
+
+
+<head>
+	<meta charset="UTF-8">
+	<title>Cust Websocket</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+	<style>
+		#me {
+			width: 400px;
+			height: 600px;
+			overflow: auto;
+			/* border: 2px solid blue; */
+		}
+
+		#chatbot {
+			/* width: 400px; */
+			height: 50px;
+			overflow: auto;
+			/* border: 2px solid blue; */
+		}
+
+		#size {
+			height: 275px;
+			overflow: auto;
+		}
+
+		.user {
+			text-align: right;
+			height: 50px;
+
+		}
+
+		.chatbot {
+			height: 50px;
+		}
+
+		.card-body {
+			height: auto;
+			width: auto;
+
+      
+		}
+    .chat_logo{
+      height: 30px;
+    }
+	</style>
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+		var stompClient = null;
+		
+		var id = [[${ session.loginid.id }]];
+		/* ]]> */
+		// 서버소켓에 연결
+		function connect() {
+			var socket = new SockJS('/ws');
+			stompClient = Stomp.over(socket);
+
+			stompClient.connect({}, function (frame) {
+				setConnected(true);
+				console.log('Connected: ' + frame);
+				stompClient.subscribe('/send/' + id, function (msg) {
+
+					$("#chatbot").append(
+						"<tr>"
+						+ "<td class='user'>" + JSON.parse(msg.body).content1
+						+ " : " + JSON.parse(msg.body).sendid + "</td>"
+						+ "</tr>"
+						+ "<tr>"
+						+ "<td class='py-1'><img class='chat_logo' src='https://kr.object.ncloudstorage.com/foodject/css/bot.png' alt='' /> Bot : " +
+						JSON.parse(msg.body).content2 + "</td>"
+						+ "</tr>"
+					);
+					$("#size").scrollTop($("#size")[0].scrollHeight);
+				});
+
+				stompClient.subscribe('/send/serversend', function (msg) {
+					$("#servermsg1").text(JSON.parse(msg.body).content1);
+					$("#servermsg2").text(JSON.parse(msg.body).content2);
+				});
+			});
+		}
+
+		// 서버소켓에 연결끊기
+		function disconnect() {
+			if (stompClient != null) {
+				stompClient.disconnect();
+			}
+			setConnected(false);
+			console.log("Disconnected");
+		}
+
+		// connect&disconnect버턴 활성화/비활성화
+		function setConnected(connected) {
+			if (connected) {
+				$("#status").text("Connected");
+			} else {
+				$("#status").text("Disconnected");
+			}
+
+		}
+
+		// 서버에 메세지 요청 메서드
+
+		function sendMe() {
+			var msg = JSON.stringify({
+				'sendid': id,
+				'content1': $('#metext').val()
+			});
+			stompClient.send("/receiveme", {}, msg);
+			$('#metext').val('');
+		}
+
+		$(document).ready(function () {
+			// $("#connect").click(function () {
+			// 	connect();
+			// });
+			connect();
+			$("#disconnect").click(function () {
+				disconnect();
+				location.href = "/host"
+			});
+			$("#sendme").click(function () {
+				sendMe();
+			});
+			$("#metext").keypress(function (e) {
+				if (e.code == 'Enter') {
+					sendMe();
+				}
+			});
+
+
+		});
+
+
+
 $(document).ready(function(){
 	//Menu Buttons
 	$('#update').click(function(){
@@ -21,50 +152,7 @@ $(document).ready(function(){
 });
 </script>
 
-  
-<section class="pb-5 pt-8">
-
-<div class="container mt-3">
-  <h3>Modal Example</h3>
-  <p>Click on the button to open the modal.</p>
-  
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" id="modalbtn">
-    Open modal
-  </button>
-  <button type="button" class="btn btn-primary" id="ajaxmodal" >
-    Open ajax
-  </button>
-</div>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        Modal body..
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-</body>
-</html>
-
+</head>
 <section class="pb-5 pt-8">
 
   <div class="container">
@@ -85,6 +173,42 @@ $(document).ready(function(){
             
               <div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
                 <h1 class="card-title mt-xl-5 mb-4 text-center">CS</h1>
+                <!-- chatbot -->
+
+                <div class="col-xl-9 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title" th:text="${session.loginid.id}">Striped Table</h4>
+                      <div class="table-responsive" id="size">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th class="chatbot">
+                                ChatBot
+                              </th>
+                              <th class="user">
+                                User
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody id="chatbot">
+                          </tbody>
+                        </table>
+                        
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputCity1"></label> <input type="text" class="form-control" id="metext"
+                          placeholder="질문을 적어주세요">
+                      </div>
+                      <button id="sendme" class="btn btn-primary mr-2">질문</button>
+                      <button class="btn btn-light" id="disconnect">종료</button>
+                    </div>
+                    
+              
+                  </div>
+                </div>
+
+                <!-- /chatbot -->
                 
 
 			  </div>

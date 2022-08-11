@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.vo.UserCartVO;
-import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOptcartVO;
 
 @RestController
@@ -21,6 +20,26 @@ public class UserShopAJAX {
 	
 	@Autowired
 	UserOptcartBiz opbiz;
+	
+	@RequestMapping("/changeCnt")
+	public Object changeCnt(String uid, int sid) {
+		List<UserCartVO> crlist= null;
+		int cnt=0;
+
+		try {
+			crlist = crbiz.get_byUid(new UserCartVO(0,uid,sid));
+			cnt = crlist.size();
+			return cnt;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		
+		// System.out.println(row);
+			
+		
+		
+	}
 	
 	@RequestMapping("/addCart")
 	public Object addCart(String uid, int mnid, int num, int chk, int sid) {
@@ -37,8 +56,7 @@ public class UserShopAJAX {
 				
 			}
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println("first cartAdd");
 		}
 		
 		List<UserCartVO> list = null;
