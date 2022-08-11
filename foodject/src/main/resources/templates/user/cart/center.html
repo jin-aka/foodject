@@ -79,11 +79,23 @@ function goOrder(){
 	});
 	if(error ==0){
 		alert("주문 화면으로 이동합니다.");
-		var uid = $('#uid_index').val();
-		location.href="/cart/order?uid="+uid;
+		var totalPrice = $('#totalPrice_data').val();
+		//var uid = $('#uid_data').val();
+		//alert(uid+'  '+ totalPrice);
+		if(totalPrice == 0){
+			alert('장바구니가 비었습니다.');
+		}else{
+			$('#order_form').attr({
+				'method':'post',
+				'action':'/cart/order'
+			});
+			$('#order_form').submit();
+			
+			//location.href="/cart/order?uid="+uid;	
+		}
+		
 	}
-	
-	
+
 }
 
 function displayPrice(){
@@ -118,6 +130,7 @@ function displayPrice(){
 
 
 function displayTotalPrice(){
+	
 	var arr = document.getElementsByClassName("price_val");
 	var totalPrice = 0;
 	for (var i = 0; i < arr.length; i++) {
@@ -126,6 +139,7 @@ function displayTotalPrice(){
 		totalPrice = totalPrice + price;
 	}
 	$('#totalPrice').text(totalPrice);
+	$('#totalPrice_data').val(totalPrice);
 }
 
 
@@ -137,6 +151,9 @@ function deleteCart(cartId){
 }
 
 $(document).ready(function(){
+	var uid = $('#uid_index').val();
+	$('#uid_data').val(uid);
+	
 	//var prevUrl = $('#prevUrl_index').val();
 	//alert(prevUrl);
 	displayPrice();
@@ -155,8 +172,7 @@ $(document).ready(function(){
             <div class="row justify-content-center">
                 <div class="p-5">
               <h1 class="card-title mt-xl-5 mb-4 text-center"><span class="text-primary"><i class="fas fa-hamburger me-2"></i>Food Box</span>&nbsp 장바구니</h1>
-                
- 
+
               	  <div th:if="${count} == 0"  class="px-6 pb-5">
               		<div class="cartbox">
                 	  <div class="card-body">                	   
@@ -223,7 +239,10 @@ $(document).ready(function(){
 				    	<h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
 				    </div>
 			    </div>
-			    
+			    <form id="order_form">
+            <input type="hidden" id="uid_data" name="uid">
+            <input type="hidden" id="totalPrice_data" name="totalPrice">
+          </form>
 			   </div>            
             </div>  
 		  </div>
@@ -231,4 +250,5 @@ $(document).ready(function(){
 	  </div>
 	</div>
   </div>
+
 </section>

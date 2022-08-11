@@ -29,8 +29,11 @@ function convertAddr(addr){
 };
 
 function selectMain(cid){
+	var addr = $('#address').val();
+	var addrd = $('#addrDetail').val();
+	
 	if(error == 0){
-		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt;
+		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
 	}else{
 		$('#address').focus();
 		alert('배달 장소를 입력하세요');
@@ -125,6 +128,9 @@ function execDaumPostcode() {
                           <div class="input-group-icon"><i class="fas fa-map-marker-alt text-danger input-box-icon"></i>
                             <label class="visually-hidden" for="inputDelivery">Address</label>
                             <input class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly"/>
+                          </div>
+                          <div class="input-group-icon">
+                           <input class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" />
                           </div>
                         </div>
                         <div class="d-grid gap-3 col-sm-auto">
