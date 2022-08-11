@@ -56,13 +56,7 @@ public class UserCustController {
       }
    }
    
-   
-   @RequestMapping("/cs")
-   public String cs(Model m) {
-      m.addAttribute("center","/user/cust/cs");
-      return "user/index";
-   }
-   
+
    @RequestMapping("/update")
    public String update(Model m, String uid, HttpSession session, String prevUrl) {
       UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
