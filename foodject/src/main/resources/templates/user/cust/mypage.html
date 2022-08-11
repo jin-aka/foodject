@@ -14,27 +14,31 @@
 <script>
 $(document).ready(function(){
 	//Menu Buttons
+	$('#mypagebtn').click(function(){
+ 		var uid = $('#uid_index').val();
+		location.href='/cust?uid='+uid;
+	});
 	$('#update').click(function(){
- 		location.href='/cust/update';
+  		var uid = $('#uid_index').val();
+ 		location.href='/cust/update?uid='+uid;
 	});
 	$('#myorders').click(function(){
- 		location.href='/cust/myorders';
+		var uid = $('#uid_index').val();
+ 		location.href='/cust/myorders?uid='+uid;
 	});
 	$('#cs').click(function(){
  		location.href='/cust/cs';
 	});
-	
-	$('#imgbtn').click(function(){
-		$('#inputimg').click(function(){
-			
-		});
-	});
+
 });
 
 </script>
 
-<section class="pb-5 pt-8">
 
+<section class="pb-5 pt-8">
+<h5 th:if="${session.loginid != null}">
+   <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">           	
+</h5>
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -42,7 +46,7 @@ $(document).ready(function(){
           <div class="card-body py-0">
             <div class="row justify-content-center">
              <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a href="/cust"><span class="text-primary">마이페이지</span></a></h1>
+                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a id="mypagebtn"><span class="text-primary">마이페이지</span></a></h1>
                 <div class="d-grid bottom-0">
                 <a class="btn btn-lg btn-primary mt-xl-6" id="update">회원정보수정하기</a><p></p>
                 <a class="btn btn-lg btn-primary mt-xl-6" id="myorders">주문내역 조회</a><p></p>

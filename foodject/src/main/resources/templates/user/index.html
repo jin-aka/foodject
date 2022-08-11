@@ -53,7 +53,8 @@ $(document).ready(function(){
 		$('#index_from').submit();
 	});
   	$('#mypagebt').click(function(){
-      	location.href='/cust';
+  		var uid = $('#uid_index').val();
+      	location.href='/cust?uid='+uid;
   	});
   	$('#loginbt').click(function(){
   		location.href='/cust/login';
@@ -76,7 +77,7 @@ $(document).ready(function(){
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"> </span></button>
           <div class="collapse navbar-collapse border-top border-lg-0 my-2 mt-lg-0" id="navbarSupportedContent">
             <div class="mx-auto pt-5 pt-lg-0 d-block d-lg-none d-xl-block">
-              <p class="mb-0 fw-bold text-lg-center">Deliver to: <i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">Current Location </span><span>Mirpur 1 Bus Stand, Dhaka</span></p>
+              <p class="mb-0 fw-bold text-lg-center">Deliver to: <i class="fas fa-map-marker-alt text-warning mx-2"></i><span class="fw-normal">현재위치&nbsp</span><span>Mirpur 1 Bus Stand, Dhaka</span></p>
             </div>
             
             <form class="d-flex mt-4 mt-lg-0 ms-lg-auto ms-xl-0">

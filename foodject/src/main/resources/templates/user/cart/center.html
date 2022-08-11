@@ -1,4 +1,3 @@
-<section class="py-8 overflow-hidden">
 
 <style>
 .cartbox{
@@ -77,13 +76,15 @@ $(document).ready(function(){
 
 </script>
 
+<section class="py-8 overflow-hidden">
 
   <div class="container">
-    <div class="row flex-center mb-6">
-      <div class="col-lg-7">
-        <h5 class="fw-bold fs-3 fs-lg-5 lh-sm text-center text-lg-start" th:text="${user}+'님의 장바구니'">여기는 카트 페이지 입니다.</h5>
-      </div>
-    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-span mb-3 shadow-lg">
+          <div class="card-body py-0">
+            <div class="row justify-content-center">
+              <h1 class="card-title mt-xl-5 mb-4 text-center"><span class="text-primary"><i class="fas fa-hamburger me-2"></i>Food Box</span>&nbsp 장바구니</h1>
     
     <div class="cartbox" th:each="cr:${crlist}">
     	<!-- 좌측 이미지 start-->
@@ -130,5 +131,7 @@ $(document).ready(function(){
    <h1><span text="Total : ">dsfsd</span><span id=totalPrice ></span></h1>
    </div>
     
-  </div><!-- end of .container-->
+
+  
+  </div></div></div></div></div></div>
 </section>
