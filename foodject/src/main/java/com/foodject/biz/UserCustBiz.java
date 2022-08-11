@@ -40,7 +40,7 @@ public class UserCustBiz implements Biz<String, UserCustVO>{
 		return dao.selectall();
 	}
 	
-	public void modifysts(UserCustVO v) throws Exception{
+	public void modifysts(String v) throws Exception{
 		dao.updatests(v);
 	}
 	
