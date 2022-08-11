@@ -10,11 +10,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.foodject.biz.UserCartBiz;
+import com.foodject.biz.UserDetailBiz;
+import com.foodject.biz.UserDoptBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserOrdersBiz;
 import com.foodject.biz.UserShopBiz;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCustVO;
+import com.foodject.vo.UserDoptVO;
 import com.foodject.vo.UserOptcartVO;
 import com.foodject.vo.UserOrdersVO;
 import com.foodject.vo.UserShopVO;
@@ -35,6 +38,11 @@ public class UserCartController {
 	@Autowired
 	UserOrdersBiz obiz;
 	
+	@Autowired
+	UserDetailBiz debiz;
+	
+	@Autowired
+	UserDoptBiz dbiz;
 	@RequestMapping("")
 	public String main(Model m, String uid, HttpSession session, String prevUrl) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
@@ -117,34 +125,68 @@ public class UserCartController {
 		}else if(cust.getId().equals(uid) == false) {
 			return "redirect:/pathError";
 		}else{
-			int sid=0;
+			int sid = 0;
+			int cartId = 0;
 			List<UserCartVO> crlist = null;
 			List<UserOptcartVO> oclist = null;
 			UserOrdersVO order = null;
 			
 			
-			/* 매개변수 */
+			/* Orders */
 			String addr = "주소";
 			String addrd = "상세주소";
 			String phon = "010-0000-00000";
 			String nick = cust.getNick();
 			String ask = "많이 주세요.";
 					
+			/* detail */
+			int odid = 0;
+			int mnid = 0;
+			String mname = "";
+			int num = 0;
+			int price = 0;
+			
+			/* dopt */
+			int did = 0;
+			int opid = 0;
+			String oname = "";
+			int oprice = 0;
+					
 			
 			try {
 				sid = crbiz.getSid_byUid(uid);
 				UserCartVO obj = new UserCartVO(0, uid,sid);
 				crlist = crbiz.get_byUid(obj);
-				oclist = ocbiz.get_byUid(uid);
+				
 				
 				order = new UserOrdersVO(uid,sid,addr,addrd,phon,nick,ask);
 				obiz.register(order);
+				odid = order.getId();
+				System.out.println("odid : " + odid);
 				
-				
-				
+
 				for (UserCartVO cart : crlist) {
-					System.out.println(cart);
+					// System.out.println(cart);
 					
+					cartId = cart.getId();
+					cart.setOdid(odid);
+					// detail에 추가
+					debiz.register(cart);
+					did = cart.getId();
+					// System.out.println("did : "+did);
+					
+					// optcart 가져오기
+					oclist = ocbiz.get_byCtid(cartId);
+					for (UserOptcartVO optcart : oclist) {
+						System.out.println(optcart);
+						opid = optcart.getOid();
+						oname = optcart.getName();
+						oprice = optcart.getPrice();
+						// dopt에 추가
+						dbiz.register(new UserDoptVO(did,opid,oname,oprice));
+					}
+					// cart에서 항목 지우기
+					crbiz.remove(cartId);
 				}
 				
 				
