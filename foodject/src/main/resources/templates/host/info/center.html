@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Shop Websocket</title>
@@ -151,11 +155,11 @@
 	<div class="col-xl-9 grid-margin stretch-card">
 		<div class="card">
 			<div class="card-body">
-				<h4 class="card-title" th:text="${session.loginshop.id}">Striped Table</h4>
+				<h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="card-title" th:text="${session.loginshop.id} + '님 안녕하세요!'">Striped Table</h2>
 				<div class="table-responsive" id="size">
 					<table class="table table-striped">
 						<thead>
-							<tr>
+							<tr style= "color: #ffa000; font-family: 'Jua', sans-serif; ">
 								<th class="chatbot">
 									ChatBot
 								</th>
@@ -173,8 +177,8 @@
 					<label for="exampleInputCity1"></label> <input type="text" class="form-control" id="metext"
 						placeholder="질문을 적어주세요">
 				</div>
-				<button id="sendme" class="btn btn-primary mr-2">질문</button>
-				<button class="btn btn-light" id="disconnect">종료</button>
+				<button style= "font-family: 'Jua', sans-serif; " id="sendme" class="btn btn-primary mr-2">질문</button>
+				<button style= "font-family: 'Jua', sans-serif; " class="btn btn-light" id="disconnect">종료</button>
 			</div>
 			
 

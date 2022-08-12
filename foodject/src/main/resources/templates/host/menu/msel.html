@@ -115,7 +115,7 @@
                 </thead>
                 
                 <tbody>
-                    <tr  th:each="mn: ${mnlist}">
+                    <tr style= "font-family: 'Jua', sans-serif; " th:each="mn: ${mnlist}">
                  		
                       	<td><input type="checkbox" name="selected" th:value="${mn.id}"></td>
                       	<td><img class="img-fluid rounded-3 h-100" th:if="${mn.img != null }" 
