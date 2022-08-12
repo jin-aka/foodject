@@ -13,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddrVO {
+	private String id;
 	private String addr;
 	private String addrd;
 }

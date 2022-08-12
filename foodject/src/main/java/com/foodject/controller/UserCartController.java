@@ -137,7 +137,7 @@ public class UserCartController {
 		
 		if(cust == null) {
 			return "redirect:/cust/login";
-		}else if(cust.getId().equals(uid) == false) {
+		}else if(cust.getId().equals(uid) == false || totalPrice == 0 ) {
 			return "redirect:/pathError";
 		}else{
 			int sid = 0;
