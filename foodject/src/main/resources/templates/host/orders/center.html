@@ -316,11 +316,11 @@
 			var cnt = 0;
 			changeStatus(modal_data.id, status);
 			modal_data.status = status;
-
-
-
-			$('#'+orders_status.get(status)).after(makeTr(modal_data));
+		
 			$('#modal_close').click();
+			alert("변경 되었습니다.");
+			$('#'+orders_status.get(status)).after(makeTr(modal_data));
+			
 			$('#orders_tr'+ modal_data.id).remove();
 			getData();
 		}
@@ -455,7 +455,6 @@
 				<button type="button" class="btn btn-success btn-rounded btn-fw" id="modal_delivery_success" onclick="upDateStatus(1)">배달 완료</button>
 				<button type="button" class="btn btn-danger btn-rounded btn-fw" id="modal_no" onclick="upDateStatus(0)">거절</button>
 				<button type="button" class="btn btn-warning" id="modal_cancel" onclick="upDateStatus(0)">취소</button>
-				<button type="button" onclick="modal_close()">모달 닫기</button>
 				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="modal_close">닫기</button>
 			</div>
 		</div>
