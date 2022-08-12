@@ -85,49 +85,6 @@ public class UserShopController {
 		return "user/index";
 	}
 	
-	@RequestMapping("/main2")
-	public String main2(Model m, int sid, HttpSession session) {
-			List<UserMenuVO> mlist = null;
-			List<UserCollectionVO> clist = null;
-			List<UserOptVO> olist = null;
-			UserShopVO obj = null;
-			List<UserCartVO> crlist= null;
-			UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
-			int row = 0;
-			
-			
-			try {
-				m.addAttribute("sid",sid);
-				
-				obj = sbiz.get(sid);
-				m.addAttribute("shop",obj);
-				
-				clist = cbiz.get_byShop(sid);
-				m.addAttribute("clist",clist);
-				
-				mlist = mnbiz.get_byShop(sid);
-				m.addAttribute("mlist",mlist);
-				
-				olist = obiz.get_byShop(sid);
-				m.addAttribute("olist",olist);
-				if(cust != null) {
-					String uid = cust.getId();
-					crlist = crbiz.get_byUid(new UserCartVO(0,uid,sid));
-					row = crlist.size();
-					// System.out.println(row);
-					m.addAttribute("row",row);
-				}else {
-					System.out.println("Login session is null");
-				}
-				m.addAttribute("center","/user/shop/main2");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			m.addAttribute(mlist);
-			return "user/index";
-
-	}
 	
 	@RequestMapping("/main")
 	public String main(Model m, int sid, HttpSession session) {
