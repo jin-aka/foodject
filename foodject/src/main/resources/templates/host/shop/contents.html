@@ -43,7 +43,7 @@
 		</thead>
 
 		<tbody th:if="${slist != null}">
-			<tr th:each="s:${slist}">
+			<tr style= "font-family: 'Jua', sans-serif; " th:each="s:${slist}">
 				<td class="py-1"> <input type="checkbox" th:value="${s.id}" name="selected"> </td>
 				<td class="py-1" th:text="${s.id}"> </td>
 				<td>
