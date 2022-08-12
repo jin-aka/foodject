@@ -2,10 +2,10 @@ package com.foodject.mapper;
 
 import java.util.List;
 
+import com.foodject.vo.HostManagerVO;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import com.foodject.vo.HostManagerVO;
 
 @Repository
 @Mapper
