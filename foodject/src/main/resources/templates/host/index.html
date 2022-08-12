@@ -33,7 +33,6 @@
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-  <link rel="stylesheet" href="/bootstrap/skydash/vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" type="text/css" href="/bootstrap/skydash/js/select.dataTables.min.css">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +42,20 @@
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+    <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+  <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script src="/bootstrap/skydash/js/chart.js"></script>
   
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
   <!-- style -->
   <style type="text/css">
     a:link {  text-decoration: none }
@@ -51,18 +63,6 @@
     a:hover {  text-decoration: underline}
    
   </style>
-  <!-- endinject -->
-  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
-    <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-	<script src="/bootstrap/skydash/js/chart.js"></script>
-  
   <script th:inline="javascript">
 		/*<![CDATA[*/
     var id = [[${ session.loginshop }]];
