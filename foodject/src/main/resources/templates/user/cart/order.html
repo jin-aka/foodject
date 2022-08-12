@@ -31,24 +31,24 @@ $(document).ready(function(){
                              
                <div class="row pt-2"><div class="col-lg-1"></div>                
                 
-				<form id="orderimple_form">
-	                <!-- ======배달정보입력 div(좌측)====== -->
-	                <div class="col-lg-6">
-	             	 <div class="card">
-			          <div class="p-1">
-			          
-			             <!-- 주문하기 Header -->
-					      <div class="modal-header">
-					      	<div class="ps-3">
-					          <h4 class="modal-title"><i class="fas fa-credit-card"></i>  &nbsp 주문하기</h4>					      	
-					      	</div>
-					      </div>
-					
-					      <!-- 주문하기 배달 정보 -->
-					      <div class="modal-body">	
-					      	<div class="p-3">						      						      	
-						      	<h5 class="pb-2">배달정보</h5>
-	
+				
+                <!-- ======배달정보입력 div(좌측)====== -->
+                <div class="col-lg-6">
+             	 <div class="card">
+		          <div class="p-1">
+		          
+		             <!-- 주문하기 Header -->
+				      <div class="modal-header">
+				      	<div class="ps-3">
+				          <h4 class="modal-title"><i class="fas fa-credit-card"></i>  &nbsp 주문하기</h4>					      	
+				      	</div>
+				      </div>
+				
+				      <!-- 주문하기 배달 정보 -->
+				      <div class="modal-body">	
+				      	<div class="p-3">						      						      	
+					      	<h5 class="pb-2">배달정보</h5>
+							<form id="orderimple_form">	
 								<h4 th:text="${cust.addr}">th:text ADDR</h4>
 								<h5 th:text="${cust.addrd}">th:value= ADDRD"></h5><p></p>
 								<hr>
@@ -56,21 +56,22 @@ $(document).ready(function(){
 								<input type="hidden" name="nick" th:value="${cust.nick}">
 								<input type="hidden" name="addr" th:value="${cust.addr}">
 								<input type="hidden" name="addrd" th:value="${cust.addrd}">
-								<input id="" class="form-control input-box form-foodwagon-control" name="phon" placeholder="th:value= PHONE" th:value="${cust.phon}">													
-					      	</div>			      		
-				      	  </div>
-				      	  <div class="modal-footer">
-					         <div class="modal-body">							      						      	
-						      	<h5 class="pb-2">요청사항</h5>
-								<h6>가게사장님께</h6>
-								<input id="" class="form-control input-box form-foodwagon-control" name="ask" placeholder="예) 당근 빼주세요. 김치 많이주세요.">
-				      	    </div>	
-					      </div>
-					      
-			          </div>												
-			         </div>		         
-	                </div>
-				</form>
+								<input id="" class="form-control input-box form-foodwagon-control" name="phon" placeholder="th:value= PHONE" th:value="${cust.phon}">
+							</form>
+				      	</div>	      		
+			      	  </div>
+			      	  <div class="modal-footer">
+				         <div class="modal-body">							      						      	
+					      	<h5 class="pb-2">요청사항</h5>
+							<h6>가게사장님께</h6>
+							<input id="" class="form-control input-box form-foodwagon-control" name="ask" placeholder="예) 당근 빼주세요. 김치 많이주세요.">
+			      	    </div>	
+				      </div>
+				      
+		          </div>												
+		         </div>		         
+                </div>
+				
 		        
 		        <!-- =====주문상세 div (우측)===== -->                	               	
                  <div class="col-lg-4 pt-3">

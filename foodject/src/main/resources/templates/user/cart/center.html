@@ -56,34 +56,41 @@
 
 <script>
 function goOrder(){
-	var priceArr = [];
-	var error = 0;
-	$('.cartbox').each(function(index, element){
-		var cartId = parseInt($(element).find(".cartId").val());
-		var deprice = $('#crprice_val'+cartId).val();
-		//var arr = [cartId,deprice];
-		//priceArr.push(arr);
+	var totalPrice = $('#totalPrice_data').val();
+	var allmin = $('#allmin').val();
+	//alert(totalPrice+'   '+allmin);
+	if(totalPrice == 0){
+		alert('장바구니가 비었습니다.');
+	}else if(totalPrice*1 < allmin*1){
+		alert('최소 주문 금액은 '+allmin+"원 입니다.");
+	}else{
 		
-		$.ajax({
-			url:'cart/updateDeprice',
-			data:{'cartId':cartId, 'deprice':deprice},
-			async: false,	//동기식으로 처리
-			success:function(data){
-				error = data;
-				if(error == 1){
-					alert("error");
+		var priceArr = [];
+		var error = 0;
+		$('.cartbox').each(function(index, element){
+			var cartId = parseInt($(element).find(".cartId").val());
+			var deprice = $('#crprice_val'+cartId).val();
+			//var arr = [cartId,deprice];
+			//priceArr.push(arr);
+			
+			$.ajax({
+				url:'cart/updateDeprice',
+				data:{'cartId':cartId, 'deprice':deprice},
+				async: false,	//동기식으로 처리
+				success:function(data){
+					error = data;
+					if(error == 1){
+						alert("error");
+					}
 				}
-			}
+			});
 		});
-	});
-	if(error ==0){
-		//alert("주문 화면으로 이동합니다.");
-		var totalPrice = $('#totalPrice_data').val();
-		//var uid = $('#uid_data').val();
-		//alert(uid+'  '+ totalPrice);
-		if(totalPrice == 0){
-			alert('장바구니가 비었습니다.');
-		}else{
+		if(error ==0){
+			//alert("주문 화면으로 이동합니다.");
+			var totalPrice = $('#totalPrice_data').val();
+			//var uid = $('#uid_data').val();
+			//alert(uid+'  '+ totalPrice);
+			
 			$('#order_form').attr({
 				'method':'post',
 				'action':'/cart/order'
@@ -91,8 +98,9 @@ function goOrder(){
 			$('#order_form').submit();
 			
 			//location.href="/cart/order?uid="+uid;	
+			
+			
 		}
-		
 	}
 
 }
@@ -185,7 +193,10 @@ $(document).ready(function(){
 			      <div class="cartbox" th:each="cr:${crlist}"><!-- start of .container-->
 			    	<!-- 좌측 이미지 start-->
 			    	<div class="imgbox">
-			    		<img class="img-fluid rounded-3 h-100" src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
+			    		<img class="img-fluid rounded-3 h-100" th:if="${cr.img != null }" 
+								th:src="'https://kr.object.ncloudstorage.com/foodject/menu/'+${cr.img}" alt="error1" />
+						<img class="img-fluid rounded-3 h-100" th:unless="${cr.img != null }" 
+								src="https://kr.object.ncloudstorage.com/foodject/menu/default.jpg" alt="error2" />
 			    	</div>
 			    	<!-- 좌측 이미지 end-->
 			    	<!-- 우측 장바구니 정보 start -->
@@ -232,7 +243,7 @@ $(document).ready(function(){
 					<!-- 하단 옵션 end -->
 			    </div><!-- end of .container-->   
 			
-			    <div class="summarybox">
+			    <div class="summarybox" th:if="${count} != 0">
 				   	<div class="summaryArea">
 				   		<button type="button" class="btn btn-danger" onclick="goOrder();">주문하기</button>
 				   	</div>
@@ -240,11 +251,12 @@ $(document).ready(function(){
 				    	<h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
 				    </div>
 			    </div>
-			    <form id="order_form">
-            <input type="hidden" id="uid_data" name="uid">
-            <input type="hidden" id="totalPrice_data" name="totalPrice">
-          </form>
-			   </div>            
+			        <form id="order_form">
+			            <input type="hidden" id="uid_data" name="uid">
+			            <input type="hidden" id="totalPrice_data" name="totalPrice">
+		          	</form>		
+			   </div> 
+			   <input type="number" id="allmin" th:if="${count} != 0" th:value="${shop.allmin}" >           
             </div>  
 		  </div>
 		</div>

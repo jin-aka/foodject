@@ -77,6 +77,7 @@ public class UserCartController {
 				
 				shop = sbiz.get(sid);
 				m.addAttribute("shop",shop);
+				System.out.println(shop);
 				
 				UserCartVO obj = new UserCartVO(0, uid,sid);
 				crlist = crbiz.get_byUid(obj);
