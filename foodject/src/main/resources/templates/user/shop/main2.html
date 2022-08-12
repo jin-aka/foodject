@@ -234,61 +234,73 @@ $(document).ready(function(){
 });
 </script>
      <section class="py-0 bg-primary-gradient">
-
         <div class="container">
           <div class="row justify-content-center g-0">
             <div class="col-xl-9">          
              
-              <div class="col-lg-6 text-center mx-auto mb-3 mt-4 pt-6">              	
-              	<div class="mx-auto mb-3 mb-md-5 mt-4 pt-8" style= "width:200px;">
-   				  <img id="imgviewer" class="img-fluid rounded-3 h-10"  src="https://kr.object.ncloudstorage.com/foodject/cust/icon.jpg" alt="image" />              	
-                  <h2 class="fw-bold fs-3 fs-lg-5 lh-sm my-3" th:text="${shop.name}"></h2>
-                  <p class="fs-1" th:text="${shop.info}">가게 정보</p>
-                  <span class="badge bg-soft-success p-2"><span class="fw-bold fs-1 text-success">Open Now</span></span>&nbsp<a id="heart" type="button"><i class='far fa-heart' style='font-size:24px'></i></a>
-              	</div>
-              </div>
-              <div class="modal-footer justify-content-center">  
-               	  <table>
-              	  	<tbody>
-              	  	  <tr>
-
-              	  	  	<td><h5>최소주문금액</h5></td>
-
-              	  	  	<td  align="right"><h5>th:text="allmin"</h5></td>
-
-              	  	  </tr>
-              	  	  <tr>
-
-              	  	    <td><h5>배달팁</h5></td>
-
-              	  	  	<td  align="right"><h5>3,000원</h5></td> 
-          	  	  
-              	  	  </tr>
-              	  	</tbody>
-              	  </table>              
-              	
-             </div>
-                <input type="hidden" id="status" th:value="${shop.status}">
-                <div class="d-grid bottom-0" th:if="${session.loginid != null}"><button class="btn btn-lg btn-primary btn_disabled mt-xl-6" onclick="goCart();">주문하기<span id="cartCnt" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i></button></div>
-                <div class="d-grid bottom-0" th:unless="${session.loginid != null}"><button class="btn btn-lg btn-primary btn_disabled mt-xl-6" onclick="goLogin();">주문하기<i class="fas fa-chevron-right ms-2"></i></button></div>
-
-              
+	              <div class="col-lg-6 text-center mx-auto mt-4 pt-6 pb-2">              	
+	              	<div class="mx-auto mb-2 md-5 mt-4 pt-6" style= "width:170px;">
+	   				  <img id="imgviewer" class="img-fluid rounded-3 h-10"  src="https://kr.object.ncloudstorage.com/foodject/cust/icon.jpg" alt="image" />              	
+	              	</div>
+	                  <h2 th:text="${shop.name}"></h2>
+	                  <h6 th:text="${shop.info}">가게 정보</h6>
+	                  <span class="badge bg-soft-success"><span class="fw-bold fs-1 text-success">Open Now</span></span>
+	                  &nbsp<a id="heart" type="button"><i class='far fa-heart' style='font-size:18px'></i></a>
+	              </div>
+	              <div class="icon-group justify-content-center">  
+	               	  <table>
+	              	  	<tbody>
+	              	  	  <tr>
+	              	  	  	<td>최소주문금액</td>
+	              	  	  	<td align="right">th:text="allmin"</td>
+	              	  	  </tr>
+	              	  	  <tr>
+	              	  	    <td>배달팁</td>
+	              	  	  	<td align="right">3,000원</td>           	  	  
+	              	  	  </tr>
+	              	  	</tbody>
+	              	  </table>                            	
+	             </div>             
+	             <input type="hidden" id="status" th:value="${shop.status}">
+	             <div class="icon-group1 justify-content-center pt-2">
+	                <div th:if="${session.loginid != null}">
+	                	<button class="btn btn-primary btn_disabled" onclick="goCart();">주문하기
+	                	<span id="cartCnt" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
+	                	</button>
+	                </div>
+	             	<div  th:unless="${session.loginid != null}">
+	             		<button class="btn btn-primary btn_disabled" onclick="goLogin();">주문하기
+	             		<i class="fas fa-chevron-right ms-2"></i>
+	             		</button>
+	             	</div>             	             	
+	             </div>
+	             <hr>
             </div>
           </div>
         </div><!-- end of .container-->
 
       </section>
 
-
-
 <!-- ============================================-->
-<!-- ============================================-->
-<div id="collection" class="col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4 pill-nav" >
-  <a th:href="'#c'+${c.id}" th:each="c:${clist}" th:text="${c.name}">collection</a>
-</div>
+        <div class="container pt-3">
+              <div class="card w-xxl-100">
+                <div class="card-body">
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <button class="nav-link active mb-3" type="button"><i class="fas fa-hamburger me-2"></i></button>
+                      <a 
+                      class="nav-link mb-3" 
+                      type="button"                    
+                      th:href="'#c'+${c.id}" th:each="c:${clist}" th:text="${c.name}">
+                      </a>
+                      
+                    </div>
+                  </nav>
+                  
+                  <div class="tab-content mt-3" id="nav-tabContent">
 
-<!-- ============================================-->
-<!-- <section> begin ============================-->
+                        <div class="col">
+                        
 <section class="py-4 overflow-hidden">
   <div class="container">
     <div class="row h-100" th:each="c:${clist}">
@@ -364,5 +376,20 @@ $(document).ready(function(){
     </div>
   </div><!-- end of .container-->
 </section>
+
+
+                        </div>
+
+                  </div>
+                  
+                </div>
+              </div>
+         </div>
+<!-- ============================================-->
+
+
+<!-- ============================================-->
+<!-- <section> begin ============================-->
+
 <!-- <section> close ============================-->
 <!-- ============================================-->

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+
 <style>
 .icon-bell{
 	color : #ffa000;
@@ -30,12 +33,29 @@
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-  <link rel="stylesheet" href="/bootstrap/skydash/vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" type="text/css" href="/bootstrap/skydash/js/select.dataTables.min.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+  
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+    <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+  <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+	<script src="/bootstrap/skydash/js/chart.js"></script>
   
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
   <!-- style -->
   <style type="text/css">
     a:link {  text-decoration: none }
@@ -43,18 +63,6 @@
     a:hover {  text-decoration: underline}
    
   </style>
-  <!-- endinject -->
-  <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
-    <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-	<script src="/bootstrap/skydash/js/chart.js"></script>
-  
   <script th:inline="javascript">
 		/*<![CDATA[*/
     var id = [[${ session.loginshop }]];
@@ -85,55 +93,55 @@
                 </span>
               </div>
              <div class="input-group-icon pe-2"><i class="fas fa-search input-box-icon text-primary"></i>
-                <input class="form-control border-0 input-box bg-100" type="search" placeholder=" Looking For Something?" aria-label="Search" />
+                <input class="form-control border-0 input-box bg-100" type="search" placeholder=" 무엇을 찾으시나요?" aria-label="Search" />
               </div>  
             </div>
           </li>
         </ul>
-        <ul class="navbar-nav navbar-nav-right">
+        <ul style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="icon-bell mx-0"></i>
               <span class="count"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-              <a class="dropdown-item preview-item">
+            <div  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header" >주의사항</p>
+              <a th:href="@{/host/orders}" class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-success">
                     <i class="ti-info-alt mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="preview-subject font-weight-normal">주문정보</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    Just now
+                    주문관리
                   </p>
                 </div>
               </a>
-              <a class="dropdown-item preview-item">
+              <a th:href="@{/host/mypage}" class="dropdown-item preview-item" >
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-warning">
                     <i class="ti-settings mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="preview-subject font-weight-normal">환경설정</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    Private message
+                   정보수정
                   </p>
                 </div>
               </a>
-              <a class="dropdown-item preview-item">
+              <a th:href="@{/host/menu/setting}" class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-info">
                     <i class="ti-user mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
-                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="preview-subject font-weight-normal">메뉴정보</h6>
                   <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
+                    메뉴관리
                   </p>
                 </div>
               </a>
@@ -146,14 +154,14 @@
             <a class="nav-link dropdown-toggle" th:href="login" data-toggle="dropdown" id="profileDropdown">
               <span id="loginname" th:text="${session.loginshop.name}"></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-              <a class="dropdown-item">
+            <div style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a  class="dropdown-item" th:href="@{/host/mypage}">
                 <i class="ti-settings text-primary"></i>
-                Settings
+                개인정보
               </a>
               <a class="dropdown-item" th:href="@{/host/login/logout}">
                 <i class="ti-power-off text-primary"></i>
-                Logout
+                로그아웃
               </a>
             </div>
           </li>
@@ -344,11 +352,11 @@
 
       <!-- 왼쪽 메뉴 바 -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <ul class="nav" id="dasul">
+        <ul style= "font-family: 'Jua', sans-serif; " class="nav" id="dasul">
           <li class="nav-item">
             <a class="nav-link" href="/test">
               <i class="icon-grid menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+              <span class="menu-title">대쉬보드</span>
             </a>
           </li>
 
@@ -397,17 +405,17 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="icon-head menu-icon"></i>
-              <span class="menu-title">My Page</span>
+              <span class="menu-title">개인정보 관리</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item" th:if="${session.loginshop == null}"> 
-                <a class="nav-link" href="/host/login"> Login</a></li>
+                <a class="nav-link" href="/host/login"> 로그인</a></li>
                 <li class="nav-item" th:if="${session.loginshop == null}"> 
-                <a class="nav-link" href="/host/register"> Register </a></li>
+                <a class="nav-link" href="/host/register"> 회원가입 </a></li>
               	<li class="nav-item" th:unless="${session.loginshop == null}"> 
-                <a class="nav-link" href="/host/mypage">My Information</a></li>
+                <a class="nav-link" href="/host/mypage">내 정보</a></li>
               
               </ul>
             </div>
@@ -421,7 +429,7 @@
             <div class="collapse" id="error">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/bootstrap/skydash/pages/samples/error-404.html"> FAQ </a></li>
-                <li class="nav-item"> <a class="nav-link" href='/host/info'> ChatBot </a></li>
+                <li class="nav-item"> <a class="nav-link" href='/host/info'> 챗봇 </a></li>
               </ul>
             </div>
           </li>

@@ -17955,6 +17955,11 @@ ul {
   display: flex;
 }
 
+.icon-group1 {
+
+  display: flex;
+}
+
 .icon-group .icon-item:not(:last-child) {
   margin-right: 0.5rem;
 }
