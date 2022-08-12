@@ -192,7 +192,7 @@ $(document).ready(function(){
 			    	<!-- 우측 장바구니 정보 start -->
 				    <div class="cartdata">
 				    	<div class="mn_name col-10">
-				    		<h3 th:text="${cr.name}" class="mn_name_txt">메뉴 이름</h3>
+				    		<h3 th:text="${crm.name}" class="mn_name_txt">메뉴 이름</h3>
 				    	</div>
 				    	<div class="delete_box col-1">
 				    		<h1><a href="#" th:onclick="deleteCart([[${cr.id}]]);"><i class='far fa-trash-alt' style='font-size:36px'></i></a>️</h1>
