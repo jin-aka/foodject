@@ -19,10 +19,11 @@ public class UserCartVO {
 	private int num;
 	private int sid;
 	
-	private String name;
+	private String mname;
 	private int total;
 	private int count;
 	private int deprice;
+	private int odid;
 	
 	// For insert
 	public UserCartVO(String uid, int mnid, int num) {

@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserCollectionBiz;
+import com.foodject.biz.UserCustBiz;
 import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserShopBiz;
+import com.foodject.vo.AddrVO;
 import com.foodject.vo.MarkerVO;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCollectionVO;
@@ -27,6 +29,9 @@ import com.foodject.vo.UserShopVO;
 @Controller
 @RequestMapping("/shop")
 public class UserShopController {
+	
+	@Autowired
+	UserCustBiz csbiz;
 	
 	@Autowired
 	UserShopBiz sbiz;  
@@ -60,11 +65,16 @@ public class UserShopController {
 	}
 
 	@RequestMapping("")
-	public String shop(Model m, int cid, double latt, double logt) {
+	public String shop(Model m, int cid, double latt, double logt, String addr, String addrd, HttpSession session) {
 		MarkerVO obj = new MarkerVO(latt,logt,cid);
 		List<UserShopVO> list = null;
+		AddrVO addrObj = new AddrVO();
 		
 		try {	
+			addrObj.setAddr(addr);
+			addrObj.setAddrd(addrd);
+			session.setAttribute("addrObj", addrObj);
+			
 			list = sbiz.getMain(obj);
 			m.addAttribute("shoplist",list);
 			m.addAttribute("center", "user/shop/center");

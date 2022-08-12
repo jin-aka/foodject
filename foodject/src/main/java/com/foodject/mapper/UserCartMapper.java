@@ -22,6 +22,7 @@ public interface UserCartMapper {
 	public Integer selectSid_byUid(String uid) throws Exception;
 	public void updateCount(UserCartVO obj) throws Exception;
 	public void updateDeprice(UserCartVO obj) throws Exception;
+	
 }
 
 

@@ -5,9 +5,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 <mapper namespace="com.foodject.mapper.UserOrdersMapper">
 	
 	<insert id="insert" parameterType="userordersVO">
-		INSERT INTO orders VALUES (NULL, #{uid}, #{sid}, #{addr}, #{addrd}, #{phon}, #{nick}, SYSDATE(), 2, #{ask}) 
+		INSERT INTO orders VALUES (NULL, #{uid}, #{sid}, #{addr}, #{addrd}, #{phon}, #{nick}, SYSDATE(), 4, #{ask})
+		 <selectKey keyColumn="" keyProperty="id" order="AFTER" resultType="Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
 	</insert>
-	
 	
 	
 	<select id="selectod" parameterType="String" resultType="userordersmyVO">
