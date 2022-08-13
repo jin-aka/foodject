@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserDetailBiz;
 import com.foodject.biz.UserDoptBiz;
+import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserOrdersBiz;
 import com.foodject.biz.UserShopBiz;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserDoptVO;
+import com.foodject.vo.UserMenuVO;
 import com.foodject.vo.UserOptcartVO;
 import com.foodject.vo.UserOrdersVO;
 import com.foodject.vo.UserShopVO;
@@ -43,6 +45,9 @@ public class UserCartController {
 	
 	@Autowired
 	UserDoptBiz dbiz;
+	
+	@Autowired
+	UserMenuBiz mnbiz;
 
 	@RequestMapping("paytest")
 	public String paytest(Model m) {
@@ -73,6 +78,7 @@ public class UserCartController {
 			int cnt = 0;
 				
 			try {
+				
 				sid = crbiz.getSid_byUid(uid);
 				
 				shop = sbiz.get(sid);

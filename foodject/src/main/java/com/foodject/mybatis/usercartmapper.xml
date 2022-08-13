@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="select_byUid" parameterType="usercartVO" resultType="usercartVO">
-		SELECT cr.id, cr.uid, cr.mnid, cr.num, cr.deprice, mn.name AS mname, (price*num) as total, i.img FROM cart cr
+		SELECT cr.id, cr.uid, cr.mnid, cr.num, cr.deprice, mn.name AS mname, mn.price AS mprice, (price*num) as total, i.img FROM cart cr
 		INNER JOIN menu mn ON mn.id=cr.mnid
 		LEFT OUTER JOIN img i ON mn.id=i.outid
 		WHERE cr.uid=#{uid} AND mn.sid=#{sid} AND (i.table='menu' OR i.table IS NULL)

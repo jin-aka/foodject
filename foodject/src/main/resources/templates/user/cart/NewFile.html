@@ -1,3 +1,59 @@
+
+<style>
+.cartbox{
+	/* offset-x | offset-y | blur-radius | spread-radius | color */
+	box-shadow: 2px 2px 20px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+	margin:auto;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+	margin-bottom:10px;
+}
+.imgbox{
+	width:20%;
+	margin:2% 2% 2% 2%;
+	display:inline-block;
+}
+.cartdata{
+	display:inline-block;
+	margin:2% 2% 2% 2%;
+	width:70%;
+	
+}
+.mn_name{
+	position:relative;
+	top:2%;
+	display:inline-block;
+}
+.delete_box{
+	display:inline-block;
+}
+.quantity{
+	display:inline-block;
+}
+.price{
+	display:inline-block;
+}
+.optionbox{
+	margin:0 5% 2% 40%;
+	position:relative;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+	background-color:rgba(0, 0, 0, 0.1);
+}
+.optiontable{
+	margin:3% 3% 3% 3%;
+}
+.summarybox{
+	margin-top:20px;
+}
+.summaryArea{
+	display: inline-block;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+</style>
+
 <script>
 function goOrder(){
 	var totalPrice = $('#totalPrice_data').val();
@@ -124,9 +180,16 @@ $(document).ready(function(){
         <div class="card card-span mb-3 shadow-lg">
           <div class="card-body py-0">
             <div class="row justify-content-center">
-                <div class="p-0">
+                <div class="p-5">
                 
-
+                <!-- =====cart가 null 일 때 화면===== -->
+              	  <div th:if="${count} == 0"  class="px-6 pb-5">
+              		<div class="cartbox">
+                	  <div class="card-body">                	   
+                	   <img class="img-fluid rounded-3 w-100" src=https://kr.object.ncloudstorage.com/foodject/shop/emptypage.jpg>                	  
+                	  </div>
+                	</div>
+                  </div><!-- =====end cart가 null 일 때 화면===== -->
                 
                 
                 <!-- =====상단배너===== --> 
@@ -142,22 +205,12 @@ $(document).ready(function(){
 			            </div>
 			          </div>
 			        </div>
-			      </section> <!-- =====end 상단배너===== -->
+			      </section> <!-- =====end 상단배너===== --> 
 			      
-			      <!-- =====cart가 null 일 때 화면===== -->
-              	  <div th:if="${count} == 0"  class="px-6 pb-5">
-              		<div class="cartbox">
-                	  <div class="card-body">                	   
-                	   <img class="img-fluid rounded-3 w-100" src=https://kr.object.ncloudstorage.com/foodject/shop/emptypage.jpg>                	  
-                	  </div>
-                	</div>
-                  </div><!-- =====end cart가 null 일 때 화면===== -->
-  
-               	  <div th:unless="${count} == 0">			                      
                         <!-- =====Main Header===== -->         
 			      		<div class="modal-header">
 					      	<div class="ps-3">
-					          <h2 class="modal-title"><i class="fas fa-home"></i><span th:if="${shop.name != null}" th:text="'&nbsp&nbsp'+${shop.name}"></span></h2>					      						          
+					          <h2 class="modal-title"><i class="fas fa-home"></i><span th:text="'&nbsp&nbsp'+${shop.name}"></span></h2>					      	
 					      	</div>
 					    </div>
 					    
@@ -167,7 +220,7 @@ $(document).ready(function(){
 				          <div class="px-3">
 				          
 							<!--th:each 주문항목-->	
-						      <div  class="cartbox pt-2"  th:each="cr:${crlist}">						     	
+						      <div class="cartbox" th:each="cr:${crlist}">						     	
 					              <div class="w-xxl-100">
 					                <div class="card">
 					                  <div class="card-body">
@@ -198,21 +251,18 @@ $(document).ready(function(){
 						                        <div th:if="${cr.count != 0}">
 										            <li>
 					                               	  <span>기본:&nbsp</span>
-					                               	  <span th:text="${#numbers.formatInteger(cr.mprice, 0, 'COMMA')+'원'}"></span>
+					                               	  <span >"${#numbers.formatInteger(mlist.price, 0, 'COMMA')+'원'}"</span>
 					                               	</li>								             
 										             <table  width="100%" cellspacing="0">
 									                   <tbody>
-									                     <tr>
-							                               <td>
-							                                 <div th:if="${cr.count != 0}">
+									                     <tr >
+							                               <td th:if="${cr.count != 0}">
 								                               <li>
 								                               	<span>추가옵션(가격):&nbsp</span>
-								                               	<div th:each="oc:${oclist}" th:if="${oc.ctid == cr.id}"  class="optiondata">
-								                               		<span th:text="'-'+${oc.name}+'('+${oc.price}+'원)&nbsp&nbsp&nbsp&nbsp'"></span>
-								                               		<input type="hidden" th:value="${oc.price}" th:class="'ocprice'+${cr.id}">                        					                               
-								                               	</div>                      	                        					                               								                               	 
+								                               	<span th:each="oc:${oclist}" th:if="${oc.ctid == cr.id}" 
+								                               	    th:text="${oc.name}+'('+${oc.price}+'원)&nbsp&nbsp&nbsp&nbsp'"></span>  
+								                               	    <input type="hidden" th:value="${oc.price}" th:class="'ocprice'+${cr.id}">                    					                               
 								                               </li>
-								                             </div>
 							                               </td>  
 									                     </tr>
 									                     <tr >
@@ -232,13 +282,7 @@ $(document).ready(function(){
 				                        <div class="col-md-5">
 				                        </div>
 				                        <div class="d-grid gap-3 col-sm-auto px-2">		                        	        	                        
-								    	<div class="price" >
-								    		<h4 th:id="'crprice_text'+${cr.id}"></h4>
-								    		<form th:id="'price_form'+${cr.id}">
-									    		<input type="hidden" th:id="'crprice_val'+${cr.id}" th:value="${cr.total}" class="price_val">
-									    		<input type="hidden" th:value="${cr.id}" class="cartId">
-									    	</form>
-								    	</div>
+											<h4 th:text="'가격:&nbsp'+${#numbers.formatInteger(cr.deprice, 0, 'COMMA')+'원'}">가격</h4>													  
 										</div>
 				                      </div>
 				                      
@@ -252,16 +296,23 @@ $(document).ready(function(){
 						      
 						      <!-- chanbin -->						             
 
+							    		<h4 th:id="'crprice_text'+${cr.id}"></h4>
+							    		<form th:id="'price_form'+${cr.id}">
+								    		<input type="hidden" th:id="'crprice_val'+${cr.id}" th:value="${cr.total}" class="price_val">
+								    		<input type="hidden"  th:value="${cr.id}" class="cartId">
+								    	</form>
 
 							</div>
 				         	
 				         	<!-- 주문가격  -->
-						    <div class="input-group justify-content-end pt-5" th:if="${count} != 0">
-							    <h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
+						    <div class="input-group justify-content-end pt-2" th:if="${count} != 0">
+							    <div class="summaryArea">
+							    	<h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
+							    </div>
 						    </div>				         	
-							<div class="modal-header justify-content-center pt-5">
+							<div class="modal-header justify-content-center pt-3">
 								<div class="pb-3">
-						        	<a type="button" class="btn btn-line text-dark" th:href="@{/shop/main(sid=${shop.id})}"><i class="fas fa-cart-plus"></i>&nbsp 더 담으러 가기</a>			        	
+						        	<a type="button" class="btn btn-line text-dark"><i class="fas fa-cart-plus"></i>&nbsp 더 담으러 가기</a>			        	
 						        </div>
 						    </div>
 							<div class="input-group justify-content-center pt-3">						        
@@ -281,11 +332,9 @@ $(document).ready(function(){
 
  
 			   			 </div><!-- end of .container--> 
-			   			 
-			   			 </div>
 		          	
 			   </div> 
-			   <input type="hidden" id="allmin" th:if="${count} != 0" th:value="${shop.allmin}" >           
+			   <input type="number" id="allmin" th:if="${count} != 0" th:value="${shop.allmin}" >           
             </div>  
 		  </div>
 		</div>
