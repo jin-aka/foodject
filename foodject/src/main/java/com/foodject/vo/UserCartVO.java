@@ -24,6 +24,7 @@ public class UserCartVO {
 	private int count;
 	private int deprice;
 	private int odid;
+	private int mprice;
 	
 	private String img;
 	

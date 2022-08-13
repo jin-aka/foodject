@@ -45,7 +45,7 @@ public class UserOrdersBiz implements Biz<Integer, UserOrdersVO> {
 		return dao.selectoddeopt(k);
 	}
 	
-	public UserOrdersMyVO getallprice(Integer k) throws Exception{
+	public Integer getallprice(Integer k) throws Exception{
 		return dao.selectallprice(k);
 	}
 	

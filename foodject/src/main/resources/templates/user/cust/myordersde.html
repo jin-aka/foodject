@@ -124,7 +124,7 @@ $(document).ready(function(){
 									  <tbody>
 									    <tr>
 									      <td><h6>총 주문금액</h6>   </td>
-									      <td><h6 align="right" th:text="${#numbers.formatInteger(ap.allprice, 0, 'COMMA')}+'원'"></h6>   </td>
+									      <td><h6 align="right" th:text="${#numbers.formatInteger(ap, 0, 'COMMA')}+'원'"></h6>   </td>
 									    </tr>
 									    <tr>
 									      <td><h6>배달팁</h6>   </td>
@@ -138,7 +138,7 @@ $(document).ready(function(){
 									  <tbody>
 									    <tr>
 									      <td><h5>최종결제가격</h5></td>
-									      <td><h5 align="right" th:text="${#numbers.formatInteger(ap.allprice+3000, 0, 'COMMA')}+'원'"></h5></td>
+									      <td><h5 align="right" th:text="${#numbers.formatInteger(ap+3000, 0, 'COMMA')}+'원'"></h5></td>
 									    </tr>
 									  </tbody>
 								  </table>
