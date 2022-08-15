@@ -60,6 +60,7 @@ public class UserCustLoginController {
 
          if(cust.getPwd().equals(pwd)) {
             session.setAttribute("loginid", cust);
+
          }else {
             throw new Exception();
          }

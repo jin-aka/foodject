@@ -24,13 +24,16 @@
     <meta name="msapplication-TileImage" content="/bootstrap/foodwagon/assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
 
-
     <!-- ===============================================-->
     <!--    Stylesheets-->
     <!-- ===============================================-->
     <link href="/bootstrap/foodwagon/assets/css/theme.css" rel="stylesheet" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+  <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+
 	<!--  script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" / -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,9 +111,15 @@ $(document).ready(function(){
             	              
               <h5 th:unless="${session.loginid == null}">
                  <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">
+<<<<<<< HEAD
             	 <button style= " font-family: 'Jua', sans-serif; " class="btn btn-danger" id="logoutbt" type="button">
             	 	<i class="fas fa-user me-2"></i>로그아웃
             	 </button>              	
+=======
+            	 <button class="btn btn-danger" id="logoutbt" type="button">
+            	 	<i class="fas fa-user me-2"></i>Logout
+            	 </button>
+>>>>>>> a923c7344b971f410dee8f6d0682d022c0337d53
               </h5>
               
               <input type="hidden" id="prevUrl_index" name="prevUrl">
