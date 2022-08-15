@@ -197,7 +197,7 @@ public class UserCustController {
 		      ArrayList<UserOrdersMyVO> getodopt = new ArrayList<UserOrdersMyVO>() ;
 		      List<UserOrdersMyVO> opt = null;
 		   
-		      UserOrdersMyVO allprice = null;
+		      Integer allprice = null;
 		      
 		      try {         
 		         //odinfo 주문기본정보
