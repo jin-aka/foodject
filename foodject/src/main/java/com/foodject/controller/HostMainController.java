@@ -4,8 +4,10 @@ package com.foodject.controller;
 import javax.servlet.http.HttpSession;
 
 import com.foodject.biz.HostManagerBiz;
+import com.foodject.biz.HostOrdersBiz;
 import com.foodject.restapi.BcrytPassward;
 import com.foodject.vo.HostManagerVO;
+import com.foodject.vo.HostOrdersVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,25 +24,44 @@ public class HostMainController {
 	
 	@Autowired
 	HostManagerBiz mbiz;
+	@Autowired
+	HostOrdersBiz obiz;
 	
 	@Autowired
 	BcrytPassward bp;
-	public void mainProduct(Model m) {
-//		List<ProductVO> plist = null;
-//		String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","img", "product_img").toString();
-//		System.out.println("imgpath : " +  pimgpath);
-//		try {	
-//			plist = mainbiz.get();
-//			m.addAttribute("plist", plist);
-//			m.addAttribute("imgpath", pimgpath);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-	}
+
+
 
 	@RequestMapping("")
-	public ModelAndView main(ModelAndView mv) {
+	public ModelAndView main(ModelAndView mv, HttpSession session) {
+		HostManagerVO mng = (HostManagerVO) session.getAttribute("loginshop");
+		if( mng == null ){
+			mv.setViewName("/host/login");
+			return mv;
+		}
+
+		int result = 0;
+		HostOrdersVO ovo = new HostOrdersVO();
+		ovo.setShop_mid(mng.getId());
+		try {
+			result = obiz.mainseletcstatus(mng.getId());
+			mv.addObject("mainseletcstatus", result);
+			result = obiz.mainallorders(mng.getId());
+			mv.addObject("mainallorders", result);
+			ovo = obiz.mainallpriceday(ovo);
+			mv.addObject("dayallprice", ovo);
+			ovo = new HostOrdersVO();
+			ovo.setShop_mid(mng.getId());
+			ovo = obiz.mainallpricemonth(ovo);
+			mv.addObject("monthallprice", ovo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 		mv.setViewName("host/index");
+		
 		mv.addObject("center", "host/center");
 		mv.addObject("kakaosrc",kakaoJSKey);
 		return mv;
@@ -48,7 +69,7 @@ public class HostMainController {
 	
 	@RequestMapping("/sample")
 	public String sample(Model m) {
-		mainProduct(m);
+
 		return "host/sample";
 	}
 	@RequestMapping("/register")
