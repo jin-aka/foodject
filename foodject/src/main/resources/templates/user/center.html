@@ -10,6 +10,12 @@ $(document).ready(function(){
 	});
 });
 
+function registerAddr(){
+	var addr = $('#address').val();
+	var addrd = $('#addrDetail').val();
+	
+	
+}
 
 function convertAddr(addr){
 		geocoder.addressSearch( addr , function(result, status){
@@ -32,11 +38,14 @@ function selectMain(cid){
 	var addr = $('#address').val();
 	var addrd = $('#addrDetail').val();
 	
-	if(error == 0){
-		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
-	}else{
+	if(error == 1 ){
 		$('#address').focus();
 		alert('배달 장소를 입력하세요');
+	}else if(addrd != ""){
+		$('#addrDetail').focus();
+		alert('상세 주소를 입력하세요');
+	}else{
+		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
 	}
 };
 
@@ -90,9 +99,11 @@ function execDaumPostcode() {
             } else {
                 document.getElementById("address").value = addr;
             }
+            
             convertAddr(addr);
             
-            scrollDown();
+            $('#addrDetail').focus();
+            // scrollDown();
          	
         }
     }).open();
@@ -134,7 +145,7 @@ function execDaumPostcode() {
                           </div>
                         </div>
                         <div class="d-grid gap-3 col-sm-auto">
-                          <button class="btn btn-danger" type="button" onclick="execDaumPostcode()">주소 검색</button>
+                          <button class="btn btn-danger" type="button" onclick="execDaumPostcode()">주소지 설정</button>
                         </div>
                       </form>
                     </div>

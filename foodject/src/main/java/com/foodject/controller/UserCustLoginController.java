@@ -49,7 +49,6 @@ public class UserCustLoginController {
          //System.out.println(cust);
          if(cust == null) {
             throw new Exception();
-
          }
          // 비밀번호 암호화 체크 처리
          // if(bp.checkPassward(cust.getPwd(), pwd)) {
