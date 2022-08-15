@@ -1,3 +1,9 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+
+
 <script type="text/javascript" th:src="'//dapi.kakao.com/v2/maps/sdk.js?appkey=' + ${kakaosrc} + '&libraries=services'"></script>
 <script>
 var geocoder = new kakao.maps.services.Geocoder();
@@ -109,15 +115,15 @@ function execDaumPostcode() {
             <div class="col-md-5 col-lg-6 order-0 order-md-1 mt-8 mt-md-0"><a class="img-landing-banner" href="#!"><img class="img-fluid" src="/bootstrap/foodwagon/assets/img/gallery/hero-header.png" alt="hero-header" /></a></div>
             <div class="col-md-7 col-lg-6 py-8 text-md-start text-center">
 
-              <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">혹시, 배고프세요?</h1><br>
-              <h1 class="text-800 mb-5 fs-4">치킨, 피자, 떡볶이, 삼겹살 ... <br class="d-none d-xxl-block" />무엇이든 주문해보세요!</h1>
-              <h3> 대구 중구 동성로6길 61 </h3>
+              <h1 style= " font-family: 'Jua', sans-serif; " class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">혹시, 배고프세요?</h1><br>
+              <h1 style= "font-family: 'Jua', sans-serif; " class="text-800 mb-5 fs-4">치킨, 피자, 떡볶이, 삼겹살 ... <br class="d-none d-xxl-block" />무엇이든 주문해보세요!</h1>
+              <h3 style= " font-family: 'Jua', sans-serif; "> 대구 중구 동성로6길 61 </h3>
 
               <div class="card w-xxl-75">
                 <div class="card-body">
                   <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <button class="nav-link active mb-3" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-motorcycle me-2"></i>배달</button>
+                      <button style= " font-family: 'Jua', sans-serif; " class="nav-link active mb-3" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-motorcycle me-2"></i>배달</button>
 
                     </div>
                   </nav>
@@ -134,7 +140,7 @@ function execDaumPostcode() {
                           </div>
                         </div>
                         <div class="d-grid gap-3 col-sm-auto">
-                          <button class="btn btn-danger" type="button" onclick="execDaumPostcode()">주소 검색</button>
+                          <button style= " font-family: 'Jua', sans-serif; " class="btn btn-danger" type="button" onclick="execDaumPostcode()">주소 검색</button>
                         </div>
                       </form>
                     </div>
@@ -164,7 +170,7 @@ function execDaumPostcode() {
         <div class="container">
           <div class="row flex-center mb-6">
             <div class="col-lg-7">
-              <h5 class="fw-bold fs-3 fs-lg-5 lh-sm text-center text-lg-start">CATEGORY</h5>
+              <h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="fw-bold fs-3 fs-lg-5 lh-sm text-center text-lg-start">카테고리</h5>
             </div>
           </div>
           <div class="row flex-center">
@@ -172,13 +178,13 @@ function execDaumPostcode() {
               <div class="carousel slide" id="carouselSearchByFood" data-bs-touch="false" data-bs-interval="false">
                 <div class="carousel-inner">
                   <div class="carousel-item active" data-bs-interval="100">
-                    <div class="row h-100 align-items-center">
+                    <div  class="row h-100 align-items-center">
 
 					  <div class="col-6 col-sm-6 col-md-4 col-xl mb-5 h-100">
                         <a href="javascript:void(0);" onclick="selectMain(0);return false;">
                         <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="https://kr.object.ncloudstorage.com/foodject/img/all.jpg" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">전체보기</h5>
+                            <h5 style= " font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">전체보기</h5>
                           </div>
                         </div>
                       </a>
@@ -188,7 +194,7 @@ function execDaumPostcode() {
                       	<a href="javascript:void(0);" onclick="selectMain(1);return false;">
                         <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="https://kr.object.ncloudstorage.com/foodject/img/ko.jpg" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">한식</h5>
+                            <h5 style= " font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">한식</h5>
                           </div>
                         </div>
                         </a>         
@@ -198,7 +204,7 @@ function execDaumPostcode() {
                         <a href="javascript:void(0);" onclick="selectMain(2);return false;">
                         <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="https://kr.object.ncloudstorage.com/foodject/img/cn.jpg" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">중식</h5>
+                            <h5 style= "font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">중식</h5>
                           </div>
                         </div>
                          </a>
@@ -208,7 +214,7 @@ function execDaumPostcode() {
                         <a href="javascript:void(0);" onclick="selectMain(3);return false;">
                         <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="https://kr.object.ncloudstorage.com/foodject/img/jp.jpg" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">일식</h5>
+                            <h5 style= " font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">일식</h5>
                           </div>
                         </div>
                          </a>  
@@ -218,7 +224,7 @@ function execDaumPostcode() {
                         <a href="javascript:void(0);" onclick="selectMain(4);return false;">
                         <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="/bootstrap/foodwagon/assets/img/gallery/search-pizza.png" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">양식</h5>
+                            <h5 style= "font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">양식</h5>
                           </div>
                         </div>
                       </a>
@@ -228,7 +234,7 @@ function execDaumPostcode() {
                         <a href="javascript:void(0);" onclick="selectMain(5);return false;">
                         <div class="card card-span h-100 rounded-circle"><img class="img-fluid rounded-circle h-100" src="https://kr.object.ncloudstorage.com/foodject/img/etc.jpeg" alt="..." />
                           <div class="card-body ps-0">
-                            <h5 class="text-center fw-bold text-1000 text-truncate mb-2">기타</h5>
+                            <h5 style= "font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">기타</h5>
                           </div>
                         </div>
                       </a>
