@@ -76,6 +76,18 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 			group by o.id) as tb
 		group by tb.mid;
 	</select>
+	<select id="bardayfrommonth" parameterType="HostOrdersVO" resultType="HostOrdersVO">
+		select date, sum(allprice) as allprice from (
+			SELECT s.id,o.id as oid, o.status as ostatus,  s.mid, s.name,  sum( d.num * d.price) + sum( doptsum.alloprice ) as allprice , o.date
+			FROM orders o
+			left join detail d on o.id = d.odid
+			left join shop s on o.sid = s.id
+			left join (select did, sum(oprice) as alloprice from dopt group by did) as doptsum on d.id = doptsum.did
+			where o.status = 1 and s.mid = #{shop_mid}
+			group by o.id) as ds
+        group by date
+        having date between date_format(now(), '%Y-%m-01') and date_format(now(), '%Y-%m-%d');
+	</select>
 
 
 

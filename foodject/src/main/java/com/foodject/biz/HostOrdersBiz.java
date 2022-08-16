@@ -66,4 +66,7 @@ public class HostOrdersBiz implements Biz<Integer, HostOrdersVO> {
 	public HostOrdersVO mainallpricemonth(HostOrdersVO obj) throws Exception{
 		return dao.mainallpricemonth(obj);
 	}
+	public List<HostOrdersVO> bardayfrommonth(HostOrdersVO obj) throws Exception{
+		return dao.bardayfrommonth(obj);
+	}
 }

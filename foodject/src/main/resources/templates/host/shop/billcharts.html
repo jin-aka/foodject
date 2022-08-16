@@ -5,7 +5,7 @@
 			labels: ["2013", "2022", "2014", "2014", "2015", "2016", "2017",],
 			datasets: [{
 				label: '# of Votes',
-				data: [1, 19, 3, 5, 2, 3],
+				data: [1, 19, 3, 5, 2, 3,5],
 				backgroundColor: [
 				"#" + Math.floor(Math.random() * 16777215).toString(16),
 				"#" + Math.floor(Math.random() * 16777215).toString(16),
@@ -45,8 +45,57 @@
 			}
 
 		};
-		function aJaxBarChart(){
+		function isEmpty(str){
+		
+		if(typeof str == "undefined" || str == null || str == "")
+			return true;
+		else
+			return false ;
+		};
+		function aJaxBarChart(id){
+
+			if( isEmpty(id) ){
+				id = 0;
+			}
+			$.ajax({
+				url: '/host/shop/barChart',
+				type: "POST",
+				data: { "id": id },
+				success: function (result) {
+				
+					displayBarChart(result);
+				}
+			});
+		};
+		function displayBarChart(result){
+
+			var bardata = new Array();	
+			var labels = new Array();
+			var eee = new Object();
+
+			result.forEach(element => {
+				// moment(element.date).format("YMM월 DD일")
+				eee.push = element.date;
+				
+			});
+			alert("eee"+eee);
+			bardata.push({'labels' : eee });
+			alert("bardata.labels1 : "+bardata.labels );
+			alert("bardata2 : "+bardata[0].labels );
 			
+			alert("bardata1 : "+bardata );
+			alert("vardata : "+vardata.labels );
+
+
+			if ($("#barChart").length) {
+				var barChartCanvas = $("#barChart").get(0).getContext("2d");
+				// This will get the first returned node in the jQuery collection.
+				var barChart = new Chart(barChartCanvas, {
+					type: 'bar',
+					data: bardata,
+					options: options
+				});
+			}
 		}
 
 		$(document).ready(function () {
@@ -56,184 +105,14 @@
 			$('#chartsbt').click(function () {
 				location.href = "/host/shop/charts";
 			});
+			aJaxBarChart();
 
-			if ($("#barChart").length) {
-				var barChartCanvas = $("#barChart").get(0).getContext("2d");
-				// This will get the first returned node in the jQuery collection.
-				var barChart = new Chart(barChartCanvas, {
-					type: 'bar',
-					data: vardata,
-					options: options
-				});
-			}
+
+			
 		});
 	</script>
 </head>
 
-<div class="modal" id="myModal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-
-			<!-- Modal Header -->
-			<div class="modal-header">
-				<h4 class="modal-title" id="modalId">Modal Heading</h4>
-				<button type="button" class="btn-close" data-bs-dismiss="modal">x</button>
-			</div>
-			<!-- Modal body -->
-			<div class="modal-body">
-				<div class="col-lg-12 grid-margin stretch-card">
-					<div class="card">
-						<div class="card-body">
-							<div class="table-responsive pt-3">
-								<table class="table table-bordered" id="modalTable">
-									<tbody>
-										<tr>
-											<td>
-												상호명
-											</td>
-											<td>
-												<input type="text" class="form-control" id="name" name="name" readonly>
-
-											</td>
-											<td>
-												사업자 번호
-											</td>
-											<td>
-												<input type="text" class="form-control" id="bnum" name="bnum" readonly>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												주소
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<div class="input-group col-xs-12">
-													<input type="text" class="form-control" id="addr" name="addr"
-														readonly="readonly" placeholder="주소">
-													<span class="input-group-append">
-														<button class="file-upload-browse btn btn-primary" id="addrbtn"
-															type="button" disabled>주소 검색</button>
-														<input type="number" hidden id="latt" name="latt">
-														<input type="number" hidden id="logt" name="logt">
-													</span>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<input type="text" class="form-control" id="addrd" name="addrd"
-													readonly>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												전화번호
-											</td>
-											<td>
-												<input type="text" class="form-control" id="phon" name="phon" readonly>
-
-											</td>
-											<td>
-												로고
-											</td>
-											<td>
-												<input type="text" class="form-control" id="logo" name="logo" readonly>
-												<div class="form-group">
-													<div class="input-group col-xs-12">
-														<input type="file" class="form-control file-upload-info"
-															id="logobtn" name="mf" placeholder="Upload Image"
-															accept=".jpg, .jpeg, .png">
-														<span class="input-group-append">
-															<!-- <button class="file-upload-browse btn btn-primary" id="logobt" type="button">Upload</button> -->
-														</span>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												가게 정보
-											</td>
-										</tr>
-										<tr>
-											<td colspan="4">
-												<input type="text" class="form-control" id="info" name="info" readonly>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												최소 결제 금액
-											</td>
-											<td>
-												<input type="text" class="form-control" id="allmin" name="allmin"
-													readonly>
-
-											</td>
-											<td>
-												등록일
-											</td>
-											<td id="date">
-												date
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2">
-												가게 운영 상태
-											</td>
-											<!-- (1) 라디오 버튼 -->
-											<div class="col-md-6">
-												<div class="form-group row">
-													<td>
-														<div class="col-sm-4">
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input type="radio" class="form-check-input"
-																		name="status" id="status1" value="1" checked
-																		onclick="return(false);">
-																	정상 영업
-																</label>
-															</div>
-														</div>
-													</td>
-													<td>
-														<div class="col-sm-5">
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input type="radio" class="form-check-input"
-																		name="status" id="status2" value="2"
-																		onclick="return(false);">
-																	휴업
-																</label>
-															</div>
-														</div>
-													</td>
-												</div>
-											</div>
-											<!-- (1) 라디오 버튼 끝 -->
-											</td>
-										</tr>
-
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- Modal footer -->
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info btn-rounded btn-fw" id="modifybtn">수정</button>
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="closebtn">닫기</button>
-				<button type="button" class="btn btn-success" id="confirmbtn">확인</button>
-				<button type="button" class="btn btn-warning btn-rounded btn-fw" id="concelbtn">취소</button>
-			</div>
-
-		</div>
-	</div>
-</div>
 
 
 <div class="main-panel">

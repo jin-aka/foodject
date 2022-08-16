@@ -83,6 +83,9 @@ public class HostShopController {
 		mv.addObject("center", "/host/shop/analysis");
 		return mv;
 	}
+	
+
+
 	@RequestMapping("analysis")
 	public ModelAndView analysis(ModelAndView mv, HttpSession session) {
 
