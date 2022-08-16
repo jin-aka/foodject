@@ -1,9 +1,13 @@
 package com.foodject.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.foodject.vo.UserCustVO;
 
 @Controller
 public class UserMainController {
@@ -29,7 +33,13 @@ public class UserMainController {
 	}
 	
 	@RequestMapping("/")
-	public String main(Model m) {
+	public String main(Model m, HttpSession session) {
+		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		if(cust != null) {
+			m.addAttribute("addr",cust.getAddr()) ;
+			m.addAttribute("addrd",cust.getAddrd()) ;
+			
+		}
 		m.addAttribute("kakaosrc",kakaoJSKey);
 		return "user/index";
 	}

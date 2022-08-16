@@ -60,7 +60,7 @@ function displayPrice(){
 		var arr = document.getElementsByClassName("ocprice"+cartId);
  		for (var i = 0; i < arr.length; i++) {
 			var ocPrice = parseInt(arr[i].value);
-			crPrice += ocPrice;		
+			crPrice += ocPrice*(arr.length+1);		
 		}
  		$('#crprice_text'+cartId).text('￦ '+crPrice);
  		$('#crprice_val'+cartId).val(crPrice);

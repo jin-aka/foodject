@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.foodject.biz.UserCustBiz;
 import com.foodject.frame.Util;
 import com.foodject.restapi.BcrytPassward;
+import com.foodject.vo.AddrVO;
 import com.foodject.vo.UserCustVO;
 
 
@@ -42,8 +43,9 @@ public class UserCustLoginController {
    }
    
    @RequestMapping("/loginimpl")
-   public String loginimpl(Model m, String id, String pwd, HttpSession session, String prevUrl) {
+   public String loginimpl(Model m, String id, String pwd, HttpSession session, String prevUrl, HttpSession sessionAddr) {
       UserCustVO cust = null;
+      AddrVO addrObj = (AddrVO) sessionAddr.getAttribute("addrObj");
       try {
          cust = custbiz.get(id);
          //System.out.println(cust);
@@ -59,18 +61,33 @@ public class UserCustLoginController {
 
          if(cust.getPwd().equals(pwd)) {
             session.setAttribute("loginid", cust);
-
+            
          }else {
             throw new Exception();
          }
       } catch (Exception e) {
          return "redirect:/cust/login?msg=f&prevUrl="+prevUrl;
       }
-      if(prevUrl != null && !(prevUrl.equals("null")) && !(prevUrl.equals(""))) {
-         return "redirect:"+prevUrl;
+      if(addrObj == null) {
+    	System.out.println("sessionAddr is null");
+      	return "redirect:/";
       }else {
-         return "redirect:/";
+    	  addrObj.setId(id);
+    	  try {
+			custbiz.modifyAddr(addrObj);
+			System.out.println("주소 세션으로 회원정보 업데이트");
+		  } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		  }
+    	  
+    	  if(prevUrl != null && !(prevUrl.equals("null")) && !(prevUrl.equals(""))) {
+	         return "redirect:"+prevUrl;
+	      }else {
+	         return "redirect:/";
+	      }
       }
+      
       
    }
    

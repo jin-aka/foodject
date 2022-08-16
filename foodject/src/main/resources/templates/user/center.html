@@ -14,14 +14,30 @@ $(document).ready(function(){
 	$('#address').click(function(){
 		execDaumPostcode();
 	});
+	
+	if($('#uid_index').val != null){
+		error = 0;
+		var addr = $('#address').val();
+		convertAddr(addr);
+	}
 });
 
 function registerAddr(){
 	var addr = $('#address').val();
 	var addrd = $('#addrDetail').val();
 	
+	$.ajax({
+		url:'/shop/main/registerAddr',
+		data:{'addr':addr, 'addrd':addrd},
+		success:function(data){
+			if(data == 1){
+				console.log("addr session");
+			}
+			convertAddr(addr);
+		}
+	});
 	
-	
+	scrollDown();
 }
 
 function convertAddr(addr){
@@ -33,7 +49,7 @@ function convertAddr(addr){
 	     	// 결과값으로 받은 위치의 좌표를 변수에 저장합니다.
 	        latt=result[0].y;
 	        logt=result[0].x;
-	     	// alert(latt+"/"+logt);
+	     	//alert(latt+"/"+logt);
 	        error = 0;
 	    }else{
 	    	error = 1;
@@ -45,15 +61,20 @@ function selectMain(cid){
 	var addr = $('#address').val();
 	var addrd = $('#addrDetail').val();
 	
+	//location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
+	
+	
 	if(error == 1 ){
+		alert('주소지를 설정하세요');
 		$('#address').focus();
-		alert('배달 장소를 입력하세요');
 	}else if(addrd == ""){
-		$('#addrDetail').focus();
 		alert('상세 주소를 입력하세요');
+		$('#addrDetail').focus();
 	}else{
 		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
 	}
+	 
+	
 };
 
 function scrollDown(){
@@ -145,10 +166,12 @@ function execDaumPostcode() {
                         <div class="col">
                           <div class="input-group-icon"><i class="fas fa-map-marker-alt text-danger input-box-icon"></i>
                             <label class="visually-hidden" for="inputDelivery">Address</label>
-                            <input class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly"/>
+                            <input th:if="${addr} == null" class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly"/>
+                            <input th:unless="${addr} == null" class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly" th:value="${addr}"/>
                           </div>
                           <div class="input-group-icon">
-                           <input class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" />
+                           <input th:if="${addrd} == null" class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" />
+                           <input th:unless="${addrd} == null" class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" th:value="${addrd}"/>
                           </div>
                         </div>
                         <div class="d-grid gap-3 col-sm-auto">
