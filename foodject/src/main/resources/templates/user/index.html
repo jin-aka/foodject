@@ -111,15 +111,10 @@ $(document).ready(function(){
             	              
               <h5 th:unless="${session.loginid == null}">
                  <input type="hidden" id="uid_index" name="uid" th:value="${session.loginid.id}">
-<<<<<<< HEAD
             	 <button style= " font-family: 'Jua', sans-serif; " class="btn btn-danger" id="logoutbt" type="button">
             	 	<i class="fas fa-user me-2"></i>로그아웃
             	 </button>              	
-=======
-            	 <button class="btn btn-danger" id="logoutbt" type="button">
-            	 	<i class="fas fa-user me-2"></i>Logout
-            	 </button>
->>>>>>> a923c7344b971f410dee8f6d0682d022c0337d53
+
               </h5>
               
               <input type="hidden" id="prevUrl_index" name="prevUrl">

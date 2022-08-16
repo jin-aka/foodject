@@ -119,7 +119,8 @@ function changeCnt(uid,sid){
 			if(data == "error"){
 				console.log(data)
 			}else{
-				$('#cartCnt').text('( '+data+' )')
+				$('#cartCnt1').text('( '+data+' )')
+				$('#cartCnt2').text('( '+data+' )')
 			}
 		}
 	});
@@ -240,7 +241,7 @@ $(document).ready(function(){
 	             <div class="icon-group1 justify-content-center pt-2">
 	                <div th:if="${session.loginid != null}">
 	                	<button class="btn btn-primary btn_disabled" onclick="goCart();">주문하기
-	                	<span id="cartCnt" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
+	                	<span id="cartCnt1" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
 	                	</button>
 	                </div>
 	             	<div  th:unless="${session.loginid != null}">
@@ -371,7 +372,7 @@ $(document).ready(function(){
 					             <div class="icon-group1 justify-content-center pt-2">
 					                <div th:if="${session.loginid != null}">
 					                	<button class="btn btn-primary btn_disabled" onclick="goCart();">주문하기
-					                	<span id="cartCnt" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
+					                	<span id="cartCnt2" th:text="'( '+${row}+' )'"></span><i class="fas fa-chevron-right ms-2"></i>
 					                	</button>
 					                </div>
 					             	<div  th:unless="${session.loginid != null}">

@@ -68,32 +68,32 @@ public class UserShopController {
 	public String shop(Model m, int cid, double latt, double logt, String addr, String addrd, HttpSession session,HttpSession sessionAddr) {
 		MarkerVO obj = new MarkerVO(latt,logt,cid);
 		List<UserShopVO> list = null;
-		AddrVO addrObj = new AddrVO();
-		addrObj.setAddr(addr);
-		addrObj.setAddrd(addrd);
-		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
-		
-		if(cust == null) {
-			// 주소세션에 검색한 주소 추가하기
-			sessionAddr.setAttribute("addrObj", addrObj);
-			//System.out.println("주소세션에 addrObj 추가");
-		}else {
-			// 배송지 업데이트
-			addrObj.setId(cust.getId());
-			try {
-				csbiz.modifyAddr(addrObj);
-				//System.out.println("배송지 업데이트");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//System.out.println("배송지 업데이트중 오류 발생");
-				e.printStackTrace();
-			}
-			
-		}
+//		AddrVO addrObj = new AddrVO();
+//		addrObj.setAddr(addr);
+//		addrObj.setAddrd(addrd);
+//		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+//		
+//		if(cust == null) {
+//			// 주소세션에 검색한 주소 추가하기
+//			sessionAddr.setAttribute("addrObj", addrObj);
+//			//System.out.println("주소세션에 addrObj 추가");
+//		}else {
+//			// 배송지 업데이트
+//			addrObj.setId(cust.getId());
+//			try {
+//				csbiz.modifyAddr(addrObj);
+//				//System.out.println("배송지 업데이트");
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				//System.out.println("배송지 업데이트중 오류 발생");
+//				e.printStackTrace();
+//			}
+//			
+//		}
 		try {	
-			addrObj.setAddr(addr);
-			addrObj.setAddrd(addrd);
-			sessionAddr.setAttribute("addrObj", addrObj);
+//			addrObj.setAddr(addr);
+//			addrObj.setAddrd(addrd);
+//			sessionAddr.setAttribute("addrObj", addrObj);
 			
 			list = sbiz.getMain(obj);
 			m.addAttribute("shoplist",list);
@@ -170,5 +170,6 @@ public class UserShopController {
 		return "redirect:/shop/main?sid="+sid;
 	}
 	
-
+	
+	
 }
