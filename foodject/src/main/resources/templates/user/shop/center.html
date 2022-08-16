@@ -13,6 +13,9 @@
 	object-fit:contain;
 }
 
+.unable{
+	opacity: 0.3;
+}
 </style>
 <script>
 
@@ -31,19 +34,25 @@
         
           <div class="col-sm-6 col-md-4 col-lg-3 h-100 mb-5" th:each="shop:${shoplist}">
          	<a th:href="'/shop/main?sid='+${shop.id}" th:if="${shop.status == 1}">
-            <div class="card card-span h-100 text-white rounded-3"><img class="img-fluid rounded-3 h-100" src="/bootstrap/foodwagon/assets/img/gallery/food-world.png" alt="..." />
+            <div class="card card-span h-100 text-white rounded-3">
+				<img class="img-fluid logo" th:if="${shop.logo != null }"
+					th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
+				<img class="img-fluid logo" th:unless="${shop.logo != null }"
+					src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
               <div class="card-body ps-0">
                 <div class="d-flex align-items-center mb-3">
-                	<!-- 가게 로고 -->
+                	<!-- 가게 로고 >
                 	<div class="col-3">
 		                	<img class="img-fluid logo" th:if="${shop.logo != null }"
 								th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
 							<img class="img-fluid logo" th:unless="${shop.logo != null }"
 								src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
 					</div>
-					<!-- 가게 로고 끝 -->	
+					< 가게 로고 끝 -->	
                   <div class="flex-1 ms-3">
-                    <h5 style= " font-family: 'Jua', sans-serif; "  class="mb-0 fw-bold text-1000" th:text="${shop.name}">가게이름</h5>
+
+                    <h2 style= " font-family: 'Jua', sans-serif; "  class="mb-0 fw-bold text-1000" th:text="${shop.name}">가게이름</h2>
+
                     <!-- span class="text-primary fs--1 me-1"><i class="fas fa-star"></i></span><span class="mb-0 text-primary">46</span-->
                   </div>
                 </div>
@@ -52,20 +61,26 @@
               </div>
             </div>
             </a>
-            <a href="#" th:unless="${shop.status == 1}">
-            <div class="card card-span h-100 text-white rounded-3"><img class="img-fluid rounded-3 h-100" src="/bootstrap/foodwagon/assets/img/gallery/food-world.png" alt="..." />
+            <a th:unless="${shop.status == 1}">
+            <div class="card card-span h-100 text-white rounded-3">
+					
+              	<img class="img-fluid logo unable" th:if="${shop.logo != null }"
+					th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
+				<img class="img-fluid logo unable" th:unless="${shop.logo != null }"
+					src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
+		
               <div class="card-body ps-0">
                 <div class="d-flex align-items-center mb-3">
-                	<!-- 가게 로고 -->
-                	<div class="col-3">
-		                	<img class="img-fluid logo" th:if="${shop.logo != null }"
-								th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
-							<img class="img-fluid logo" th:unless="${shop.logo != null }"
-								src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
+                	<!-- 가게 로고 >
+               		<div class="col-3">
+	                	<img class="img-fluid logo" th:if="${shop.logo != null }"
+							th:src="'https://kr.object.ncloudstorage.com/foodject/shop/'+${shop.logo}" alt="error1" />
+						<img class="img-fluid logo" th:unless="${shop.logo != null }"
+							src="https://kr.object.ncloudstorage.com/foodject/shop/logo1.jpg" alt="error2" />
 					</div>
-					<!-- 가게 로고 끝 -->	
+					< 가게 로고 끝 -->	
                   <div class="flex-1 ms-3">
-                    <h5 class="mb-0 fw-bold text-1000" th:text="${shop.name}">가게이름</h5>
+                    <h2 style= " font-family: 'Jua', sans-serif; " class="mb-0 fw-bold text-1000 unable" th:text="${shop.name}">가게이름</h2>
                     <!-- span class="text-primary fs--1 me-1"><i class="fas fa-star"></i></span><span class="mb-0 text-primary">46</span-->
                   </div>
                 </div>

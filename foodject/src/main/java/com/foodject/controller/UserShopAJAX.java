@@ -130,7 +130,6 @@ public class UserShopAJAX {
 		addrObj.setAddr(addr);
 		addrObj.setAddrd(addrd);
 		
-		
 		if(cust == null) {
 			// 주소세션에 검색한 주소 추가하기
 			sessionAddr.setAttribute("addrObj", addrObj);
