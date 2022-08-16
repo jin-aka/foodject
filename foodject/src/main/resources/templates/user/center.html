@@ -150,7 +150,7 @@ function execDaumPostcode() {
 
               <h1 style= " font-family: 'Jua', sans-serif; " class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">혹시, 배고프세요?</h1><br>
               <h1 style= "font-family: 'Jua', sans-serif; " class="text-800 mb-5 fs-4">치킨, 피자, 떡볶이, 삼겹살 ... <br class="d-none d-xxl-block" />무엇이든 주문해보세요!</h1>
-              <h3 style= " font-family: 'Jua', sans-serif; "> 대구 중구 동성로6길 61 </h3>
+              
 
               <div class="card w-xxl-75">
                 <div class="card-body">
@@ -166,12 +166,12 @@ function execDaumPostcode() {
                         <div class="col">
                           <div class="input-group-icon"><i class="fas fa-map-marker-alt text-danger input-box-icon"></i>
                             <label class="visually-hidden" for="inputDelivery">Address</label>
-                            <input th:if="${addr} == null" class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly"/>
-                            <input th:unless="${addr} == null" class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly" th:value="${addr}"/>
+                            <input th:if="${session.loginid} == null" class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly"/>
+                            <input th:unless="${session.loginid} == null" class="form-control input-box form-foodwagon-control" id="address" type="text" placeholder="주소를 입력해주세요" readonly="readonly" th:value="${addr}"/>
                           </div>
                           <div class="input-group-icon">
-                           <input th:if="${addrd} == null" class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" />
-                           <input th:unless="${addrd} == null" class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" th:value="${addrd}"/>
+                           <input th:if="${session.loginid} == null" class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" />
+                           <input th:unless="${session.loginid} == null" class="form-control input-box form-foodwagon-control" id="addrDetail" type="text" placeholder="상세 주소를 입력해주세요" th:value="${addrd}"/>
                           </div>
                         </div>
                         <div class="d-grid gap-3 col-sm-auto">
