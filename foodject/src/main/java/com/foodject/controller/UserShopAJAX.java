@@ -127,11 +127,12 @@ public class UserShopAJAX {
 	public Object registerAddr(String addr, String addrd, HttpSession session, HttpSession sessionAddr) {
 		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
 		AddrVO addrObj = new AddrVO();
+		addrObj.setAddr(addr);
+		addrObj.setAddrd(addrd);
+		
 		
 		if(cust == null) {
 			// 주소세션에 검색한 주소 추가하기
-			addrObj.setAddr(addr);
-			addrObj.setAddrd(addrd);
 			sessionAddr.setAttribute("addrObj", addrObj);
 			System.out.println("주소세션에 addrObj 추가");
 			return 1;
