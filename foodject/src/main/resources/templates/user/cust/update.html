@@ -1,3 +1,8 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+
 <style>
 #imgviewer{
 	width: 150px;		
@@ -217,11 +222,11 @@ $(document).ready(function(){
             <div class="row justify-content-center">
             
              <div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
-                <h1 class="card-title mt-xl-5 mb-4 text-center">My Page <a id="mypagebtn"><span class="text-primary">마이페이지</span></a></h1>
+                <h1 style= " font-family: 'Jua', sans-serif; " class="card-title mt-xl-5 mb-4 text-center">My Page <a id="mypagebtn"><span style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="text-primary">마이페이지</span></a></h1>
                 <div class="d-grid bottom-0">                
-                <a class="btn btn-danger text-white mt-xl-6" id="update">회원정보수정하기 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="myorders">주문내역 조회</a><p></p>
-                <a class="btn btn-lg btn-primary mt-xl-6" id="cs">고객센터</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; " class="btn btn-danger text-white mt-xl-6" id="update">회원정보수정하기 &nbsp<i class="fas fa-mouse-pointer me-2"></i></a><p></p>
+                <a style= "font-family: 'Jua', sans-serif; " class="btn btn-lg btn-primary mt-xl-6" id="myorders">주문내역 조회</a><p></p>
+                <a style= " font-family: 'Jua', sans-serif; " class="btn btn-lg btn-primary mt-xl-6" id="cs">고객센터</a><p></p>
                 </div>
               </div>
             
@@ -236,7 +241,7 @@ $(document).ready(function(){
 			                <form id="update-img-form">
 			                   <div class="col">
 			                   		<input id="id" name="id" type="hidden" th:value="${c.id}">                      
-			                        <label for="img">프로필 사진:</label><br>                       
+			                        <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="img">프로필 사진:</label><br>                       
 			                        <div class="text-center">
                           				<img class="img-fluid rounded-3 h-50 shadow-transition pb-2" id="imgviewer" th:src="@{'https://kr.object.ncloudstorage.com/foodject/cust/'+${c.img}}">
                           			    <div class="input-group">
@@ -244,7 +249,7 @@ $(document).ready(function(){
                           					id="img" name="mf" type="file" placeholder="Profile Image" required>
                         				</div>
                         				<div class="p-3">
-				                    		<button id="updatebtn-img" class="btn btn-line text-dark btn-sm" type="button">프로필변경</button>
+				                    		<button style= "color: #ffa000; font-family: 'Jua', sans-serif; " id="updatebtn-img" class="btn btn-line text-dark btn-sm" type="button">프로필변경</button>
                         				</div>                          		                          			
                           			</div>
 			                    </div>                       
@@ -260,7 +265,7 @@ $(document).ready(function(){
 
 		                   <div class="col">   	                   
 		                        <input id="id" name="id" type="hidden" th:value="${c.id}">               
-	                        	<label for="pwd">현재 비밀번호:</label>
+	                        	<label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="pwd">현재 비밀번호:</label>
 		                        <div class="input-group">
 		                          <input class="form-control input-box form-foodwagon-control"
 		                          id="pwd" name="currentpwd" th:value="${c.pwd}" type="hidden">
@@ -276,7 +281,7 @@ $(document).ready(function(){
 			                <form id="update-pwd-form">
 			                	<div class="col pt-2">   			                
 			                        <input id="id" name="id" th:value="${c.id}" type="hidden"> 
-			                        <label for="newpwd">새 비밀번호 입력:</label>
+			                        <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="newpwd">새 비밀번호 입력:</label>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
 			                          id="newpwd" name="pwd" type="password"  placeholder="New Password" required>		                        
@@ -284,7 +289,7 @@ $(document).ready(function(){
 			                        <span style="font-size: smaller; color:gray;" id="newpwdspan"></span><p></p>	
 			                        
                        				<div class="text-center p-3">
-			                    		<button id="updatebtn-pwd" class="btn btn-line text-dark btn-sm" type="button">비밀번호변경</button>
+			                    		<button style= "font-family: 'Jua', sans-serif; " id="updatebtn-pwd" class="btn btn-line text-dark btn-sm" type="button">비밀번호변경</button>
                        				</div>                      				 								
 								</div>                       
 			                </form> 
@@ -300,30 +305,30 @@ $(document).ready(function(){
 			                <form id="update-etc-form">
 			                   <div class="col">   
 			                         <input id="id" name="id" type="hidden" th:value="${c.id}">       
-					                <label for="name">이름:</label><br>
+					                <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="name">이름:</label><br>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
 			                          id="name" name="name" type="text" th:value="${c.name}" required>
 			                        </div> <p></p>
 									<span style="font-size: smaller; color:gray;" id="namespan"></span><p></p>
 									
-			                        <label for="birth">생년월일:</label><br>
+			                        <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="birth">생년월일:</label><br>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
 			                          id="birth" name="birth" type="date" th:value="${#dates.format(c.birth, 'yyyy-MM-dd')}" required>
 			                        </div> <p></p>
 			                                                               
-			                        <label for="phon">연락처:</label><br>
+			                        <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="phon">연락처:</label><br>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
 			                          id="phon" name="phon" type="tel" th:value="${c.phon}" placeholder="Phone Number"  maxlength="13" required>
 			                        </div><p></p>
 			                                                
-			                        <label for="addr">주소:</label><br>
+			                        <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="addr">주소:</label><br>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
 			                          id="addr" name="addr" type="text" th:value="${c.addr}" placeholder="도로명 주소" readonly>
-			                          <button type="button" class="btn btn-primary" onclick="execDaumPostcode()">주소찾기</button>
+			                          <button style= " font-family: 'Jua', sans-serif; " type="button" class="btn btn-primary" onclick="execDaumPostcode()">주소찾기</button>
 			                        </div><p></p>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
@@ -331,7 +336,7 @@ $(document).ready(function(){
 			                        </div><p></p>
 			                        <span style="font-size: smaller; color:gray;" id="addrspan"></span><p></p>
 			                                                                         
-			                        <label for="nick">닉네임:</label><br>
+			                        <label style= "color: #ffa000; font-family: 'Jua', sans-serif; " for="nick">닉네임:</label><br>
 			                        <div class="input-group">
 			                          <input class="form-control input-box form-foodwagon-control"
 			                          id="nick" name="nick" type="text" th:value="${c.nick}" placeholder="Nickname" required>
@@ -340,7 +345,7 @@ $(document).ready(function(){
 
 			                        
                        				<div class="text-center p-3">
-			                    		<button id="updatebtn-etc" class="btn btn-line text-dark btn-sm" type="button">회원정보변경</button>
+			                    		<button style= " font-family: 'Jua', sans-serif; " id="updatebtn-etc" class="btn btn-line text-dark btn-sm" type="button">회원정보변경</button>
                        				</div> 
                        				 								
 								</div>                       
@@ -353,7 +358,7 @@ $(document).ready(function(){
                 <form id="delete-form">
                  <div class="text-center pt-5 pb-5">
 			        <input id="id" name="id" type="hidden" th:value="${c.id}">                    
-                	<button class="btn btn-light btn-sm" style="color:gray;" id="deletebtn">회원탈퇴하기</button>
+                	<button  class="btn btn-light btn-sm" style="color:gray; font-family: 'Jua', sans-serif;" id="deletebtn">회원탈퇴하기</button>
                  </div>               
                 </form>               
 
