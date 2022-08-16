@@ -2,18 +2,26 @@ package com.foodject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodject.biz.UserCartBiz;
+import com.foodject.biz.UserCustBiz;
 import com.foodject.biz.UserOptcartBiz;
+import com.foodject.vo.AddrVO;
 import com.foodject.vo.UserCartVO;
+import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserOptcartVO;
 
 @RestController
 @RequestMapping("/shop/main")
 public class UserShopAJAX {
+	
+	@Autowired
+	UserCustBiz csbiz;
 	
 	@Autowired
 	UserCartBiz crbiz;
@@ -114,4 +122,40 @@ public class UserShopAJAX {
 		}
 		return cartId;
 	}
+	
+	@RequestMapping("/registerAddr")
+	public Object registerAddr(String addr, String addrd, HttpSession session, HttpSession sessionAddr) {
+		UserCustVO cust = (UserCustVO) session.getAttribute("loginid");
+		AddrVO addrObj = new AddrVO();
+		addrObj.setAddr(addr);
+		addrObj.setAddrd(addrd);
+		
+		if(cust == null) {
+			// 주소세션에 검색한 주소 추가하기
+			sessionAddr.setAttribute("addrObj", addrObj);
+			System.out.println("주소세션에 addrObj 추가");
+			return 1;
+		}else {
+			String uid = cust.getId();
+			addrObj.setId(uid);
+			try {
+				csbiz.modifyAddr(addrObj);
+				System.out.println("배송지 업데이트");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("배송지 업데이트중 오류 발생");
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 }
