@@ -19,7 +19,6 @@ import com.foodject.biz.UserShopBiz;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserDoptVO;
-import com.foodject.vo.UserMenuVO;
 import com.foodject.vo.UserOptcartVO;
 import com.foodject.vo.UserOrdersVO;
 import com.foodject.vo.UserShopVO;
@@ -250,18 +249,15 @@ public class UserCartController {
 					crbiz.remove(cartId);
 				}
 				
-				
-				
-				
-				
-				
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return "redirect:/orderError";
 			}
 			
 			
-			return "redirect:/";
+			return "redirect:/orderComple";
 		}
 	}
 				

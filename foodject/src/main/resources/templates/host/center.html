@@ -48,18 +48,18 @@
       <div class="col-md-6 mb-4 stretch-card transparent">
         <div class="card card-tale">
           <div class="card-body">
-            <p class="mb-4">Today’s Bookings</p>
-            <p class="fs-30 mb-2">4006</p>
-            <p>10.00% (30 days)</p>
+            <p class="mb-4">완료되지 않은 주문</p>
+            <a href="/host/orders"><p class="fs-30 mb-2" th:text="${mainseletcstatus}">4006</p></a>
+           
           </div>
         </div>
       </div>
       <div class="col-md-6 mb-4 stretch-card transparent">
         <div class="card card-dark-blue">
           <div class="card-body">
-            <p class="mb-4">Total Bookings</p>
-            <p class="fs-30 mb-2">61344</p>
-            <p>22.00% (30 days)</p>
+            <p class="mb-4" >완료된 총 주문</p>
+            <a href="/host/shop/analysis"><p class="fs-30 mb-2" th:text="${mainallorders}">61344</p></a>
+
           </div>
         </div>
       </div>
@@ -68,18 +68,18 @@
       <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
         <div class="card card-light-blue">
           <div class="card-body">
-            <p class="mb-4">Number of Meetings</p>
-            <p class="fs-30 mb-2">34040</p>
-            <p>2.00% (30 days)</p>
+            <p class="mb-4">일 매출</p>
+            <p class="fs-30 mb-2" th:text="${#numbers.formatInteger(dayallprice.allprice, 0, 'COMMA')+'원'}" >34040</p>
+
           </div>
         </div>
       </div>
       <div class="col-md-6 stretch-card transparent">
         <div class="card card-light-danger">
           <div class="card-body">
-            <p class="mb-4">Number of Clients</p>
-            <p class="fs-30 mb-2">47033</p>
-            <p>0.22% (30 days)</p>
+            <p class="mb-4">월 매출</p>
+            <p class="fs-30 mb-2" th:text="${#numbers.formatInteger(monthallprice.allprice, 0, 'COMMA')+'원'}">47033</p>
+
           </div>
         </div>
       </div>

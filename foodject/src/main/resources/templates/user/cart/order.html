@@ -1,11 +1,9 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Shop Websocket</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <style>
@@ -163,7 +161,7 @@ $(document).ready(function(){
           <div class="card-body py-0">
             <div class="row justify-content-center">
                <div class="p-5">
-              <h1 class="card-title mt-xl-5 mb-4 text-center"><span class="text-primary"><i class="fas fa-hamburger me-2"></i>Check Out</span>&nbsp 주문페이지</h1>
+              <h1 style= " font-family: 'Jua', sans-serif; "  class="card-title mt-xl-5 mb-4 text-center"><span class="text-primary"><i class="fas fa-hamburger me-2"></i>Order Page</span>&nbsp 주문페이지</h1>
                
                              
                <div class="row pt-2"><div class="col-lg-1"></div>                
@@ -177,17 +175,17 @@ $(document).ready(function(){
 			             <!-- 주문하기 Header -->
 					      <div class="modal-header">
 					      	<div class="ps-3">
-					          <h4 class="modal-title"><i class="fas fa-credit-card"></i>  &nbsp 주문하기</h4>					      	
+					          <h4 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="modal-title"><i class="fas fa-credit-card"></i>  &nbsp 주문하기</h4>					      	
 					      	</div>
 					      </div>
 					
 					      <!-- 주문하기 배달 정보 -->
 					      <div class="modal-body">	
 					      	<div class="p-3">						      						      	
-						      	<h5 class="pb-2">배달정보</h5>
+						      	<h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="pb-2">배달정보</h5>
 	
-								<h4 th:text="${cust.addr}">th:text ADDR</h4>
-								<h5 th:text="${cust.addrd}">th:value= ADDRD"></h5><p></p>
+								<h4 style= " font-family: 'Jua', sans-serif; "  th:text="${cust.addr}">th:text ADDR</h4>
+								<h5 style= " font-family: 'Jua', sans-serif; "  th:text="${cust.addrd}">th:value= ADDRD"></h5><p></p>
 								<hr>
 								<input type="hidden" name="uid" th:value="${cust.id}">
 								<input type="hidden" name="nick" th:value="${cust.nick}">
@@ -198,8 +196,8 @@ $(document).ready(function(){
 				      	  </div>
 				      	  <div class="modal-footer">
 					         <div class="modal-body">							      						      	
-						      	<h5 class="pb-2">요청사항</h5>
-								<h6>가게사장님께</h6>
+						      	<h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="pb-2">요청사항</h5>
+								<h6 style= "font-family: 'Jua', sans-serif; " >가게사장님께</h6>
 								<input id="" class="form-control input-box form-foodwagon-control" name="ask" placeholder="예) 당근 빼주세요. 김치 많이주세요.">
 				      	    </div>	
 					      </div>
@@ -216,19 +214,19 @@ $(document).ready(function(){
 		             <!-- 주문상세 Header -->
 				      <div class="modal-header2">
 				      	<div class="ps-3">
-				          <h5 class="modal-title"> 주문요약</h5>					      	
+				          <h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; "  class="modal-title"> 주문요약</h5>					      	
 				      	</div>
 				      </div>
 				
 				      <!-- 주문상세 음식정보 -->
 				      <div class="modal-body">
-				      	<h3 th:text="${shop.name}">가게이름  th:text="${i.sname}"</h3>	
+				      	<h3 style= " font-family: 'Jua', sans-serif; "  th:text="${shop.name}">가게이름  th:text="${i.sname}"</h3>	
 			             <table   width="100%" style="color:black;">
 		                   <tbody>
 	                         <tr>
-                               <td th:if="${cnt} == 0"><h6 th:text="${mname}">메뉴명(th:text="${m.mname}")</h6></td>	                              
-                               <td th:unless="${cnt} == 0"><h6 th:text="${mname}+' 외 '+${cnt}+'개'">메뉴명(th:text="${m.mname}")</h6></td>
-                               <td align="right">비고</td>
+                               <td   th:if="${cnt} == 0"><h6 style= " font-family: 'Jua', sans-serif; "  th:text="${mname}">메뉴명(th:text="${m.mname}")</h6></td>	                              
+                               <td   th:unless="${cnt} == 0"><h6 style= " font-family: 'Jua', sans-serif; "  th:text="${mname}+' 외 '+${cnt}+'개'">메뉴명(th:text="${m.mname}")</h6></td>
+                               <td style= " font-family: 'Jua', sans-serif; "  align="right">비고</td>
 		                     </tr>
 		                     <!-- 
 		                     <tr >
@@ -260,31 +258,30 @@ $(document).ready(function(){
 						  <table width="100%" cellspacing="0">
 							  <tbody>
 							    <tr>
-							      <td><h6>총 주문금액</h6>   </td>
-							      <td><h6 align="right" th:text="${totalPrice}+' 원'" >th:text</h6>   </td>
+							      <td><h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " >총 주문금액</h6>   </td>
+							      <td><h6 style= " font-family: 'Jua', sans-serif; "  align="right" th:text="${totalPrice}+' 원'" >th:text</h6>   </td>
 							    </tr>
 							    <tr>
-							      <td><h6>배달팁</h6>   </td>
-							      <td align="right" ><h6>3000 원</h6>   </td>
+							      <td><h6 style= "color: #ffa000; font-family: 'Jua', sans-serif; " >배달팁</h6>   </td>
+							      <td  align="right" ><h6 style= " font-family: 'Jua', sans-serif; " >3000 원</h6>   </td>
 							    </tr>								  
 							  </tbody>
 						  </table>
 						  <table width="100%" cellspacing="0">
 							  <tbody>
 							    <tr>
-							      <td><h5>최종결제가격</h5></td>
+							      <td><h5 style= "color: #ffa000; font-family: 'Jua', sans-serif; " >최종결제가격</h5></td>
 							      	<input type="hidden" id="totalPrice" th:value="${totalPrice}">
-							      <td><h5 id="finalPrice" align="right"> </h5></td>
+							      <td><h5 style= " font-family: 'Jua', sans-serif; "  id="finalPrice" align="right"> </h5></td>
 							    </tr>
 							  </tbody>
 						  </table>
 			      	  </div>					      
-			        </div>												
-        
+			        </div>												        
                 </div>        
                 <div class="col-lg-1"></div>
                 <div class="text-center p-5">
-                 <button style="width:300px;"class="btn btn-primary" onclick="checkout();">결제하기</button>                               
+                 <button  style="width:300px; font-family: 'Jua', sans-serif;"class="btn btn-primary" onclick="checkout();">결제하기</button>                               
                 </div> 
  				</div>		
  				
