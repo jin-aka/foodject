@@ -97,7 +97,7 @@ $(document).ready(function(){
 					             <table  th:each="m: ${m}"  width="100%" cellspacing="0">
 				                   <tbody>
 			                         <tr>
-		                               <td><h6 th:text="${m.mname}"></h6></td>	                              
+		                               <td><h6 th:text="${m.mname}+'('+${m.mnum}+')개'"></h6></td>	                              
 		                               <td align="right"></td>
 				                     </tr>
 				                     <tr >
