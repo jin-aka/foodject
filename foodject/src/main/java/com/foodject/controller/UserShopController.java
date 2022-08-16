@@ -16,7 +16,6 @@ import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserShopBiz;
-import com.foodject.vo.AddrVO;
 import com.foodject.vo.MarkerVO;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCollectionVO;
@@ -54,7 +53,7 @@ public class UserShopController {
 
 
 	@RequestMapping("")
-	public String shop(Model m, int cid, double latt, double logt, String addr, String addrd, HttpSession session,HttpSession sessionAddr) {
+	public String shop(Model m, int cid, double latt, double logt) {
 		MarkerVO obj = new MarkerVO(latt,logt,cid);
 		List<UserShopVO> list = null;
 

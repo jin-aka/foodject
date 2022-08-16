@@ -61,9 +61,6 @@ function selectMain(cid){
 	var addr = $('#address').val();
 	var addrd = $('#addrDetail').val();
 	
-	//location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
-	
-	
 	if(error == 1 ){
 		alert('주소지를 설정하세요');
 		$('#address').focus();
@@ -71,7 +68,7 @@ function selectMain(cid){
 		alert('상세 주소를 입력하세요');
 		$('#addrDetail').focus();
 	}else{
-		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt+"&addr="+addr+"&addrd="+addrd;
+		location.href="/shop?cid="+cid+"&latt="+latt+"&logt="+logt;
 	}
 	 
 	
@@ -254,7 +251,7 @@ function execDaumPostcode() {
                             <h5 style= " font-family: 'Jua', sans-serif; " class="text-center fw-bold text-1000 text-truncate mb-2">일식</h5>
                           </div>
                         </div>
-                         </a>  
+                         </a>
                       </div>
 
                       <div class="col-6 col-sm-6 col-md-4 col-xl mb-5 h-100">
