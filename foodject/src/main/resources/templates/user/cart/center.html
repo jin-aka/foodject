@@ -1,3 +1,8 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+
 <script>
 function goOrder(){
 	var totalPrice = $('#totalPrice_data').val();
@@ -138,7 +143,7 @@ $(document).ready(function(){
 			        <div class="container">
 			          <div class="row flex-center">
 			            <div class="col-xxl-9 py-7 text-center">
-			              <h1 class="fw-bold mb-4 text-white fs-6">Food Box <br /><i class="fas fa-hamburger me-2"></i> </h1>
+			              <h1 style= " font-family: 'Jua', sans-serif; " class="fw-bold mb-4 text-white fs-6">Food Box <br /><i class="fas fa-hamburger me-2"></i> </h1>
 			            </div>
 			          </div>
 			        </div>
@@ -157,7 +162,7 @@ $(document).ready(function(){
                         <!-- =====Main Header===== -->         
 			      		<div class="modal-header">
 					      	<div class="ps-3">
-					          <h2 class="modal-title"><i class="fas fa-home"></i><span th:if="${shop.name != null}" th:text="'&nbsp&nbsp'+${shop.name}"></span></h2>					      						          
+					          <h2 style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="modal-title"><i class="fas fa-home"></i><span th:if="${shop.name != null}" th:text="'&nbsp&nbsp'+${shop.name}"></span></h2>					      						          
 					      	</div>
 					    </div>
 					    
@@ -190,12 +195,12 @@ $(document).ready(function(){
 						                      </div>
 						                      
 						                      <div class="col-md-5 ps-3 pt-2">
-						                        <h3 th:text="${cr.mname}" >메뉴명</h3>
-									    		<p th:text="'수량:&nbsp'+${cr.num}">수량</p>					                        	                        
+						                        <h3 style= "color: #ffa000; font-family: 'Jua', sans-serif; " th:text="${cr.mname}" >메뉴명</h3>
+									    		<p style= " font-family: 'Jua', sans-serif; " th:text="'수량:&nbsp'+${cr.num}">수량</p>					                        	                        
 						                      </div>
 						                      
 						                      <div class="col-md-5">
-						                        <div th:if="${cr.count != 0}">
+						                        <div style= "color: #ffa000; font-family: 'Jua', sans-serif; " th:if="${cr.count != 0}">
 										            <li>
 					                               	  <span>기본:&nbsp</span>
 					                               	  <span th:text="${#numbers.formatInteger(cr.mprice, 0, 'COMMA')+'원'}"></span>
@@ -257,17 +262,17 @@ $(document).ready(function(){
 				         	
 				         	<!-- 주문가격  -->
 						    <div class="input-group justify-content-end pt-5" th:if="${count} != 0">
-							    <h1><span >총 가격 : </span><span id="totalPrice" ></span></h1>
+							    <h1><span style= "color: #ffa000; font-family: 'Jua', sans-serif; " >총 가격 : </span><span id="totalPrice" ></span></h1>
 						    </div>				         	
 							<div class="modal-header justify-content-center pt-5">
 								<div class="pb-3">
-						        	<a type="button" class="btn btn-line text-dark" th:href="@{/shop/main(sid=${shop.id})}"><i class="fas fa-cart-plus"></i>&nbsp 더 담으러 가기</a>			        	
+						        	<a style= "font-family: 'Jua', sans-serif; " type="button" class="btn btn-line text-dark" th:href="@{/shop/main(sid=${shop.id})}"><i style= "color: #ffa000; font-family: 'Jua', sans-serif; " class="fas fa-cart-plus"></i>&nbsp 더 담으러 가기</a>			        	
 						        </div>
 						    </div>
 							<div class="input-group justify-content-center pt-3">						        
 							    <div class="summarybox" th:if="${count} != 0">
 								   	<div class="summaryArea">
-								   		<button type="button" class="btn btn-danger" onclick="goOrder();">주문하기</button>
+								   		<button style= " font-family: 'Jua', sans-serif; " type="button" class="btn btn-danger" onclick="goOrder();">주문하기</button>
 								   	</div>
 							    </div>
 						        <form id="order_form">
