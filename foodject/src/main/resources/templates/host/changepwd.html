@@ -10,17 +10,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Skydash Admin</title>
-  <!-- plugins:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/feather/feather.css">
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/ti-icons/css/themify-icons.css">
   <link rel="stylesheet" href="/bootstrap/skydash/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
   <link rel="stylesheet" href="/bootstrap/skydash/css/vertical-layout-light/style.css">
-  <!-- endinject -->
   <link rel="shortcut icon" href="/bootstrap/skydash/images/favicon.png" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -40,19 +35,20 @@ $(document).ready(function(){
 	$('#pwdc').click(function(){
 		 var pwd = $('#cpwd').val();
 		 var ipwd = $('#ipwd').val();
-		if( pwd != ipwd){
-			alert("비밀번호가 틀립니다.");	
-		}
-		if( pwd == ipwd){
-			location.href = "/host/changepwd2"
-		}
-		
+
+     $.ajax({
+			url: '/host/login/checkpwdbphost',
+			data: { 'pwd' : pwd },
+			success: function (result) {
+				if (result == '1') {
+					alert("비밀번호가 틀립니다.");	
+				} else {
+					location.href = "/host/changepwd2"
+				}
+			}
+		});	
 		
 	});
-
-	
-	
-	
 });
 
 </script>

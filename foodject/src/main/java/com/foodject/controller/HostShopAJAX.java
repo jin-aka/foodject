@@ -14,6 +14,7 @@ import com.foodject.biz.HostOrdersBiz;
 import com.foodject.biz.HostShopBiz;
 import com.foodject.frame.Util;
 import com.foodject.restapi.NaverORC;
+import com.foodject.vo.HostManagerVO;
 import com.foodject.vo.HostOrdersVO;
 import com.foodject.vo.HostShopVO;
 
@@ -38,6 +39,26 @@ public class HostShopAJAX {
 	
 
 	
+	@RequestMapping("barChart")
+	public Object barChart( int id  ,HttpSession session) {
+		HostManagerVO manager = (HostManagerVO) session.getAttribute("loginshop");
+		List<HostOrdersVO> list = null;
+		HostOrdersVO ovo = new HostOrdersVO();
+		
+
+		if( id == 0 ){
+			ovo.setShop_mid(manager.getId());
+		}
+		
+		try {
+			list = obiz.bardayfrommonth(ovo);
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 	@RequestMapping("bill")
 	public Object bill( int id  ) {
 		List<HostOrdersVO> list = null;
