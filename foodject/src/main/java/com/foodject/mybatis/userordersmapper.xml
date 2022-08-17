@@ -11,6 +11,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		</selectKey>
 	</insert>
 	
+
 	
 	<select id="selectod" parameterType="String" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.status, o.date AS odate, s.name AS sname, s.logo AS slogo FROM orders o

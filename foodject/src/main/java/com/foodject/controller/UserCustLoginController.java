@@ -48,23 +48,17 @@ public class UserCustLoginController {
       AddrVO addrObj = (AddrVO) sessionAddr.getAttribute("addrObj");
       try {
          cust = custbiz.get(id);
-         //System.out.println(cust);
          if(cust == null) {
             throw new Exception();
          }
          // 비밀번호 암호화 체크 처리
-         // if(bp.checkPassward(cust.getPwd(), pwd)) {
-         //    session.setAttribute("loginid", cust);
-         // }else {
-         //    throw new Exception();
-         // }
-
-         if(cust.getPwd().equals(pwd)) {
+         if(bp.checkPassward(cust.getPwd(), pwd)) {
             session.setAttribute("loginid", cust);
-            
          }else {
             throw new Exception();
          }
+
+   
       } catch (Exception e) {
          return "redirect:/cust/login?msg=f&prevUrl="+prevUrl;
       }
@@ -113,7 +107,7 @@ public class UserCustLoginController {
        String savename = idname + "." + splitname[splitname.length -1];
 
       // 비밀번호 암호화 처리
-      //cust.setPwd(bp.hashPassward(cust.getPwd()));
+      cust.setPwd(bp.hashPassward(cust.getPwd()));
       if(savename.equals(idname+".")) {
          cust.setImg("icon.jpg");         
       }else {

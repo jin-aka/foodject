@@ -109,13 +109,19 @@ $(document).ready(function(){
 		var uid = $('#id').val();
 		var pwd = $('#pwd').val();
 		var pwd2 = $('#pwdcheck').val();
-			if(pwd != pwd2){								
-				$('#pwdcheckspan').text('비밀번호가 일치하지 않아 비밀번호를 변경할 수 없습니다.');
+		$.ajax({
+			url: '/checkpwdbp',
+			data: { 'pwd' : pwd2 },
+			success: function (result) {
+				if (result == '1') {
+					$('#pwdcheckspan').text('비밀번호가 일치하지 않아 비밀번호를 변경할 수 없습니다.');
 				$('#update-pwd-form').hide(function(){});
-			}else {
-				$('#pwdcheckspan').text('비밀번호를 변경할 수 있습니다');
+				} else {
+					$('#pwdcheckspan').text('비밀번호를 변경할 수 있습니다');
 				$('#update-pwd-form').show(function(){});
+				}
 			}
+		});
 	 });
 
 	// 비밀번호 유효성검사 
@@ -135,7 +141,7 @@ $(document).ready(function(){
 		var inputpwd = $(this).val();
 		$.ajax({
 			url: '/checkpwd',
-			data: { pwd: inputpwd },
+			data: { pwd : inputpwd },
 			success: function (result) {
 				if (result == '1') {
 					$('#newpwdspan').text('사용이 불가능한 비밀번호입니다');
