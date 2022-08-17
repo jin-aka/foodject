@@ -3,7 +3,6 @@ package com.foodject.frame;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 import com.foodject.restapi.NaverObj;
 
@@ -23,7 +22,7 @@ public class Util {
 	// 파일, 저장할 이름, 사용되는 디비 테이블명
 	public void saveFile(MultipartFile mf, String savename, String table) {
 		byte [] data;
-		
+		System.out.println("dfadfa");
 		//이미지 경로설정
 		//String pimgpath = Paths.get(System.getProperty("user.dir"), "src", "main","resources","static","custimg").toString();
 		String filePath = "";
