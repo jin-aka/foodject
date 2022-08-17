@@ -66,6 +66,13 @@
     if( id == null ){
       location.href = "/host/login"
     }
+    function locateHref(href){
+      location.href = href;
+    }
+
+    $(document).ready(function(){
+
+    });
 	</script>
 
 </head>
@@ -351,7 +358,7 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul style= "font-family: 'Jua', sans-serif; " class="nav" id="dasul">
           <li class="nav-item">
-            <a class="nav-link" href="/test">
+            <a class="nav-link" href="#" onclick="locateHref('')">
               <i class="icon-grid menu-icon"></i>
               <span class="menu-title">대쉬보드</span>
             </a>
@@ -365,9 +372,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/host/shop">가게 목록 조회</a></li>
+                <li class="nav-item"> <a class="nav-link" id="host_shop" href="#">가게 목록 조회</a></li>
                
-                <li class="nav-item"> <a class="nav-link" href="/host/shop/analysis">매출 전표</a></li>
+                <li class="nav-item"> <a class="nav-link" id="host_shop_analysis" href="#">매출 전표</a></li>
               </ul>
             </div>
           </li>
@@ -380,8 +387,8 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="/host/orders">들어온 주문</a></li>
-                <li class="nav-item"><a class="nav-link" href="/host/orders/list">배달 완료된 주문</a></li>
+                <li class="nav-item"><a class="nav-link" id="host_orders" href="/host/orders">들어온 주문</a></li>
+                <li class="nav-item"><a class="nav-link" id="host_orders_list" href="/host/orders/list">배달 완료된 주문</a></li>
               </ul>
             </div>
           </li>
@@ -394,7 +401,7 @@
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
                 
-                <li class="nav-item"> <a class="nav-link" href="/host/menu/setting">메뉴 관리</a></li>
+                <li class="nav-item"> <a class="nav-link" onclick="locateHref('/host/menu/setting')" href="#">메뉴 관리</a></li>
               </ul>
             </div>
           </li>
