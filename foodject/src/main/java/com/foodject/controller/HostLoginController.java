@@ -23,6 +23,8 @@ public class HostLoginController {
 
 	@Autowired
 	BcrytPassward bp;
+
+	
 	
 
 
@@ -54,7 +56,9 @@ public class HostLoginController {
 			// }else {
 			// 	throw new Exception("비밀번호가 틀립니다.");
 			// }
-			if (manager.getPwd().equals(pwd)) {
+
+			// 비밀번호 암호화 체크 처리
+			if (bp.checkPassward(manager.getPwd(), pwd)) {
 				session.setAttribute("loginshop", manager);
 				
 			}else {

@@ -1,10 +1,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-
-
 <head>
-
 	<style>
 		#all {
 			width: 400px;
@@ -30,7 +27,7 @@
 			color:  black;
 			background: #ffa000;
 			background-color: #ffa000;
-			color
+			
 		}
 	</style>
 
@@ -89,6 +86,7 @@
 						+ "</h4>");
 				});
 				stompClient.subscribe('/send/tomsg/' + id, function (msg) {
+					alert("msg : " +   msg);
 					$("#to").append(
 						"<h4>" + JSON.parse(msg.body).sendid + ":" +
 						JSON.parse(msg.body).content1

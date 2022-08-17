@@ -49,10 +49,12 @@ public class HostMainController {
 			result = obiz.mainallorders(mng.getId());
 			mv.addObject("mainallorders", result);
 			ovo = obiz.mainallpriceday(ovo);
+			System.out.println("dayallprice"+ovo);
 			mv.addObject("dayallprice", ovo);
 			ovo = new HostOrdersVO();
 			ovo.setShop_mid(mng.getId());
 			ovo = obiz.mainallpricemonth(ovo);
+			System.out.println("monthallprice"+ovo);
 			mv.addObject("monthallprice", ovo);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -82,7 +84,7 @@ public class HostMainController {
 		
 		try {
 			//비밀번호 암호화 처리
-			//manager.setPwd(bp.hashPassward(manager.getPwd()));
+			manager.setPwd(bp.hashPassward(manager.getPwd()));
 
 			mbiz.register(manager);
 			session.setAttribute("loginshop", manager);
@@ -170,7 +172,7 @@ public class HostMainController {
 	}
 	@RequestMapping("/update2")
 	public String update2(Model m, HostManagerVO obj) {
-		
+		obj.setPwd(bp.hashPassward(obj.getPwd()));
 		try {
 			
 			mbiz.modifypwd(obj);

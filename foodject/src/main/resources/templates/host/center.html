@@ -49,8 +49,8 @@
         <div class="card card-tale">
           <div class="card-body">
             <p class="mb-4">완료되지 않은 주문</p>
-            <a href="/host/orders"><p class="fs-30 mb-2" th:text="${mainseletcstatus}">4006</p></a>
-           
+            <a href="/host/orders"><p class="fs-30 mb-2" th:if="${mainseletcstatus != null}" th:text="${mainseletcstatus}">4006</p></a>
+            <p class="fs-30 mb-2" th:unless="${mainseletcstatus != null}" >0</p>
           </div>
         </div>
       </div>
@@ -58,8 +58,8 @@
         <div class="card card-dark-blue">
           <div class="card-body">
             <p class="mb-4" >완료된 총 주문</p>
-            <a href="/host/shop/analysis"><p class="fs-30 mb-2" th:text="${mainallorders}">61344</p></a>
-
+            <a href="/host/shop/analysis"><p class="fs-30 mb-2" th:if="${mainallorders != null}" th:text="${mainallorders}">61344</p></a>
+            <p class="fs-30 mb-2" th:unless="${mainallorders != null}" >0</p>
           </div>
         </div>
       </div>
@@ -67,10 +67,10 @@
     <div class="row">
       <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
         <div class="card card-light-blue">
-          <div class="card-body">
+          <div class="card-body" >
             <p class="mb-4">일 매출</p>
-            <p class="fs-30 mb-2" th:text="${#numbers.formatInteger(dayallprice.allprice, 0, 'COMMA')+'원'}" >34040</p>
-
+            <p class="fs-30 mb-2" th:if="${dayallprice != null}" th:text="${#numbers.formatInteger(dayallprice.allprice, 0, 'COMMA')+'원'}" >34040</p>
+            <p class="fs-30 mb-2" th:unless="${dayallprice != null}" >0 원</p>
           </div>
         </div>
       </div>
@@ -78,8 +78,8 @@
         <div class="card card-light-danger">
           <div class="card-body">
             <p class="mb-4">월 매출</p>
-            <p class="fs-30 mb-2" th:text="${#numbers.formatInteger(monthallprice.allprice, 0, 'COMMA')+'원'}">47033</p>
-
+            <p class="fs-30 mb-2" th:if="${monthallprice != null}" th:text="${#numbers.formatInteger(monthallprice.allprice, 0, 'COMMA')+'원'}">47033</p>
+            <p class="fs-30 mb-2" th:unless="${monthallprice != null}" >0 원</p>
           </div>
         </div>
       </div>

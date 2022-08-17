@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.foodject.biz.HostOrdersBiz;
 import com.foodject.biz.UserCartBiz;
 import com.foodject.biz.UserDetailBiz;
 import com.foodject.biz.UserDoptBiz;
@@ -16,6 +17,7 @@ import com.foodject.biz.UserMenuBiz;
 import com.foodject.biz.UserOptcartBiz;
 import com.foodject.biz.UserOrdersBiz;
 import com.foodject.biz.UserShopBiz;
+import com.foodject.vo.HostOrdersVO;
 import com.foodject.vo.UserCartVO;
 import com.foodject.vo.UserCustVO;
 import com.foodject.vo.UserDoptVO;
@@ -47,6 +49,9 @@ public class UserCartController {
 	
 	@Autowired
 	UserMenuBiz mnbiz;
+
+	@Autowired
+	HostOrdersBiz hobiz;
 
 	@RequestMapping("paytest")
 	public String paytest(Model m) {
@@ -250,14 +255,29 @@ public class UserCartController {
 				}
 				
 
+
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return "redirect:/orderError";
 			}
 			
-			
-			return "redirect:/orderComple";
+			HostOrdersVO hovo = null;
+			// 웹소켓 데이터
+			try {
+				
+				hovo = hobiz.get(odid);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("UserCartController : hovo :: " + hovo);
+
+
+
+			m.addAttribute("soket_data",hovo);
+			return "/user/cart/orderComple";
 		}
 	}
 				
