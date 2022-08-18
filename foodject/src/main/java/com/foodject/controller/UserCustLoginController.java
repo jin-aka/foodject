@@ -70,6 +70,8 @@ public class UserCustLoginController {
     	  try {
 			custbiz.modifyAddr(addrObj);
 			System.out.println("주소 세션으로 회원정보 업데이트");
+			cust = custbiz.get(id);
+			session.setAttribute("loginid", cust);
 		  } catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
