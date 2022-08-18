@@ -141,6 +141,8 @@ public class UserShopAJAX {
 			try {
 				csbiz.modifyAddr(addrObj);
 				System.out.println("배송지 업데이트");
+				cust = csbiz.get(uid);
+				session.setAttribute("loginid", cust);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				System.out.println("배송지 업데이트중 오류 발생");
