@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectod" parameterType="String" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.status, o.date AS odate, s.name AS sname, s.logo AS slogo FROM orders o
 		JOIN shop s ON o.sid = s.id
-		WHERE o.uid=#{uid} ORDER BY o.date DESC
+		WHERE o.uid=#{uid} ORDER BY o.id DESC
 	</select>
 	<select id="selectodinfo" parameterType="int" resultType="userordersmyVO">
 		SELECT DISTINCT o.id as oid, o.uid, o.date AS odate, s.name AS sname, s.id as sid, s.logo AS slogo, o.status FROM orders o
